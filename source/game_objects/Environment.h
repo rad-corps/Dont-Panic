@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rect.h"
+#include "../math/Rect.h"
 
 enum ENVIRO_TILE
 {

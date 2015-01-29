@@ -90,24 +90,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Environment.cpp" />
-    <ClCompile Include="source\GameObject.cpp" />
+    <ClCompile Include="source\game_state\GameLoop.cpp" />
+    <ClCompile Include="source\math\Collision.cpp" />
+    <ClCompile Include="source\game_objects\Environment.cpp" />
+    <ClCompile Include="source\game_objects\GameObject.cpp" />
     <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\Player.cpp" />
-    <ClCompile Include="source\SpriteManager.cpp" />
+    <ClCompile Include="source\game_objects\Player.cpp" />
     <ClCompile Include="source\spritesheet\SpriteSheet.cpp" />
     <ClCompile Include="source\spritesheet\UVTranslator.cpp" />
     <ClCompile Include="source\tests\SpriteSheetTests.cpp" />
-    <ClCompile Include="source\Vector.cpp" />
+    <ClCompile Include="source\math\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\game_objects\World.h" />
+    <ClInclude Include="source\game_state\GameLoop.h" />
+    <ClInclude Include="source\math\Collision.h" />
     <ClInclude Include="include\AIE.h" />
-    <ClInclude Include="include\Environment.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\Rect.h" />
-    <ClInclude Include="include\SpriteManager.h" />
-    <ClInclude Include="include\Vector.h" />
+    <ClInclude Include="source\game_objects\Environment.h" />
+    <ClInclude Include="source\game_objects\GameObject.h" />
+    <ClInclude Include="source\game_objects\Player.h" />
+    <ClInclude Include="source\math\Rect.h" />
+    <ClInclude Include="source\math\Vector.h" />
     <ClInclude Include="source\spritesheet\SpriteSheet.h" />
     <ClInclude Include="source\spritesheet\UVTranslator.h" />
     <ClInclude Include="source\tests\SpriteSheetTests.h" />

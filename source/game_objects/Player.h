@@ -1,7 +1,10 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Vector.h"
+#include "Environment.h"
+#include "../math/Vector.h"
+#include <vector>
+
 
 enum PLAYER_STATUS
 {
@@ -16,7 +19,7 @@ public:
 	Player(void);
 	~Player(void);
 
-	virtual void Update(float delta_);
+	virtual void Update(float delta_, const std::vector<Environment>& environment_);
 	virtual void Draw();
 
 private:

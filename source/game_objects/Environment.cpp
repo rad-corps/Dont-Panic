@@ -1,7 +1,7 @@
 #include "Environment.h"
 #include "aie.h"
-#include "spritesheet\SpriteSheet.h"
-#include "spritesheet\UVTranslator.h"
+#include "../spritesheet/SpriteSheet.h"
+#include "../spritesheet/UVTranslator.h"
 
 Environment::Environment(Vector2 pos, ENVIRO_TILE tileType_)
 {

@@ -8,8 +8,8 @@
 
 #pragma once
 
-#include "Vector.h"
-#include "Rect.h"
+#include "../math/Vector.h"
+#include "../math/Rect.h"
 
 class GameObject
 {
@@ -20,7 +20,7 @@ public:
 	virtual ~GameObject(void);
 
 	//pure virtuals
-	virtual void Update(float delta_) = 0;
+	//virtual void Update(float delta_);
 	virtual void Draw() = 0;
 
 	float Width();

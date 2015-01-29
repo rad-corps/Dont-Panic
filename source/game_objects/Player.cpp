@@ -1,7 +1,8 @@
 #include "Player.h"
 #include "aie.h"
-#include "spritesheet\SpriteSheet.h"
-#include "spritesheet\UVTranslator.h"
+#include "../spritesheet/SpriteSheet.h"
+#include "../spritesheet/UVTranslator.h"
+#include "../math/Collision.h"
 
 Player::Player(void)
 {
@@ -25,8 +26,18 @@ Player::~Player(void)
 {
 }
 
-void Player::Update(float delta_)
+void Player::Update(float delta_, const vector<Environment>& environment_)
 {
+	//check collision
+	for ( auto &env : environment_ )
+	{
+		if ( Collision::RectCollision(env, Rect(Vector2(pos.x, pos.y), 16, 16)))
+		{
+			cout << "Collided with environment" << endl;
+		}
+	}
+
+
 	//check bounds
 	if ( pos.y <= 20 )
 	{
@@ -93,22 +104,7 @@ void Player::Update(float delta_)
 			currentAnimation = animMove1;
 		}
 
-		FPS = 1 / delta_;
-		
-
-		//switch ( status ) 
-
-		//{
-		//case STATIONARY :
-		//	cout << "STATIONARY" << endl;
-		//	break;
-		//case JUMPING :
-		//	cout << "JUMPING" << endl;
-		//	break;
-		//case RUNNING :
-		//	cout << "RUNNING" << endl;
-		//	break;
-		//}
+		FPS = 1 / delta_;		
 	}
 }
 
