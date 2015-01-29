@@ -48,8 +48,8 @@ int main( int argc, char* argv[] )
 
 	Player player;
 	vector<Environment> environment;
-	environment.push_back(Environment(Vector2(500,50), ENVIRO_TILE::RED_BRICK_SURFACE));
-	environment.push_back(Environment(Vector2(200,150), ENVIRO_TILE::ROCK_SURFACE));
+	environment.push_back(Environment(Vector2(500,16), ENVIRO_TILE::RED_BRICK_SURFACE));
+	environment.push_back(Environment(Vector2(200,80), ENVIRO_TILE::ROCK_SURFACE));
 		
 	do 
 	{
