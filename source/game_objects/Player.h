@@ -24,6 +24,7 @@ public:
 
 private:
 	Vector2 pos;
+	Vector2 prevPos;
 	Vector2 velocity;
 	PLAYER_STATUS status;
 

@@ -6,7 +6,7 @@
 
 Player::Player(void)
 {
-	pos = Vector2(50,50);
+	pos = Vector2(50,100);
 	velocity = Vector2(0,0);
 	status = PLAYER_STATUS::STATIONARY;
 
@@ -28,22 +28,43 @@ Player::~Player(void)
 
 void Player::Update(float delta_, const vector<Environment>& environment_)
 {
+	prevPos = pos;
+	
+	//gravity only if jumping
+	Vector2 gravity(0, -1); 
+	if ( status == JUMPING )
+	{
+		velocity += gravity;	
+	}
+
 	//check collision
+	Rect playerRect(Vector2(pos.x, pos.y), 16,16);
+	int collidedWith = 0;
 	for ( auto &env : environment_ )
 	{
-		if ( Collision::RectCollision(env, Rect(Vector2(pos.x, pos.y), 16, 16)))
+		collidedWith |= Collision::RectCollision(playerRect, env);
+		if ( collidedWith > 0)
 		{
-			cout << "Collided with environment" << endl;
-		}
+			if ( collidedWith & COLLISION_TYPE::BOT_COLL ) 
+			{
+				//cout << "BOT_COLL" << endl;
+				status = STATIONARY; //will be overwritten to running if user input
+				//pos = prevPos; //undo effects of gravity
+				velocity.y = 0;
+			}
+			if ( collidedWith & COLLISION_TYPE::LEFT_COL ) {}
+				//cout << "LEFT_COLL" << endl;
+			if ( collidedWith & COLLISION_TYPE::RIGHT_COL) {}
+				//cout << "RIGHT_COLL" << endl;
+			if ( collidedWith & COLLISION_TYPE::TOP_COLL) {}
+				//cout << "TOP_COLL" << endl;
+		}		
 	}
-
-
-	//check bounds
-	if ( pos.y <= 20 )
+	if ( collidedWith == 0 )
 	{
-		status = PLAYER_STATUS::STATIONARY;
-		pos.y = 20;
+		status = JUMPING;
 	}
+
 
 
 	if ( IsKeyDown(KEY_LEFT ) )
@@ -64,22 +85,23 @@ void Player::Update(float delta_, const vector<Environment>& environment_)
 	{
 		status = STATIONARY;
 	}
+
+
+
 	//only jump if not already jumping
 	if ( IsKeyDown(KEY_UP ) && status != PLAYER_STATUS::JUMPING)
 	{
 		status = JUMPING;	
 		
 		//will only happen for one frame
-		velocity.y += 10;
+		velocity.y += 15;
 	}
 
 	pos += velocity;
-	Vector2 gravity(0, -1); 
-	velocity += gravity;
-	if ( velocity.y < 0.0f && status != PLAYER_STATUS::JUMPING) velocity.y = 0.0f;
+
+
+	//if ( velocity.y < 0.0f && status != PLAYER_STATUS::JUMPING) velocity.y = 0.0f;
 	
-
-
 	//pick the animation
 	animationTimer += delta_;
 	if ( animationTimer > 0.1f )
@@ -106,6 +128,8 @@ void Player::Update(float delta_, const vector<Environment>& environment_)
 
 		FPS = 1 / delta_;		
 	}
+
+
 }
 
 void Player::Draw()
