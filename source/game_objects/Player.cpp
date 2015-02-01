@@ -53,7 +53,8 @@ void Player::HandleCollision(vector<Environment>& environment_)
 		if ( Collision::RectCollision(topCollider, env))
 		{
 			if  (velocity.y > 0)
-				velocity.y = -velocity.y;
+				velocity.y = 0;
+				//velocity.y = -velocity.y;
 		}
 		if ( Collision::RectCollision(bottomCollider, env))
 		{
@@ -112,6 +113,10 @@ void Player::HandleInput(float delta_)
 		
 		if ( onPlatform ) 
 			status = RUNNING;
+	}
+	else if ( onPlatform ) 
+	{
+		status = STATIONARY;
 	}
 
 	//only jump if not already jumping
