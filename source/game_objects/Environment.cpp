@@ -5,8 +5,8 @@
 
 Environment::Environment(Vector2 pos, ENVIRO_TILE tileType_)
 {
-	width = 16;
-	height = 16;
+	width = 32;
+	height = 32;
 	centre = pos;
 
 	UVTranslator translator(800, 1280, 16, 16);

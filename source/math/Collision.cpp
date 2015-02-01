@@ -39,44 +39,60 @@ bool Collision::CheckCollision(GameObject* obj1_, GameObject* obj2_)
 }
 */
 
-//check rectangle collision between two rectangles
-int Collision::RectCollision(Rect r1_, Rect r2_)
+////check rectangle collision between two rectangles
+//int Collision::RectCollision(Rect platform_, Rect player_)
+//{
+//	//platform_.Scale(0.95f);
+//	//player_.Scale(0.95f);
+//
+//	int ret = (int)COLLISION_TYPE::NO_COL;
+//
+//	if (platform_.Right() < player_.Left() 
+//		|| player_.Right() < platform_.Left() 
+//		|| platform_.Bottom() > player_.Top() 
+//		|| platform_.Top() < player_.Bottom())
+//		
+//		return ret;
+//
+//	
+//
+//	//http://stackoverflow.com/questions/5062833/detecting-the-direction-of-a-collision
+//
+//	float b_collision = player_.Bottom() - platform_.Top();
+//	float t_collision = platform_.Bottom() - player_.Top();
+//	float l_collision = platform_.Right() - player_.Left();
+//	float r_collision = player_.Right() - platform_.Left();
+//
+//	if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision )
+//	{                           
+//		ret |= COLLISION_TYPE::TOP_COLL;
+//	}
+//	if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)                        
+//	{
+//		ret |= COLLISION_TYPE::BOT_COLL;
+//	}
+//	if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)
+//	{
+//		ret |= COLLISION_TYPE::LEFT_COL;
+//	}
+//	if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision )
+//	{
+//		ret != COLLISION_TYPE::RIGHT_COL;
+//	}
+//
+//	return ret;
+//}
+
+int Collision::RectCollision(Rect platform_, Rect player_)
 {
-	//r1_.Scale(0.95f);
-	//r2_.Scale(0.95f);
+	//platform_.Scale(0.95f);
+	//player_.Scale(0.95f);
 
-	int ret = (int)COLLISION_TYPE::NO_COL;
-
-	if (r1_.Right() < r2_.Left() 
-		|| r2_.Right() < r1_.Left() 
-		|| r1_.Bottom() > r2_.Top() 
-		|| r1_.Top() < r2_.Bottom())
+	if (platform_.Right() < player_.Left() 
+		|| player_.Right() < platform_.Left() 
+		|| platform_.Bottom() > player_.Top() 
+		|| platform_.Top() < player_.Bottom())
 		
-		return ret;
-
-	//http://stackoverflow.com/questions/5062833/detecting-the-direction-of-a-collision
-
-	float b_collision = r2_.Bottom() - r1_.Top();
-	float t_collision = r1_.Bottom() - r2_.Top();
-	float l_collision = r1_.Right() - r2_.Left();
-	float r_collision = r2_.Right() - r1_.Left();
-
-	if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision )
-	{                           
-		ret |= COLLISION_TYPE::TOP_COLL;
-	}
-	if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)                        
-	{
-		ret |= COLLISION_TYPE::BOT_COLL;
-	}
-	if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)
-	{
-		ret |= COLLISION_TYPE::LEFT_COL;
-	}
-	if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision )
-	{
-		ret != COLLISION_TYPE::RIGHT_COL;
-	}
-
-	return ret;
+		return 0;
+	return 1;	
 }

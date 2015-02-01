@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Environment.h"
 #include "../math/Vector.h"
+#include "../math/Rect.h"
 #include <vector>
 
 
@@ -19,14 +20,29 @@ public:
 	Player(void);
 	~Player(void);
 
-	virtual void Update(float delta_, const std::vector<Environment>& environment_);
+	virtual void Update(float delta_, std::vector<Environment>& environment_);
 	virtual void Draw();
 
 private:
+	void ApplyVelocity(Vector2 velocity_);
+	void MoveTo(Vector2 pos_);
+	void UndoX();
+	void UndoY();
+	void HandleCollision(std::vector<Environment>& environment_);
+	void HandleInput(float delta_);
+	void UpdateAnimation(float delta_);
+	void ApplyGravity();
+	void UpdateColliders();
 	Vector2 pos;
-	Vector2 prevPos;
+	float prevY;
+	float prevX;
 	Vector2 velocity;
 	PLAYER_STATUS status;
+
+	Rect topCollider;
+	Rect bottomCollider;
+	Rect leftCollider;
+	Rect rightCollider;
 
 	float animStationary[4];
 	float animMove1[4];
@@ -37,5 +53,7 @@ private:
 	float animationTimer;
 
 	float FPS;
+
+	bool onPlatform;
 };
 

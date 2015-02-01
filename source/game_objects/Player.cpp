@@ -6,7 +6,23 @@
 
 Player::Player(void)
 {
-	pos = Vector2(50,100);
+	pos = Vector2(100,100);
+
+	//initialise colliders
+	topCollider.width = 24;
+	topCollider.height = 1;
+	bottomCollider.width = 24;
+	bottomCollider.height = 1;
+
+	leftCollider.width = 1;
+	leftCollider.height = 24;
+	rightCollider.width = 1;
+	rightCollider.height = 24;
+	
+	UpdateColliders();
+
+
+
 	velocity = Vector2(0,0);
 	status = PLAYER_STATUS::STATIONARY;
 
@@ -19,6 +35,8 @@ Player::Player(void)
 	currentAnimation = animStationary;
 
 	animationTimer = 0.0f;
+
+	onPlatform = false;
 }
 
 
@@ -26,67 +44,75 @@ Player::~Player(void)
 {
 }
 
-void Player::Update(float delta_, const vector<Environment>& environment_)
+void Player::HandleCollision(vector<Environment>& environment_)
 {
-	prevPos = pos;
-	
+	onPlatform = false;
+	//check collision	
+	for ( auto &env : environment_ )
+	{
+		if ( Collision::RectCollision(topCollider, env))
+		{
+			if  (velocity.y > 0)
+				velocity.y = -velocity.y;
+		}
+		if ( Collision::RectCollision(bottomCollider, env))
+		{
+			onPlatform = true;
+			velocity.y = 0;
+			//push him back up to the top of the platform
+			MoveTo(Vector2(pos.x, env.Top() + 16));
+		}
+		if ( Collision::RectCollision(leftCollider, env))
+		{
+			UndoX();
+		}
+		if ( Collision::RectCollision(rightCollider, env))
+		{
+			UndoX();
+		}
+	}
+	if ( !onPlatform )
+	{
+		status = JUMPING;
+	}
+}
+
+void Player::UndoX()
+{
+	MoveTo(Vector2(prevX, pos.y));
+}
+
+void Player::UndoY()
+{
+	MoveTo(Vector2(pos.x, prevY));
+}
+
+void Player::ApplyGravity()
+{
 	//gravity only if jumping
 	Vector2 gravity(0, -1); 
 	if ( status == JUMPING )
 	{
 		velocity += gravity;	
 	}
+}
 
-	//check collision
-	Rect playerRect(Vector2(pos.x, pos.y), 16,16);
-	int collidedWith = 0;
-	for ( auto &env : environment_ )
-	{
-		collidedWith |= Collision::RectCollision(playerRect, env);
-		if ( collidedWith > 0)
-		{
-			if ( collidedWith & COLLISION_TYPE::BOT_COLL ) 
-			{
-				//cout << "BOT_COLL" << endl;
-				status = STATIONARY; //will be overwritten to running if user input
-				//pos = prevPos; //undo effects of gravity
-				velocity.y = 0;
-			}
-			if ( collidedWith & COLLISION_TYPE::LEFT_COL ) {}
-				//cout << "LEFT_COLL" << endl;
-			if ( collidedWith & COLLISION_TYPE::RIGHT_COL) {}
-				//cout << "RIGHT_COLL" << endl;
-			if ( collidedWith & COLLISION_TYPE::TOP_COLL) {}
-				//cout << "TOP_COLL" << endl;
-		}		
-	}
-	if ( collidedWith == 0 )
-	{
-		status = JUMPING;
-	}
-
-
-
+void Player::HandleInput(float delta_)
+{
 	if ( IsKeyDown(KEY_LEFT ) )
 	{
 		pos.x -= 300 * delta_;
 
-		if ( status != JUMPING ) 
+		if ( onPlatform ) 
 			status = RUNNING;
 	}
 	else if ( IsKeyDown(KEY_RIGHT ) )
 	{
 		pos.x += 300 * delta_;
 		
-		if ( status != JUMPING ) 
+		if ( onPlatform ) 
 			status = RUNNING;
 	}
-	else if ( status != JUMPING ) 
-	{
-		status = STATIONARY;
-	}
-
-
 
 	//only jump if not already jumping
 	if ( IsKeyDown(KEY_UP ) && status != PLAYER_STATUS::JUMPING)
@@ -96,12 +122,10 @@ void Player::Update(float delta_, const vector<Environment>& environment_)
 		//will only happen for one frame
 		velocity.y += 15;
 	}
+}
 
-	pos += velocity;
-
-
-	//if ( velocity.y < 0.0f && status != PLAYER_STATUS::JUMPING) velocity.y = 0.0f;
-	
+void Player::UpdateAnimation(float delta_)
+{
 	//pick the animation
 	animationTimer += delta_;
 	if ( animationTimer > 0.1f )
@@ -129,7 +153,43 @@ void Player::Update(float delta_, const vector<Environment>& environment_)
 		FPS = 1 / delta_;		
 	}
 
+}
 
+void Player::Update(float delta_, vector<Environment>& environment_)
+{
+	prevX = pos.x;
+	prevY = pos.y;
+	
+	HandleInput(delta_);
+	
+	ApplyGravity();
+	
+	ApplyVelocity(velocity);	
+	HandleCollision(environment_);
+	UpdateAnimation(delta_);
+
+}
+
+void Player::MoveTo(Vector2 pos_)
+{
+	pos = pos_;
+	UpdateColliders();
+}
+
+//must be called whenever players position changes
+void Player::UpdateColliders()
+{
+	//update colliders
+	topCollider.centre = pos + Vector2(0, 16);
+	bottomCollider.centre = pos + Vector2(0, -16);
+	leftCollider.centre = pos + Vector2(-16, 0);
+	rightCollider.centre = pos + Vector2(16, 0);
+}
+
+void Player::ApplyVelocity(Vector2 velocity_)
+{
+	pos += velocity;
+	UpdateColliders();
 }
 
 void Player::Draw()

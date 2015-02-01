@@ -33,15 +33,24 @@ GameLoop::GameLoop(int screenW_, int screenH_, float updateInterval_)
 
 	gameTimer = 0.f;
 
-	for ( int i = 50; i < 1000; i += 32 )
+	for ( int y = 32; y < 500; y += 32 )
 	{
-		world.environment.push_back(Environment(Vector2(i,32), ENVIRO_TILE::RED_BRICK_SURFACE));
+		world.environment.push_back(Environment(Vector2(50,y), ENVIRO_TILE::RED_BRICK_SURFACE));
+	}
+	for ( int x = 50; x < 1000; x += 32 )
+	{
+		world.environment.push_back(Environment(Vector2(x,32), ENVIRO_TILE::RED_BRICK_SURFACE));
 	}
 
-	for ( int i = 300; i < 800; i += 32 )
+	for ( int x = 300; x < 800; x += 32 )
 	{
-		world.environment.push_back(Environment(Vector2(i,96), ENVIRO_TILE::ROCK_SURFACE));
+		world.environment.push_back(Environment(Vector2(x,128), ENVIRO_TILE::ROCK_SURFACE));
 	}
+	for ( int y = 128; y < 500; y += 32 )
+	{
+		world.environment.push_back(Environment(Vector2(800,y), ENVIRO_TILE::ROCK_SURFACE));
+	}
+
 }
 
 
