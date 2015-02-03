@@ -1,11 +1,15 @@
 #include "Player.h"
-#include "aie.h"
+//#include "aie.h"
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
 #include "../math/Collision.h"
 
+
 Player::Player(void)
 {
+//	gfx = GLAHGraphics::Instance();
+	inpt = GLAHInput::Instance();
+
 	pos = Vector2(100,100);
 
 	//initialise colliders
@@ -21,21 +25,19 @@ Player::Player(void)
 	
 	UpdateColliders();
 
-
-
 	velocity = Vector2(0,0);
 	status = PLAYER_STATUS::STATIONARY;
 
 	//initialise animations
 	UVTranslator translator(800, 1280, 16, 16);
-	translator.GetUV(animStationary, 78, 26);
-	translator.GetUV(animMove1, 78, 27);
-	translator.GetUV(animMove2, 78, 28);
-	translator.GetUV(animMove3, 78, 27);
+	translator.GetUV(animStationary, 1, 26);
+	translator.GetUV(animMove1, 1, 27);
+	translator.GetUV(animMove2, 1, 28);
+	translator.GetUV(animMove3, 1, 27);
 	currentAnimation = animStationary;
 
 	animationTimer = 0.0f;
-
+	faceLeft = false;
 	onPlatform = false;
 }
 
@@ -100,15 +102,16 @@ void Player::ApplyGravity()
 
 void Player::HandleInput(float delta_)
 {
-	if ( IsKeyDown(KEY_LEFT ) )
+	if ( inpt->IsKeyDown(KEY_LEFT ) )
 	{
+		faceLeft = true;
 		pos.x -= 300 * delta_;
-
 		if ( onPlatform ) 
 			status = RUNNING;
 	}
-	else if ( IsKeyDown(KEY_RIGHT ) )
+	else if ( inpt->IsKeyDown(KEY_RIGHT ) )
 	{
+		faceLeft = false;
 		pos.x += 300 * delta_;
 		
 		if ( onPlatform ) 
@@ -120,7 +123,7 @@ void Player::HandleInput(float delta_)
 	}
 
 	//only jump if not already jumping
-	if ( IsKeyDown(KEY_UP ) && status != PLAYER_STATUS::JUMPING)
+	if ( inpt->IsKeyDown(KEY_UP ) && status != PLAYER_STATUS::JUMPING)
 	{
 		status = JUMPING;	
 		
@@ -202,7 +205,6 @@ void Player::Draw()
 	//set the UV
 	SetSpriteUVCoordinates	( SpriteSheet::Sprite(), currentAnimation);
 	MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);
-	DrawSprite(SpriteSheet::Sprite());
-
-	DrawString(to_string(FPS).c_str(), 50, 500);
+	DrawSprite(SpriteSheet::Sprite(), faceLeft);
+	//DrawString(to_string(FPS).c_str(), 50, 500);
 }

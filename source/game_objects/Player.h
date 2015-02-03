@@ -6,6 +6,9 @@
 #include "../math/Rect.h"
 #include <vector>
 
+#include "GLAH\GLAHInput.h"
+#include "GLAH\GLAHGraphics.h"
+
 
 enum PLAYER_STATUS
 {
@@ -55,5 +58,11 @@ private:
 	float FPS;
 
 	bool onPlatform;
+	bool faceLeft;
+
+//	GLAHGraphics * gfx;
+	GLAHInput * inpt;
+
+
 };
 

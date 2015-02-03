@@ -1,10 +1,11 @@
 #include "Environment.h"
-#include "aie.h"
+//#include "aie.h"
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
 
 Environment::Environment(Vector2 pos, ENVIRO_TILE tileType_)
 {
+//	gfx = GLAHGraphics::Instance();
 	width = 32;
 	height = 32;
 	centre = pos;
@@ -14,10 +15,10 @@ Environment::Environment(Vector2 pos, ENVIRO_TILE tileType_)
 	switch ( tileType_ )
 	{
 	case RED_BRICK_SURFACE :
-		translator.GetUV(UV, 75, 0);
+		translator.GetUV(UV, 4, 0);
 		break;
 	case ROCK_SURFACE :
-		translator.GetUV(UV, 73, 0);
+		translator.GetUV(UV, 6, 0);
 		break;
 	}
 }

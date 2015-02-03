@@ -12,7 +12,7 @@ public:
 	//float height_		: height of the entire spritesheet image
 	//float blockWidth_	: the width of each sprite in the sprite sheet (will only work when sprite sheets have equally spaced sprites), 
 	//float blockHeight_	: the height of each sprite in the sprite sheet (will only work when sprite sheets have equally spaced sprites), if 0, defaults to blockWidth_;
-	UVTranslator(float width_, float height_, float blockWidth_, float blockHeight_);
+	UVTranslator(int width_, int height_, int blockWidth_, int blockHeight_);
 	
 	//default ctor, object is in an invalid state until Init is called.
 	UVTranslator();
@@ -25,15 +25,15 @@ public:
 	//float row_		: 0 based row (starting from the bottom)
 	//float blockCols_	: number of columns to retreive in the UV (defaults to 1)
 	//float rowWidth_	: number of rows to retreive in the UV (defaults to 1)
-	void GetUV(float* out_, float row_, float col_, float tileCols_ = 1, float tileRows_ = 1);
+	void GetUV(float* out_, int row_, int col_, int tileCols_ = 1, int tileRows_ = 1);
 
 	~UVTranslator();
 
 private:
 
-	float tileWidth;
-	float tileHeight;
-	float sheetWidth;
-	float sheetHeight;
+	int tileWidth;
+	int tileHeight;
+	int sheetWidth;
+	int sheetHeight;
 };
 

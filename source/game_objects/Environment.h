@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../math/Rect.h"
+#include "GLAH\GLAHGraphics.h"
+#include "GLAH\Vector.h"
 
 enum ENVIRO_TILE
 {
@@ -22,5 +24,7 @@ public:
 private:
 	float UV[4];
 	unsigned int sprite;
+
+//	GLAHGraphics * gfx;
 };
 

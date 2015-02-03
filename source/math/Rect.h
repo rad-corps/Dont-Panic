@@ -7,7 +7,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "Vector.h"
+#include "GLAH/Vector.h"
 #include <string>
 #include <iomanip>
 #include <iostream>

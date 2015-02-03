@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\game_objects\Environment.cpp" />
+    <ClCompile Include="source\game_objects\GameObject.cpp" />
+    <ClCompile Include="source\game_objects\Player.cpp" />
+    <ClCompile Include="source\game_state\GameLoop.cpp" />
+    <ClCompile Include="source\GLAH\GLAHSound.cpp" />
+    <ClCompile Include="source\GLAH\GLAHInput.cpp" />
+    <ClCompile Include="source\GLAH\GLAHGraphics.cpp" />
+    <ClCompile Include="source\GLAH\FileIO.cpp" />
+    <ClCompile Include="source\GLAH\Matrix.cpp" />
+    <ClCompile Include="source\GLAH\Shaders.cpp" />
+    <ClCompile Include="source\GLAH\Vector.cpp" />
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\math\Collision.cpp" />
+    <ClCompile Include="source\spritesheet\SpriteSheet.cpp" />
+    <ClCompile Include="source\spritesheet\UVTranslator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\GLAH\bass.h" />
+    <ClInclude Include="include\GLAH\CONSTS.h" />
+    <ClInclude Include="include\GLAH\GLAHColour.h" />
+    <ClInclude Include="include\GLAH\GLAHSound.h" />
+    <ClInclude Include="include\GLAH\GLAHInput.h" />
+    <ClInclude Include="include\GLAH\GLAHGraphics.h" />
+    <ClInclude Include="include\GLAH\FileIO.h" />
+    <ClInclude Include="include\GLAH\GLAHEntity.h" />
+    <ClInclude Include="include\GLAH\GLAHSoundInfo.h" />
+    <ClInclude Include="include\GLAH\Matrix.h" />
+    <ClInclude Include="include\GLAH\Shaders.h" />
+    <ClInclude Include="include\GLAH\SOIL.h" />
+    <ClInclude Include="include\GLAH\Vector.h" />
+    <ClInclude Include="include\GLAH\Vertex.h" />
+    <ClInclude Include="source\game_objects\Environment.h" />
+    <ClInclude Include="source\game_objects\GameObject.h" />
+    <ClInclude Include="source\game_objects\Player.h" />
+    <ClInclude Include="source\game_objects\World.h" />
+    <ClInclude Include="source\game_state\GameLoop.h" />
+    <ClInclude Include="source\math\Collision.h" />
+    <ClInclude Include="source\math\Rect.h" />
+    <ClInclude Include="source\spritesheet\SpriteSheet.h" />
+    <ClInclude Include="source\spritesheet\UVTranslator.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{68E0BC72-EE41-47C1-AA0E-83EE7612C16B}</ProjectGuid>
+    <RootNamespace>OpenGLTutorial</RootNamespace>
+    <ProjectName>DontPanic2</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>./lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;bass.lib;glfw3dll.lib;soil_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;bass.lib;glfw3.lib;soil_r.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

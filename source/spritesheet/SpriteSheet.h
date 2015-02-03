@@ -1,6 +1,8 @@
 #pragma once
 
-#include "AIE.h"
+#include "GLAH\GLAHGraphics.h"
+
+//#include "AIE.h"
 
 class SpriteSheet
 {
@@ -14,5 +16,6 @@ private:
 	static unsigned int sprite;
 	static bool init;
 	SpriteSheet(void);
+//	static GLAHGraphics* gfx;
 };
 
