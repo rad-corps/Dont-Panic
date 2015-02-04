@@ -21,9 +21,6 @@
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\GLAH\GLAHInput.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\GLAH\GLAHSound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,6 +57,15 @@
     <ClCompile Include="source\spritesheet\UVTranslator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\game_objects\Cannon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_objects\Shell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\game_objects\Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLAH\bass.h">
@@ -78,9 +84,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\GLAHGraphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\GLAHInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\GLAHSound.h">
@@ -122,13 +125,22 @@
     <ClInclude Include="source\game_objects\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\game_objects\World.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\spritesheet\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\spritesheet\UVTranslator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_objects\Cannon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_objects\Shell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\listeners\CannonListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_objects\Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

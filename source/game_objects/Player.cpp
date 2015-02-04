@@ -8,20 +8,20 @@
 Player::Player(void)
 {
 //	gfx = GLAHGraphics::Instance();
-	inpt = GLAHInput::Instance();
+//	inpt = GLAHInput::Instance();
 
 	pos = Vector2(100,100);
 
 	//initialise colliders
-	topCollider.width = 24;
+	topCollider.width = 10;
 	topCollider.height = 1;
-	bottomCollider.width = 24;
+	bottomCollider.width = 16;
 	bottomCollider.height = 1;
 
 	leftCollider.width = 1;
-	leftCollider.height = 24;
+	leftCollider.height = 18;
 	rightCollider.width = 1;
-	rightCollider.height = 24;
+	rightCollider.height = 18;
 	
 	UpdateColliders();
 
@@ -44,6 +44,16 @@ Player::Player(void)
 
 Player::~Player(void)
 {
+}
+
+//must be called whenever players position changes
+void Player::UpdateColliders()
+{
+	//update colliders
+	topCollider.centre = pos + Vector2(0, 14);
+	bottomCollider.centre = pos + Vector2(0, -16);
+	leftCollider.centre = pos + Vector2(-12, 0);
+	rightCollider.centre = pos + Vector2(12, 0);
 }
 
 void Player::HandleCollision(vector<Environment>& environment_)
@@ -102,14 +112,14 @@ void Player::ApplyGravity()
 
 void Player::HandleInput(float delta_)
 {
-	if ( inpt->IsKeyDown(KEY_LEFT ) )
+	if ( IsKeyDown(KEY_A ) )
 	{
 		faceLeft = true;
 		pos.x -= 300 * delta_;
 		if ( onPlatform ) 
 			status = RUNNING;
 	}
-	else if ( inpt->IsKeyDown(KEY_RIGHT ) )
+	else if ( IsKeyDown(KEY_D ) )
 	{
 		faceLeft = false;
 		pos.x += 300 * delta_;
@@ -123,7 +133,7 @@ void Player::HandleInput(float delta_)
 	}
 
 	//only jump if not already jumping
-	if ( inpt->IsKeyDown(KEY_UP ) && status != PLAYER_STATUS::JUMPING)
+	if ( IsKeyDown(KEY_W ) && status != PLAYER_STATUS::JUMPING)
 	{
 		status = JUMPING;	
 		
@@ -184,15 +194,7 @@ void Player::MoveTo(Vector2 pos_)
 	UpdateColliders();
 }
 
-//must be called whenever players position changes
-void Player::UpdateColliders()
-{
-	//update colliders
-	topCollider.centre = pos + Vector2(0, 16);
-	bottomCollider.centre = pos + Vector2(0, -16);
-	leftCollider.centre = pos + Vector2(-16, 0);
-	rightCollider.centre = pos + Vector2(16, 0);
-}
+
 
 void Player::ApplyVelocity(Vector2 velocity_)
 {

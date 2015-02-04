@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\game_objects\Enemy.cpp" />
+    <ClCompile Include="source\game_objects\Shell.cpp" />
+    <ClCompile Include="source\game_objects\Cannon.cpp" />
     <ClCompile Include="source\game_objects\Environment.cpp" />
     <ClCompile Include="source\game_objects\GameObject.cpp" />
     <ClCompile Include="source\game_objects\Player.cpp" />
     <ClCompile Include="source\game_state\GameLoop.cpp" />
     <ClCompile Include="source\GLAH\GLAHSound.cpp" />
-    <ClCompile Include="source\GLAH\GLAHInput.cpp" />
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp" />
     <ClCompile Include="source\GLAH\FileIO.cpp" />
     <ClCompile Include="source\GLAH\Matrix.cpp" />
@@ -28,11 +30,13 @@
     <ClCompile Include="source\spritesheet\UVTranslator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\game_objects\Enemy.h" />
+    <ClInclude Include="source\game_objects\Shell.h" />
+    <ClInclude Include="source\game_objects\Cannon.h" />
     <ClInclude Include="include\GLAH\bass.h" />
     <ClInclude Include="include\GLAH\CONSTS.h" />
     <ClInclude Include="include\GLAH\GLAHColour.h" />
     <ClInclude Include="include\GLAH\GLAHSound.h" />
-    <ClInclude Include="include\GLAH\GLAHInput.h" />
     <ClInclude Include="include\GLAH\GLAHGraphics.h" />
     <ClInclude Include="include\GLAH\FileIO.h" />
     <ClInclude Include="include\GLAH\GLAHEntity.h" />
@@ -45,8 +49,8 @@
     <ClInclude Include="source\game_objects\Environment.h" />
     <ClInclude Include="source\game_objects\GameObject.h" />
     <ClInclude Include="source\game_objects\Player.h" />
-    <ClInclude Include="source\game_objects\World.h" />
     <ClInclude Include="source\game_state\GameLoop.h" />
+    <ClInclude Include="source\listeners\CannonListener.h" />
     <ClInclude Include="source\math\Collision.h" />
     <ClInclude Include="source\math\Rect.h" />
     <ClInclude Include="source\spritesheet\SpriteSheet.h" />

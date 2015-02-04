@@ -6,7 +6,7 @@
 #include "../math/Rect.h"
 #include <vector>
 
-#include "GLAH\GLAHInput.h"
+//#include "GLAH\GLAHInput.h"
 #include "GLAH\GLAHGraphics.h"
 
 
@@ -61,7 +61,7 @@ private:
 	bool faceLeft;
 
 //	GLAHGraphics * gfx;
-	GLAHInput * inpt;
+//	GLAHInput * inpt;
 
 
 };

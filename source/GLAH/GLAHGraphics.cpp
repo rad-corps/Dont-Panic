@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <GL/wglew.h>
 #include "GLAH/GLAHGraphics.h"
-#include "GLAH/GLAHInput.h"
+//#include "GLAH/GLAHInput.h"
 #include "GLAH/Shaders.h"
 #include <iostream>
 //glfw include
@@ -47,15 +47,12 @@ Matrix4x4 ortho;
 // textureName_		: filename/path of the texture to load
 // width_			: width of texture
 // height_			: height of texture
-// x_				: initial x position of texture
-// y_				: initial y position of texture
 // parentSpriteID_	: sprite ID of sprite to parent to (0 if no parent)
 // originOffset_	: the point of rotation, this is relative to the sprites own space. 
 //						Default value is Vector3
 // colour_			: not implemented
 unsigned int CreateSprite	( const char* textureName_, 
 									 int width_, int height_, 
-									 int x_, int y_, 
 									 unsigned int parentSpriteID_, 
 									 Vector3 originOffset_, 
 									 SColour colour_ )
@@ -64,8 +61,8 @@ unsigned int CreateSprite	( const char* textureName_,
 	GLuint texture_handle = SOIL_load_OGL_texture(textureName_, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, NULL);
 
 	//Setup the translation matrix for the sprite
-	Matrix3x3 translation;
-	translation.SetupTranslation(Vector3((float)x_, (float)y_, 0.0f));
+	//Matrix3x3 translation;
+	//translation.SetupTranslation(Vector3((float)x_, (float)y_, 0.0f));
 
 	//Create an entity with position, scale, rotation info
 	GLAHEntity glahEntity;
@@ -73,7 +70,7 @@ unsigned int CreateSprite	( const char* textureName_,
 	glahEntity.size.y = (float)height_;
 	glahEntity.parentSpriteID = parentSpriteID_;
 	glahEntity.spriteID = texture_handle;
-	glahEntity.position = Vector3((float)x_, (float)y_, 1.f);
+	//glahEntity.position = Vector3((float)x_, (float)y_, 1.f);
 	glahEntity.origin = originOffset_;
 
 	//add to the spriteList (map) using the texture_handle as the key
@@ -161,8 +158,8 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
     glfwMakeContextCurrent(window);
 
 	//initialise input lib
-	GLAHInput* input = GLAHInput::Instance();
-	input->Initialise(window);
+//	GLAHInput* input = GLAHInput::Instance();
+//	input->Initialise(window);
  
     //init glew
     if (glewInit() != GLEW_OK)
@@ -385,3 +382,29 @@ void			DrawString( const char* text_, int xPos_, int yPos_, float size_, SColour
 void			AddFont( const char* fontName_ ){cout << "not yet implemented" << endl;}
 void			SetFont( const char* fontName_ ){cout << "not yet implemented" << endl;}
 void			RemoveFont( const char* fontName_ ){cout << "not yet implemented" << endl;}
+
+
+//INPUT HANDLING-------------------------------------------------------
+///////////////////////////////////////////////////////////////////////
+bool IsKeyDown( int key_ )
+{
+	if (glfwGetKey(window,key_))
+		return true;
+	return false;
+}
+
+bool GetMouseButtonDown( int a_iMouseButtonToTest )
+{
+	if(glfwGetMouseButton(window, a_iMouseButtonToTest) == GLFW_PRESS)
+	{
+		return true;
+	}
+	return false;
+}
+
+void GetMouseLocation( double& a_iMouseX, double& a_iMouseY )
+{
+	glfwGetCursorPos(window, &a_iMouseX, &a_iMouseY);
+}
+//END INPUT HANDLING
+///////////////////////////////////////////////////////////////////////
