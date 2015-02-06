@@ -32,6 +32,7 @@
     <ClCompile Include="source\GLAH\InputHelper.cpp" />
     <ClCompile Include="source\GLAH\Matrix.cpp" />
     <ClCompile Include="source\GLAH\Shaders.cpp" />
+    <ClCompile Include="source\GLAH\SpriteFont.cpp" />
     <ClCompile Include="source\GLAH\Vector.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math\Collision.cpp" />
@@ -43,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLAH\InputHelper.h" />
+    <ClInclude Include="include\GLAH\SpriteFont.h" />
     <ClInclude Include="source\game_state\PSLevelSelect.h" />
     <ClInclude Include="source\game_state\PSLevelEditor.h" />
     <ClInclude Include="source\game_state\PSMainMenu.h" />

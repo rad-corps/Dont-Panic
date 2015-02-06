@@ -54,8 +54,8 @@ OuterLoop::OuterLoop(void)
 	
 	SpriteSheet::Init();
 	
-	AddFont( "./fonts/arial.fnt" );
-
+	AddFont( "./resources/fonts/arial.fnt" );
+	
 	mouseX = 0.0;
 	mouseY = 0.0;
 	gameTimer = 0.0f;

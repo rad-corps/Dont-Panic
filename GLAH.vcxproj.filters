@@ -102,6 +102,9 @@
     <ClCompile Include="source\game_state\PSLevelSelect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\GLAH\SpriteFont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLAH\bass.h">
@@ -213,6 +216,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\game_state\PSLevelSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLAH\SpriteFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

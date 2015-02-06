@@ -13,8 +13,11 @@
 #include "GLAH/SOIL.h"
 #include "GLAH/Vertex.h"
 #include <chrono> //std::chrono::time_point
+#include <fstream>
 
 using namespace std::chrono; 
+
+Charset charSet;
 
 
 //used internally by DrawSprite
@@ -378,10 +381,29 @@ unsigned int	DuplicateSprite			( unsigned int spriteID_ ){cout << "not yet imple
 void			DestroySprite			( unsigned int spriteID_ ){cout << "not yet implemented" << endl;}
 void			SetSpriteColour			( unsigned int spriteID_, SColour& colour_ ){cout << "not yet implemented" << endl;}
 void			GetSpriteColour			( unsigned int spriteID_, SColour& colour_ ){cout << "not yet implemented" << endl;}
-void			DrawString( const char* text_, int xPos_, int yPos_, float size_, SColour colour_){cout << "not yet implemented" << endl;}
-void			AddFont( const char* fontName_ ){cout << "not yet implemented" << endl;}
-void			SetFont( const char* fontName_ ){cout << "not yet implemented" << endl;}
-void			RemoveFont( const char* fontName_ ){cout << "not yet implemented" << endl;}
+
+void			DrawString( const char* text_, int xPos_, int yPos_, float size_, SColour colour_)
+{
+	
+}
+
+void			AddFont( const char* fontName_ )
+{
+	std::fstream myfile;
+    myfile.open (fontName_, std::fstream::in);
+	istream& instream = myfile; //black magic http://stackoverflow.com/questions/4080179/convert-ifstream-to-istream
+	ParseFont(instream, charSet);
+}
+
+void			SetFont( const char* fontName_ )
+{
+	
+}
+
+void			RemoveFont( const char* fontName_ )
+{
+	
+}
 
 
 //INPUT HANDLING-------------------------------------------------------
