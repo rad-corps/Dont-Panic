@@ -18,7 +18,7 @@ void SpriteSheet::Init()
 	if ( !init ) 
 	{
 		//gfx = GLAHGraphics::Instance();
-		sprite = CreateSprite("./resources/images/simples_pimples.png", 32, 32, 0, Vector3(16.f,16.f,1.f));
+		sprite = CreateSprite("./resources/images/simples_pimples2.png", 32, 32, 0, Vector3(16.f,16.f,1.f));
 		init = true;
 	}
 }

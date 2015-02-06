@@ -1,5 +1,6 @@
-
+#include "tests\Databases.h"
 #include "game_state\GameLoop.h"
+#include "game_state\OuterLoop.h"
 
 //The Original resolution of Space Invaders was 224 x 260 
 //For comparison the Nintendo DS has a resolution of 292 x 192
@@ -13,9 +14,14 @@ const float UPDATE_INTERVAL = 0.0166666666666666667f;
 int main( int argc, char* argv[] )
 {			
 
+	//CreateDatabase();
+	//system("pause");
+	//return 0;
 	{	
-		GameLoop gameLoop(1024,768);
-		gameLoop.Run();	
+		OuterLoop outerLoop;
+		outerLoop.Go();
+//		GameLoop gameLoop(1024,768);
+//		gameLoop.Run();	
 	} //scope ensures GameLoop destructor is called before returning from main
 
 	return 0;

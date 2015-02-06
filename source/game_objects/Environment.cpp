@@ -3,12 +3,12 @@
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
 
-Environment::Environment(Vector2 pos, ENVIRO_TILE tileType_)
+Environment::Environment(int col_, int row_, ENVIRO_TILE tileType_)
 {
 //	gfx = GLAHGraphics::Instance();
 	width = 32;
 	height = 32;
-	centre = pos;
+	centre = Vector2(col_ * 32, row_ * 32);
 
 	UVTranslator translator(800, 1280, 16, 16);
 

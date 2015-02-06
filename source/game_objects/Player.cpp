@@ -10,7 +10,7 @@ Player::Player(void)
 //	gfx = GLAHGraphics::Instance();
 //	inpt = GLAHInput::Instance();
 
-	pos = Vector2(100,100);
+	pos = Vector2(0,0);
 
 	//initialise colliders
 	topCollider.width = 10;
@@ -44,6 +44,11 @@ Player::Player(void)
 
 Player::~Player(void)
 {
+}
+
+void Player::SetPos(int col_, int row_)
+{
+	pos = Vector2(col_ * 32, row_ * 32);
 }
 
 //must be called whenever players position changes

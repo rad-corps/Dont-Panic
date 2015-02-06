@@ -170,7 +170,7 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
     }
 
 	//create shader program
-    GLuint uiProgramFlat = CreateProgram("resources/VertexShader.glsl", "resources/FlatFragmentShader.glsl");
+    GLuint uiProgramFlat = CreateProgram("./Resources/VertexShader.glsl", "./Resources/FlatFragmentShader.glsl");
  
     //find the position of the matrix variable in the shader so we can send info there later
     GLuint MatrixIDFlat = glGetUniformLocation(uiProgramFlat, "MVP");

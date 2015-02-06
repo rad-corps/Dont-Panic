@@ -11,6 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\data\FileSettings.cpp" />
+    <ClCompile Include="source\data\IniFile.cpp" />
+    <ClCompile Include="source\game_state\OuterLoop.cpp" />
+    <ClCompile Include="source\data\DBLevel.cpp" />
     <ClCompile Include="source\game_objects\Enemy.cpp" />
     <ClCompile Include="source\game_objects\Shell.cpp" />
     <ClCompile Include="source\game_objects\Cannon.cpp" />
@@ -18,6 +22,7 @@
     <ClCompile Include="source\game_objects\GameObject.cpp" />
     <ClCompile Include="source\game_objects\Player.cpp" />
     <ClCompile Include="source\game_state\GameLoop.cpp" />
+    <ClCompile Include="source\game_state\ProgramState.cpp" />
     <ClCompile Include="source\GLAH\GLAHSound.cpp" />
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp" />
     <ClCompile Include="source\GLAH\FileIO.cpp" />
@@ -28,8 +33,15 @@
     <ClCompile Include="source\math\Collision.cpp" />
     <ClCompile Include="source\spritesheet\SpriteSheet.cpp" />
     <ClCompile Include="source\spritesheet\UVTranslator.cpp" />
+    <ClCompile Include="source\sqlite\DatabaseManager.cpp" />
+    <ClCompile Include="source\sqlite\sqlite3.c" />
+    <ClCompile Include="source\tests\Databases.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\data\FileSettings.h" />
+    <ClInclude Include="source\data\IniFile.h" />
+    <ClInclude Include="source\game_state\OuterLoop.h" />
+    <ClInclude Include="source\data\DBLevel.h" />
     <ClInclude Include="source\game_objects\Enemy.h" />
     <ClInclude Include="source\game_objects\Shell.h" />
     <ClInclude Include="source\game_objects\Cannon.h" />
@@ -50,11 +62,15 @@
     <ClInclude Include="source\game_objects\GameObject.h" />
     <ClInclude Include="source\game_objects\Player.h" />
     <ClInclude Include="source\game_state\GameLoop.h" />
+    <ClInclude Include="source\game_state\ProgramState.h" />
     <ClInclude Include="source\listeners\CannonListener.h" />
     <ClInclude Include="source\math\Collision.h" />
     <ClInclude Include="source\math\Rect.h" />
     <ClInclude Include="source\spritesheet\SpriteSheet.h" />
     <ClInclude Include="source\spritesheet\UVTranslator.h" />
+    <ClInclude Include="source\sqlite\DatabaseManager.h" />
+    <ClInclude Include="source\sqlite\sqlite3.h" />
+    <ClInclude Include="source\tests\Databases.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{68E0BC72-EE41-47C1-AA0E-83EE7612C16B}</ProjectGuid>

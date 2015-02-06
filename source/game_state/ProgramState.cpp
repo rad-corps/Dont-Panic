@@ -1,0 +1,14 @@
+//////////////////////////////////////////////////////////////////////////
+// Monster Mayhem
+// Game Code By Adam Hulbert
+// For AIE Advanced Diploma - Practice Production Term 4 2014
+// 22/12/2014
+// ProgramState.cpp
+/////////////////////////////////////////////////////////////////////////
+
+#include "ProgramState.h"
+
+bool ProgramState::ShuttingDown()
+{
+	return shuttingDown;
+}

@@ -6,14 +6,14 @@
 
 enum ENVIRO_TILE
 {
-	RED_BRICK_SURFACE,
-	ROCK_SURFACE,
+	RED_BRICK_SURFACE = 0,
+	ROCK_SURFACE = 1,
 };
 
 class Environment :	public Rect
 {
 public:
-	Environment(Vector2 pos_, ENVIRO_TILE tileType_);
+	Environment(int col_, int row_, ENVIRO_TILE tileType_);
 	~Environment(void);
 
 	void Draw();
