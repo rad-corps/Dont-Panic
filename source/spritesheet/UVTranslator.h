@@ -14,8 +14,7 @@ public:
 	//float blockHeight_	: the height of each sprite in the sprite sheet (will only work when sprite sheets have equally spaced sprites), if 0, defaults to blockWidth_;
 	UVTranslator(int width_, int height_, int blockWidth_, int blockHeight_);
 	
-	//default ctor, object is in an invalid state until Init is called.
-	UVTranslator();
+	
 
 	//calls the matching CTOR
 	void Init(float sheetWidth_, float sheetHeight_, float tileWidth_, float tileHeight_);
@@ -30,6 +29,8 @@ public:
 	~UVTranslator();
 
 private:
+	//default ctor, object is in an invalid state until Init is called.
+	UVTranslator();
 
 	int tileWidth;
 	int tileHeight;

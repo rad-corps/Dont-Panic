@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\game_state\PSLevelEditor.cpp" />
     <ClCompile Include="source\game_state\PSMainMenu.cpp" />
     <ClCompile Include="source\data\FileSettings.cpp" />
     <ClCompile Include="source\data\IniFile.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="source\GLAH\GLAHSound.cpp" />
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp" />
     <ClCompile Include="source\GLAH\FileIO.cpp" />
+    <ClCompile Include="source\GLAH\InputHelper.cpp" />
     <ClCompile Include="source\GLAH\Matrix.cpp" />
     <ClCompile Include="source\GLAH\Shaders.cpp" />
     <ClCompile Include="source\GLAH\Vector.cpp" />
@@ -39,6 +41,8 @@
     <ClCompile Include="source\tests\Databases.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\GLAH\InputHelper.h" />
+    <ClInclude Include="source\game_state\PSLevelEditor.h" />
     <ClInclude Include="source\game_state\PSMainMenu.h" />
     <ClInclude Include="source\data\FileSettings.h" />
     <ClInclude Include="source\data\IniFile.h" />
