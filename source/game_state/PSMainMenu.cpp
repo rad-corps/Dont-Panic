@@ -1,6 +1,7 @@
 #include "PSMainMenu.h"
 #include "PSGameLoop.h"
 #include "PSLevelEditor.h"
+#include "PSLevelSelect.h"
 #include "GLAH/GLAHGraphics.h"
 #include <iostream>
 
@@ -23,7 +24,7 @@ PSMainMenu::~PSMainMenu(void)
 ProgramState* PSMainMenu::Update(float delta_)
 {
 	if ( IsKeyDown(KEY_1) )
-		return new PSGameLoop();
+		return new PSLevelSelect();
 	if ( IsKeyDown(KEY_2) )
 		return new PSLevelEditor();
 	//if ( IsKeyDown(KEY_ESCAPE) )

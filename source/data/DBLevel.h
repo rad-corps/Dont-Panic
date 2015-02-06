@@ -13,7 +13,7 @@ public:
 	~DBLevel(void);
 
 	void FillData(int level_, std::vector<Environment>& environment_, Player& player_);
-
+	void SaveData(std::vector<Environment>& environment_, Player& player_);
 
 private:
 	DatabaseManager dm;

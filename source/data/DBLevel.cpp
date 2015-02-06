@@ -13,6 +13,27 @@ DBLevel::~DBLevel(void)
 {
 }
 
+void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_)
+{
+	//save the level table first. record the ID
+	//tbl_level
+	char * error = "";
+	std::stringstream playerValues;
+	playerValues << " " << player_.Pos().x << ", " << player_.Pos().y << " ";
+	dm.Insert("./resources/db/dontpanic.db", "tbl_level", " player_tile_x, player_tile_y ", playerValues.str(), error);
+
+	int id = dm.GetLastInsertedRowID();
+
+	for ( auto& env : environment_ )
+	{
+		std::stringstream tileValues;
+		tileValues << " " << id << ", " << env.Row() << ", " << env.Col() << ", " << (int)env.TileType() << " ";
+		dm.Insert("./resources/db/dontpanic.db", "tbl_tile", " level_id, row, col, tile_type ", tileValues.str(), error);
+	}
+
+	
+}
+
 void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Player& player_)
 {
 	char * error = "";

@@ -37,6 +37,8 @@ public:
 	//returns true if no error
 	bool Insert(string dbFile, string table, string colNames, string values, char* errorMsg); 
 	
+	int GetLastInsertedRowID();
+
 	//DatabaseManager::Select
 	//table		- the table to select from	
 	//columns	- columns to select
@@ -60,6 +62,8 @@ private:
 	static int s_Callback(void* dmInstance, int numArgs, char **data, char **columnName);
 	int Callback(int numArgs, char **data, char **columnName);
 	bool locked;
+
+	int lastInsertedRowID;
 
 	vector<map<string, string>> databaseResponse;	//colname, value
 	map<DB_SQLITE_DATATYPE, string> sqlDataTypes;

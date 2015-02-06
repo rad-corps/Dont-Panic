@@ -39,16 +39,28 @@
 //	cannon.RegisterCannonListener(this);
 //}
 
-PSGameLoop::PSGameLoop()
+//PSGameLoop::PSGameLoop()
+//{
+//	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
+//	DBLevel dbLevel;
+//	dbLevel.FillData(5, environment, player);
+//
+//	gameTimer = 0.f;
+//	
+//	cannon.RegisterCannonListener(this);
+//}
+
+PSGameLoop::PSGameLoop(int level_)
 {
 	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
 	DBLevel dbLevel;
-	dbLevel.FillData(1, environment, player);
+	dbLevel.FillData(level_, environment, player);
 
 	gameTimer = 0.f;
 	
 	cannon.RegisterCannonListener(this);
 }
+
 
 PSGameLoop::~PSGameLoop(void)
 {

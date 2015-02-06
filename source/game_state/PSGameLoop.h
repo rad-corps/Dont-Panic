@@ -15,7 +15,8 @@ class PSGameLoop : public ProgramState, public CannonListener
 public:
 	//updateInterval defaults to 1/60th of a second (60FPS)
 	//GameLoop(int screenW_, int screenH_, float updateInterval = 0.0166666666666666667f);
-	PSGameLoop();
+	PSGameLoop(int startingLevel);
+	//PSGameLoop();
 	~PSGameLoop(void);
 
 	//void Run();

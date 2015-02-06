@@ -21,6 +21,7 @@ public:
 	void Update(float delta_);
 
 	void IncrementTileType();
+	ENVIRO_TILE TileType();
 
 	int Row();
 	int Col();

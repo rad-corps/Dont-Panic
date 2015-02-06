@@ -49,7 +49,7 @@ float DatabaseManager::GetValueFloat(int row, string col)
 }
 
 //Constructor/Destructor
-DatabaseManager::DatabaseManager()
+DatabaseManager::DatabaseManager() : lastInsertedRowID(-1)
 {
 	sqlDataTypes[DB_SQLITE_DATATYPE::SQLITE_TYPE_NULL] = " NULL ";
 	sqlDataTypes[DB_SQLITE_DATATYPE::SQLITE_TYPE_INTEGER] = " INTEGER ";
@@ -59,6 +59,10 @@ DatabaseManager::DatabaseManager()
 }
 DatabaseManager::~DatabaseManager(){}
 
+int DatabaseManager::GetLastInsertedRowID()
+{
+	return lastInsertedRowID;
+}
 	
 //DatabaseManager::Insert
 //table		- the table to insert to
@@ -80,6 +84,8 @@ bool DatabaseManager::Insert(string dbFile, string table, string colNames, strin
 		" VALUES(" + values + ");";
 
 	sqlite3_exec(db, sql.c_str(), this->s_Callback, this, &errorMsg);
+
+	lastInsertedRowID = sqlite3_last_insert_rowid(db);
 
 	assert (errorMsg == NULL && "Something went wrong trying to insert a record to database");	
 	return true;

@@ -34,6 +34,12 @@ void Environment::InitialiseGraphic()
 void Environment::IncrementTileType()
 {
 	tileType = (ENVIRO_TILE)((int)tileType + 1);
+	InitialiseGraphic();
+}
+
+ENVIRO_TILE Environment::TileType()
+{
+	return tileType;
 }
 
 int Environment::Row()

@@ -28,5 +28,7 @@ private:
 
 	InputHelper inputHelper;
 	std::vector<Environment> environment;
+
+	bool saving;
 };
 

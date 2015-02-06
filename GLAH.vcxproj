@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\game_state\PSLevelSelect.cpp" />
     <ClCompile Include="source\game_state\PSLevelEditor.cpp" />
     <ClCompile Include="source\game_state\PSMainMenu.cpp" />
     <ClCompile Include="source\data\FileSettings.cpp" />
@@ -42,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLAH\InputHelper.h" />
+    <ClInclude Include="source\game_state\PSLevelSelect.h" />
     <ClInclude Include="source\game_state\PSLevelEditor.h" />
     <ClInclude Include="source\game_state\PSMainMenu.h" />
     <ClInclude Include="source\data\FileSettings.h" />
