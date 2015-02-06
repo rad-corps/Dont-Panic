@@ -6,8 +6,9 @@
 
 enum ENVIRO_TILE
 {
-	RED_BRICK_SURFACE = 0,
-	ROCK_SURFACE = 1,
+	RED_BRICK_SURFACE,
+	ROCK_SURFACE,
+	ENVIRO_TILE_END
 };
 
 class Environment :	public Rect
@@ -19,11 +20,18 @@ public:
 	void Draw();
 	void Update(float delta_);
 
-	Vector2 pos;
+	void IncrementTileType();
+
+	int Row();
+	int Col();
 
 private:
+	void InitialiseGraphic();
 	float UV[4];
 	unsigned int sprite;
+	ENVIRO_TILE tileType;
+	int row;
+	int col;
 
 //	GLAHGraphics * gfx;
 };

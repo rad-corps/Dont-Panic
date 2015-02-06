@@ -2,6 +2,8 @@
 #include "ProgramState.h"
 #include "GLAH/Vector.h"
 #include "GLAH/InputHelper.h"
+#include <vector>
+#include "../game_objects/Environment.h"
 
 class PSLevelEditor : public ProgramState
 {
@@ -14,14 +16,17 @@ public:
 
 	void KeyDown(int key_);
 
+	static bool FindMatchingEnvironment(Environment& env_);
+
 private:
 
-	int col;
-	int row;
+	static int col;
+	static int row;
 
 	float uv[4];
 	Vector2 pos;
 
 	InputHelper inputHelper;
+	std::vector<Environment> environment;
 };
 
