@@ -1,5 +1,4 @@
 #include "tests\Databases.h"
-#include "game_state\GameLoop.h"
 #include "game_state\OuterLoop.h"
 
 //The Original resolution of Space Invaders was 224 x 260 

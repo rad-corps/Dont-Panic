@@ -14,9 +14,9 @@ public:
 	virtual ProgramState* Update(float delta_) = 0;
 	virtual void Draw() = 0;
 
-	virtual bool ShuttingDown();
+	//virtual bool ShuttingDown();
 
 protected:
-	bool shuttingDown;
+	//bool shuttingDown;
 };
 

@@ -1,4 +1,4 @@
-#include "GameLoop.h"
+#include "PSGameLoop.h"
 
 //#include "AIE.h"
 #include <string>
@@ -18,6 +18,7 @@
 #include "../spritesheet/UVTranslator.h"
 #include "../spritesheet/spritesheet.h"
 #include "../data/DBLevel.h"
+#include "PSMainMenu.h"
 
 //GameLoop::GameLoop(int screenW_, int screenH_, float updateInterval_)
 //	: updateInterval(updateInterval_)
@@ -38,8 +39,9 @@
 //	cannon.RegisterCannonListener(this);
 //}
 
-GameLoop::GameLoop()
+PSGameLoop::PSGameLoop()
 {
+	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
 	DBLevel dbLevel;
 	dbLevel.FillData(1, environment, player);
 
@@ -48,7 +50,7 @@ GameLoop::GameLoop()
 	cannon.RegisterCannonListener(this);
 }
 
-GameLoop::~GameLoop(void)
+PSGameLoop::~PSGameLoop(void)
 {
 	//Shutdown();
 }
@@ -83,7 +85,7 @@ GameLoop::~GameLoop(void)
 //	} while ( FrameworkUpdate() == false );
 //}
 
-ProgramState* GameLoop::Update(float delta_)
+ProgramState* PSGameLoop::Update(float delta_)
 {
 	//update player
 	player.Update(delta_, environment);
@@ -99,11 +101,14 @@ ProgramState* GameLoop::Update(float delta_)
 	for (auto &shell : shells )
 		shell.Update(delta_);
 
+	if ( IsKeyDown(KEY_ESCAPE) ) 
+		return new PSMainMenu();
+
 	return nullptr;
 }
 
 //Draw Game
-void GameLoop::Draw()
+void PSGameLoop::Draw()
 {
 
 	for (auto &env : environment )
@@ -116,7 +121,7 @@ void GameLoop::Draw()
 	player.Draw();
 }
 
-void GameLoop::ShotFired(Vector2 pos_, Vector2 velocity_)
+void PSGameLoop::ShotFired(Vector2 pos_, Vector2 velocity_)
 {
 	//find an inactive shell
 	for ( auto &shell : shells )

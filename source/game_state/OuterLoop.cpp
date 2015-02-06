@@ -8,7 +8,9 @@
 
 #include "OuterLoop.h"
 #include "./GLAH/GLAHGraphics.h"
-#include "GameLoop.h"
+#include "ProgramState.h"
+#include "PSGameLoop.h"
+#include "PSMainMenu.h"
 //#include "PSMainMenu.h"
 //#include "AIE.h"
 #include "windows.h"
@@ -45,7 +47,8 @@ OuterLoop::OuterLoop(void)
 	FileSettings::AddIntValue("SCREEN_W", hor);
 	FileSettings::AddIntValue("SCREEN_H", ver);
 
-	Initialise( FileSettings::GetInt("SCREEN_W"), FileSettings::GetInt("SCREEN_H"),  FileSettings::GetBool("FULL_SCREEN"), "Dont Panic" );
+	//Initialise( FileSettings::GetInt("SCREEN_W"), FileSettings::GetInt("SCREEN_H"),  FileSettings::GetBool("FULL_SCREEN"), "Dont Panic" );
+	Initialise( 1024, 768, false, "Dont Panic" );
 
 	cout << "OuterLoop()" << endl;
 	
@@ -58,6 +61,8 @@ OuterLoop::OuterLoop(void)
 	gameTimer = 0.0f;
 
 	shuttingDown = false;
+
+	currentProgramState = new PSMainMenu();	
 }
 
 
@@ -68,7 +73,7 @@ OuterLoop::~OuterLoop(void)
 
 void OuterLoop::Go()
 {
-	currentProgramState = new GameLoop();	
+	
 	do 
 	{
 		//if this is set to something other than null, we switch states. 
@@ -87,8 +92,8 @@ void OuterLoop::Go()
 		{
 			delete currentProgramState;
 			currentProgramState = newState;
-			if ( currentProgramState->ShuttingDown() ) 
-				break;
+			//if ( currentProgramState->ShuttingDown() ) 
+			//	break;
 		}
 
 		//draw the current state
