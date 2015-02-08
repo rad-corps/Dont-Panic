@@ -4,17 +4,59 @@
 #include "PSGameLoop.h"
 using namespace std;
 
+void MyLevelSelectKeyEvent(int key_, void* caller_)
+{
+	PSLevelSelect* caller = (PSLevelSelect*)caller_;
+	caller->KeyDown(key_);
+}
+
+void PSLevelSelect::KeyDown(int key_)
+{
+	switch (key_)
+	{
+	case KEY_UP : 
+		if ( selection > 0 )
+			--selection;
+		break;
+	case KEY_DOWN : 
+		if ( selection < levelText.size() - 1 )
+			++selection;
+		break;
+	case KEY_ENTER : 
+		lvlToStart = levelMap[selection];
+		break;
+	}
+}
+
 PSLevelSelect::PSLevelSelect(void)
 {
 	cout << endl << endl << "-------Select a Level---------" << endl;
 	DatabaseManager dm;
 	char * error = "";
 	dm.Select("./resources/db/dontpanic.db", "tbl_level", "id", "", "", error);
+
+	textPos = Vector2(1024/2, 700);
+	GLText txtTemp;
+	txtTemp.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
+	
 	
 	for ( int i = 0; i < dm.Rows(); ++i )
 	{
-		cout << dm.GetValueInt(i, "id") << endl;
+		levelMap[i] = dm.GetValueInt(i, "id");
+		txtTemp.SetText(to_string(dm.GetValueInt(i, "id")));
+		txtTemp.SetPos(textPos);
+		levelText.push_back(txtTemp);
+		textPos -= Vector2(0, 30);
 	}
+
+	selection = 0;
+
+	inputHelper.RegisterCallback(&MyLevelSelectKeyEvent, this);
+	inputHelper.AddKey(KEY_UP);
+	inputHelper.AddKey(KEY_DOWN);
+	inputHelper.AddKey(KEY_ENTER);
+
+	lvlToStart = -1;
 }
 
 
@@ -24,13 +66,23 @@ PSLevelSelect::~PSLevelSelect(void)
 
 ProgramState* PSLevelSelect::Update(float delta_)
 {
-	cout << endl;
-	int level = -1;
-	cout << "enter the level to play: ";
-	cin >> level;
+	inputHelper.Update();
 
-	return new PSGameLoop(level);
+	if ( lvlToStart != -1)
+		return new PSGameLoop(lvlToStart);
+	return nullptr;
 }
 
 void PSLevelSelect::Draw()
-{}
+{
+	
+	for ( int i = 0; i < levelText.size(); ++i )
+	{
+		GLText txt = levelText[i];
+		if ( i == selection )
+		{
+			txt.SetText("--" + txt.GetText() + "--");
+		}
+		txt.Draw();		
+	}
+}

@@ -9,19 +9,21 @@ using namespace std;
 
 PSMainMenu::PSMainMenu(void)
 {
-	cout << endl << endl << "--------Main Menu---------" << endl;
-	cout << "Play Game:            1" << endl;
-	cout << "Level Designer:       2" << endl;
-	//cout << "Quit:                 Escape" << endl;
+	menuStrings.push_back("----------Dont Panic Alpha----------");
+	menuStrings.push_back("Play Game                          1");
+	menuStrings.push_back("Level Designer                     2");
 
-	text1.SetPos(Vector2(1024/2, 200));
-	text1.SetText("Hello World - High Score - 1234567890");
-	text2.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
-	text2.SetPos(Vector2(1024/2, 150));
-	text2.SetText("Hello World - High Score - 2345678901");
-	text3.SetAlignment(TEXT_ALIGNMENT::ALIGN_RIGHT);
-	text3.SetPos(Vector2(1024/2, 100));
-	text3.SetText("Hello World - High Score - 3456789012");
+	//create the GLText objects
+	Vector2 textPos(1024/2, 700);
+	GLText txt;
+	txt.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
+	for ( string str : menuStrings )
+	{		
+		txt.SetPos(textPos);
+		txt.SetText(str);
+		textPos -= Vector2(0, 30);
+		menuText.push_back(txt);
+	}
 }
 
 
@@ -43,7 +45,8 @@ ProgramState* PSMainMenu::Update(float delta_)
 
 void PSMainMenu::Draw()
 {
-	text1.Draw();
-	text2.Draw();
-	text3.Draw();
+	for ( auto &txt : menuText )
+	{
+		txt.Draw();
+	}
 }

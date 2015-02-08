@@ -21,8 +21,14 @@ void GLText::SetAlignment(TEXT_ALIGNMENT alignment_)
 	alignment = alignment_;
 }
 
+std::string GLText::GetText()
+{
+	return text;
+}
+
 void GLText::SetText(string text_)
 {
+	text = text_;
 	uvs.clear();
 	UVTranslator trans(1024,1024,64,64);
 
@@ -58,7 +64,7 @@ void GLText::Draw()
 		for ( int i = 0; i < uvs.size(); ++i )
 		{
 			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[i].data());
-			MoveSprite(SpriteSheet::FontSprite(), pos.x + 8 * i, pos.y); //hardcoded 8 as a step for now, variable size can come later
+			MoveSprite(SpriteSheet::FontSprite(), pos.x + 16 * i, pos.y); //hardcoded 8 as a step for now, variable size can come later
 			DrawSprite(SpriteSheet::FontSprite());
 		}
 	}
@@ -69,7 +75,7 @@ void GLText::Draw()
 		float middle_char = (uvs.size() - 1) / 2.f;
 		for ( int i = 0; i < uvs.size(); ++i )
 		{
-			float charOffset = (i - middle_char) * 8;
+			float charOffset = (i - middle_char) * 16;
 			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[i].data());
 			MoveSprite(SpriteSheet::FontSprite(), pos.x + charOffset, pos.y);
 			DrawSprite(SpriteSheet::FontSprite());
@@ -82,7 +88,7 @@ void GLText::Draw()
 		for ( int i = 0; i < uvs.size(); ++i )
 		{
 			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[uvs.size()-1-i].data());
-			MoveSprite(SpriteSheet::FontSprite(), pos.x - 8 * i, pos.y);
+			MoveSprite(SpriteSheet::FontSprite(), pos.x - 16 * i, pos.y);
 			DrawSprite(SpriteSheet::FontSprite());
 		}
 	}

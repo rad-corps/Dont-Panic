@@ -12,9 +12,9 @@ public:
 	virtual void Draw();
 
 private:
-	GLText text1;
-	GLText text2;
-	GLText text3;
+	
+	std::vector<string> menuStrings;
+	std::vector<GLText> menuText;
 
 };
 
