@@ -13,6 +13,9 @@ PSMainMenu::PSMainMenu(void)
 	cout << "Play Game:            1" << endl;
 	cout << "Level Designer:       2" << endl;
 	//cout << "Quit:                 Escape" << endl;
+
+	text.SetPos(Vector2(200, 200));
+	text.SetText("Hello World");
 }
 
 
@@ -33,4 +36,6 @@ ProgramState* PSMainMenu::Update(float delta_)
 }
 
 void PSMainMenu::Draw()
-{}
+{
+	text.Draw();
+}

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\game_objects\GLText.cpp" />
     <ClCompile Include="source\game_state\PSLevelSelect.cpp" />
     <ClCompile Include="source\game_state\PSLevelEditor.cpp" />
     <ClCompile Include="source\game_state\PSMainMenu.cpp" />
@@ -32,7 +33,6 @@
     <ClCompile Include="source\GLAH\InputHelper.cpp" />
     <ClCompile Include="source\GLAH\Matrix.cpp" />
     <ClCompile Include="source\GLAH\Shaders.cpp" />
-    <ClCompile Include="source\GLAH\SpriteFont.cpp" />
     <ClCompile Include="source\GLAH\Vector.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math\Collision.cpp" />
@@ -43,8 +43,8 @@
     <ClCompile Include="source\tests\Databases.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\game_objects\GLText.h" />
     <ClInclude Include="include\GLAH\InputHelper.h" />
-    <ClInclude Include="include\GLAH\SpriteFont.h" />
     <ClInclude Include="source\game_state\PSLevelSelect.h" />
     <ClInclude Include="source\game_state\PSLevelEditor.h" />
     <ClInclude Include="source\game_state\PSMainMenu.h" />

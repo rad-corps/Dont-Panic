@@ -2,7 +2,7 @@
 
 #include <map>
 #include <string>
-#include "SpriteFont.h"
+//#include "SpriteFont.h"
 #include "Vertex.h"
 #include "GLAHEntity.h"
 #include "GLAHColour.h"
@@ -193,8 +193,8 @@ typedef enum
 	void			DestroySprite			( unsigned int spriteID_ );
 	void			SetSpriteColour			( unsigned int spriteID_, SColour& colour_ );
 	void			GetSpriteColour			( unsigned int spriteID_, SColour& colour_ );
-	void			DrawString(const char *, int xPos_, int yPos_, float size_ = 1.f, SColour colour_ = SColour(0xFF,0xFF,0xFF,0xFF));
-	void			AddFont( const char* fontName_ );
-	void			SetFont( const char* fontName_ );
-	void			RemoveFont( const char* fontName_ );
+	void			DrawString(char *, int xPos_, int yPos_, float size_ = 1.f, SColour colour_ = SColour(0xFF,0xFF,0xFF,0xFF));
+	void			AddFont( char* fontName_ );
+	void			SetFont( char* fontName_ );
+	void			RemoveFont( char* fontName_ );
 	//END OF NOT YET IMPLEMENTED

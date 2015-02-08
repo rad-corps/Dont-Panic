@@ -49,12 +49,13 @@ OuterLoop::OuterLoop(void)
 
 	//Initialise( FileSettings::GetInt("SCREEN_W"), FileSettings::GetInt("SCREEN_H"),  FileSettings::GetBool("FULL_SCREEN"), "Dont Panic" );
 	Initialise( 1024, 768, false, "Dont Panic" );
+	SpriteSheet::Init();
+	
+	AddFont("./resources/fonts/arial.fnt");
 
 	cout << "OuterLoop()" << endl;
 	
-	SpriteSheet::Init();
 	
-	AddFont( "./resources/fonts/arial.fnt" );
 	
 	mouseX = 0.0;
 	mouseY = 0.0;
@@ -96,8 +97,8 @@ void OuterLoop::Go()
 			//	break;
 		}
 
-		//draw the current state
 		currentProgramState->Draw();
+		
 	
 	}while ( FrameworkUpdate() == false );
 }

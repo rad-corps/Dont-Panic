@@ -1,5 +1,6 @@
 #pragma once
 #include "ProgramState.h"
+#include "../game_objects/GLText.h"
 
 class PSMainMenu : public ProgramState
 {
@@ -9,5 +10,9 @@ public:
 
 	virtual ProgramState* Update(float delta_);
 	virtual void Draw();
+
+private:
+	GLText text;
+
 };
 

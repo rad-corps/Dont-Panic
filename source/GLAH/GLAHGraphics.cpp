@@ -17,8 +17,6 @@
 
 using namespace std::chrono; 
 
-Charset charSet;
-
 
 //used internally by DrawSprite
 void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_);
@@ -382,25 +380,22 @@ void			DestroySprite			( unsigned int spriteID_ ){cout << "not yet implemented" 
 void			SetSpriteColour			( unsigned int spriteID_, SColour& colour_ ){cout << "not yet implemented" << endl;}
 void			GetSpriteColour			( unsigned int spriteID_, SColour& colour_ ){cout << "not yet implemented" << endl;}
 
-void			DrawString( const char* text_, int xPos_, int yPos_, float size_, SColour colour_)
+void			DrawString( char* text_, int xPos_, int yPos_, float size_, SColour colour_)
+{
+
+}
+
+void			AddFont( char* fontName_)
+{
+
+}
+
+void			SetFont( char* fontName_ )
 {
 	
 }
 
-void			AddFont( const char* fontName_ )
-{
-	std::fstream myfile;
-    myfile.open (fontName_, std::fstream::in);
-	istream& instream = myfile; //black magic http://stackoverflow.com/questions/4080179/convert-ifstream-to-istream
-	ParseFont(instream, charSet);
-}
-
-void			SetFont( const char* fontName_ )
-{
-	
-}
-
-void			RemoveFont( const char* fontName_ )
+void			RemoveFont( char* fontName_ )
 {
 	
 }
