@@ -14,8 +14,14 @@ PSMainMenu::PSMainMenu(void)
 	cout << "Level Designer:       2" << endl;
 	//cout << "Quit:                 Escape" << endl;
 
-	text.SetPos(Vector2(200, 200));
-	text.SetText("Hello World");
+	text1.SetPos(Vector2(1024/2, 200));
+	text1.SetText("Hello World - High Score - 1234567890");
+	text2.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
+	text2.SetPos(Vector2(1024/2, 150));
+	text2.SetText("Hello World - High Score - 2345678901");
+	text3.SetAlignment(TEXT_ALIGNMENT::ALIGN_RIGHT);
+	text3.SetPos(Vector2(1024/2, 100));
+	text3.SetText("Hello World - High Score - 3456789012");
 }
 
 
@@ -37,5 +43,7 @@ ProgramState* PSMainMenu::Update(float delta_)
 
 void PSMainMenu::Draw()
 {
-	text.Draw();
+	text1.Draw();
+	text2.Draw();
+	text3.Draw();
 }

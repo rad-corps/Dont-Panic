@@ -12,7 +12,9 @@ public:
 	virtual void Draw();
 
 private:
-	GLText text;
+	GLText text1;
+	GLText text2;
+	GLText text3;
 
 };
 

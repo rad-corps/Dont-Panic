@@ -5,13 +5,20 @@
 
 using namespace std;
 
-GLText::GLText(){}
+GLText::GLText(){
+	alignment = TEXT_ALIGNMENT::ALIGN_LEFT;
+}
 GLText::~GLText(void){}
 void GLText::Update(float delta_){}
 
 void GLText::SetPos(Vector2 pos_)
 {
 	pos = pos_;
+}
+
+void GLText::SetAlignment(TEXT_ALIGNMENT alignment_)
+{
+	alignment = alignment_;
 }
 
 void GLText::SetText(string text_)
@@ -45,10 +52,38 @@ void GLText::SetText(string text_)
 void GLText::Draw()
 {
 	//for each std::array in uvs
-	for ( int i = 0; i < uvs.size(); ++i )
+
+	if ( alignment == TEXT_ALIGNMENT::ALIGN_LEFT )
 	{
-		SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[i].data());
-		MoveSprite(SpriteSheet::FontSprite(), pos.x + 8 * i, pos.y); //hardcoded 8 as a step for now, variable size can come later
-		DrawSprite(SpriteSheet::FontSprite());
+		for ( int i = 0; i < uvs.size(); ++i )
+		{
+			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[i].data());
+			MoveSprite(SpriteSheet::FontSprite(), pos.x + 8 * i, pos.y); //hardcoded 8 as a step for now, variable size can come later
+			DrawSprite(SpriteSheet::FontSprite());
+		}
+	}
+	
+	if ( alignment == TEXT_ALIGNMENT::ALIGN_CENTRE )
+	{
+		//use a float to find the middle character because it can be halfway for even numbers
+		float middle_char = (uvs.size() - 1) / 2.f;
+		for ( int i = 0; i < uvs.size(); ++i )
+		{
+			float charOffset = (i - middle_char) * 8;
+			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[i].data());
+			MoveSprite(SpriteSheet::FontSprite(), pos.x + charOffset, pos.y);
+			DrawSprite(SpriteSheet::FontSprite());
+		}
+	}
+
+	if ( alignment == TEXT_ALIGNMENT::ALIGN_RIGHT)
+	{
+		//use a float to find the middle character because it can be halfway for even numbers		
+		for ( int i = 0; i < uvs.size(); ++i )
+		{
+			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[uvs.size()-1-i].data());
+			MoveSprite(SpriteSheet::FontSprite(), pos.x - 8 * i, pos.y);
+			DrawSprite(SpriteSheet::FontSprite());
+		}
 	}
 }
