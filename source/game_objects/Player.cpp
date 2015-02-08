@@ -15,14 +15,14 @@ Player::Player(void)
 
 	//initialise colliders
 	topCollider.width = 10;
-	topCollider.height = 1;
-	bottomCollider.width = 16;
-	bottomCollider.height = 1;
+	topCollider.height = 3;
+	bottomCollider.width = 10;
+	bottomCollider.height = 3;
 
-	leftCollider.width = 1;
-	leftCollider.height = 18;
-	rightCollider.width = 1;
-	rightCollider.height = 18;
+	leftCollider.width = 3;
+	leftCollider.height = 10;
+	rightCollider.width = 3;
+	rightCollider.height = 10;
 	
 	UpdateColliders();
 
