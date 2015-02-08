@@ -2,6 +2,7 @@
 #include "GLAH/GLAHGraphics.h"
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
+#include "../math/Collision.h"
 
 using namespace std;
 
@@ -19,7 +20,23 @@ Enemy::Enemy(const Enemy& enemy_)
 	xFlip = enemy_.xFlip;
 	timer = 0.0f;
 	pos = enemy_.pos;
+
+	//initialise colliders
+	topCollider.width = 10;
+	topCollider.height = 3;
+	bottomCollider.width = 16;
+	bottomCollider.height = 3;
+
+	leftCollider.width = 3;
+	leftCollider.height = 18;
+	rightCollider.width = 3;
+	rightCollider.height = 18;
+	
+	UpdateColliders();
+	velocity = Vector2(0,0);
+
 	active = true;
+	onPlatform = false;
 }
 
 Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, Vector2 pos_)
@@ -47,11 +64,22 @@ Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, Vector2 pos_)
 	timer = 0.0f;
 	active = true;
 	pos = pos_;
+	velocity = Vector2(0,0);
 }
+
 
 
 Enemy::~Enemy(void)
 {
+}
+
+void Enemy::UpdateColliders()
+{
+	//update colliders
+	topCollider.centre = pos + Vector2(0, 14);
+	bottomCollider.centre = pos + Vector2(0, -16);
+	leftCollider.centre = pos + Vector2(-12, 0);
+	rightCollider.centre = pos + Vector2(12, 0);
 }
 
 void Enemy::GetNextAnimation()
@@ -64,15 +92,91 @@ void Enemy::GetNextAnimation()
 		currentAnimation = walk1;
 }
 
+void Enemy::MoveTo(Vector2 pos_)
+{
+	pos = pos_;
+	UpdateColliders();
+}
+
+void Enemy::UndoX()
+{
+	MoveTo(Vector2(prevX, pos.y));
+}
+
+void Enemy::UndoY()
+{
+	MoveTo(Vector2(pos.x, prevY));
+}
+
+void Enemy::HandleCollision(vector<Environment>& environment_)
+{
+	onPlatform = false;
+	//check collision	
+	for ( auto &env : environment_ )
+	{
+		if ( Collision::RectCollision(topCollider, env))
+		{
+			if  (velocity.y > 0)
+				velocity.y = 0;
+				//velocity.y = -velocity.y;
+		}
+		if ( Collision::RectCollision(bottomCollider, env))
+		{
+			onPlatform = true;
+			velocity.y = 0;
+			//push him back up to the top of the platform
+			MoveTo(Vector2(pos.x, env.Top() + 16));
+		}
+		if ( Collision::RectCollision(leftCollider, env))
+		{
+			UndoX();
+			dir = DIRECTION::DIR_RIGHT;
+		}
+		if ( Collision::RectCollision(rightCollider, env))
+		{
+			UndoX();
+			dir = DIRECTION::DIR_LEFT;
+		}
+	}
+	if ( !onPlatform )
+	{
+		status = ENEMY_STATUS::WALKING;
+	}
+}
+
+void Enemy::ApplyGravity()
+{
+	//gravity only if jumping
+	Vector2 gravity(0, -1); 
+	if ( !onPlatform )
+	{
+		velocity += gravity;	
+	}
+}
+
+void Enemy::ApplyVelocity(Vector2 velocity_)
+{
+	pos += velocity;
+	UpdateColliders();
+}
+
 void Enemy::Update(float delta_, vector<Environment>& environment_)
 {
 	timer += delta_;
+
+	prevX = pos.x;
+	prevY = pos.y;
 
 	if (timer > 0.2f )
 	{
 		timer = 0.0f;
 		GetNextAnimation();
 	}
+
+	
+	HandleCollision(environment_);
+	ApplyGravity();
+	ApplyVelocity(velocity);
 
 	if ( dir == DIRECTION::DIR_LEFT)
 	{

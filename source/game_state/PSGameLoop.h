@@ -8,6 +8,7 @@
 #include "../game_objects/Cannon.h"
 #include "../game_objects/Shell.h"
 #include "../game_objects/Enemy.h"
+#include "../game_objects/EnemySpawner.h"
 #include "../listeners/CannonListener.h"
 #include "GLAH/Vector.h"
 
@@ -37,6 +38,7 @@ private:
 	std::vector<Enemy> enemies;
 	std::vector<Environment> environment;
 	std::vector<Shell> shells;
+	std::vector<EnemySpawner> enemySpawners;
 
 	//World world;
 };

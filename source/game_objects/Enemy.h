@@ -16,6 +16,12 @@ enum DIRECTION
 	DIR_RIGHT
 };
 
+enum ENEMY_STATUS
+{
+	WALKING,
+	FALLING,
+};
+
 class Enemy : public GameObject
 {
 public:
@@ -29,6 +35,16 @@ public:
 private:
 
 	void GetNextAnimation();
+	void UpdateColliders();
+	void MoveTo(Vector2 pos_);
+	void ApplyGravity();
+	void ApplyVelocity(Vector2 velocity_);
+	void HandleCollision(std::vector<Environment>& environment_);
+	void UndoX();
+	void UndoY();
+
+	float prevY;
+	float prevX;
 
 	float walk1[4];
 	float walk2[4];
@@ -36,7 +52,17 @@ private:
 	float* currentAnimation;
 
 	DIRECTION dir;
+	ENEMY_STATUS status;
+
+	Vector2 velocity;
+
 	bool xFlip;
+	bool onPlatform;
 	float timer;
+
+	Rect topCollider;
+	Rect bottomCollider;
+	Rect leftCollider;
+	Rect rightCollider;
 };
 

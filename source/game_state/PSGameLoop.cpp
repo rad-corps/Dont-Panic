@@ -56,7 +56,10 @@ PSGameLoop::PSGameLoop(int level_)
 	DBLevel dbLevel;
 	dbLevel.FillData(level_, environment, player, cannon);
 
-	enemies.push_back(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, Vector2(500, 200)));
+	EnemySpawner es1(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, Vector2(500, 200)));
+	EnemySpawner es2(Enemy(ENEMY_TYPE::ZOMBIE, DIRECTION::DIR_RIGHT, Vector2(700, 200)));
+	enemySpawners.push_back(es1);
+	enemySpawners.push_back(es2);
 
 	gameTimer = 0.f;
 	
@@ -116,6 +119,9 @@ ProgramState* PSGameLoop::Update(float delta_)
 	for ( auto &enemy : enemies )
 		enemy.Update(delta_, environment);
 
+	//update the spawners
+	for ( auto &spawner : enemySpawners )
+		spawner.Update(delta_, enemies);
 	
 	//update shells
 	for (auto &shell : shells )
@@ -137,9 +143,11 @@ void PSGameLoop::Draw()
 	for (auto &shell : shells )
 		shell.Draw();
 
-		//update enemies
 	for ( auto &enemy : enemies )
 		enemy.Draw();
+
+	for ( auto &es : enemySpawners )
+		es.Draw();
 
 	
 	cannon.Draw();

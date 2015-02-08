@@ -105,6 +105,9 @@
     <ClCompile Include="source\game_objects\GLText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\game_objects\EnemySpawner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLAH\bass.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\globals\consts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_objects\EnemySpawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

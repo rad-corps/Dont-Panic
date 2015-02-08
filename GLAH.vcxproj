@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\game_objects\EnemySpawner.cpp" />
     <ClCompile Include="source\game_objects\GLText.cpp" />
     <ClCompile Include="source\game_state\PSLevelSelect.cpp" />
     <ClCompile Include="source\game_state\PSLevelEditor.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="source\tests\Databases.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\game_objects\EnemySpawner.h" />
     <ClInclude Include="source\globals\consts.h" />
     <ClInclude Include="source\game_objects\GLText.h" />
     <ClInclude Include="include\GLAH\InputHelper.h" />

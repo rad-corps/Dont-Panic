@@ -44,12 +44,12 @@ Cannon::Update(float delta_)
 	}
 	if  (IsKeyDown(KEY_SPACE)) 
 	{
-		if ( reloadTime > 0.02f ) 
+		if ( reloadTime > 0.3 ) 
 		{
 			reloadTime = 0.0f;
 			Vector2 velocity;
 			velocity.SetAngle(rotation);
-			velocity.SetMagnitude(3000);
+			velocity.SetMagnitude(1000);
 			cannonListener->ShotFired(pos, velocity);	
 		}
 		
