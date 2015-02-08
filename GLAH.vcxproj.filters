@@ -221,5 +221,8 @@
     <ClInclude Include="source\game_objects\GLText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\globals\consts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

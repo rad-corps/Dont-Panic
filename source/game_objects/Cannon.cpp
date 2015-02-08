@@ -2,6 +2,7 @@
 #include "GLAH/GLAHGraphics.h"
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
+#include "../globals/consts.h"
 
 Cannon::Cannon(void)
 {

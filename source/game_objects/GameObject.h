@@ -32,6 +32,11 @@ public:
 
 	Rect GetRect();
 
+	int Row();
+	int Col();
+
+	void SetPos(int col_, int row_);
+
 protected:
 	Vector2 pos;
 	int width;

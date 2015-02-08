@@ -13,17 +13,17 @@ DBLevel::~DBLevel(void)
 {
 }
 
-void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_)
+void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_, Cannon& cannon_, std::string levelName_)
 {
 	//save the level table first. record the ID
-	//tbl_level
 	char * error = "";
-	std::stringstream playerValues;
-	playerValues << " " << player_.Pos().x << ", " << player_.Pos().y << " ";
-	dm.Insert("./resources/db/dontpanic.db", "tbl_level", " player_tile_x, player_tile_y ", playerValues.str(), error);
+	std::stringstream levelValues;
+	levelValues << " " << player_.Col() << ", " << player_.Row() << ", " << cannon_.Col() << ", " << cannon_.Row() << ", '" << levelName_ << "' ";
+	dm.Insert("./resources/db/dontpanic.db", "tbl_level", " player_tile_x, player_tile_y, cannon_tile_x, cannon_tile_y, name ", levelValues.str(), error);
 
 	int id = dm.GetLastInsertedRowID();
 
+	//save each table tile
 	for ( auto& env : environment_ )
 	{
 		std::stringstream tileValues;
@@ -34,7 +34,7 @@ void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_)
 	
 }
 
-void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Player& player_)
+void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Player& player_, Cannon& cannon_)
 {
 	char * error = "";
 	{
@@ -55,5 +55,6 @@ void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Playe
 		dm.Select("./resources/db/dontpanic.db", "tbl_level", "*", ss.str(), "", error);
 
 		player_.SetPos(dm.GetValueInt(0, "player_tile_x"), dm.GetValueInt(0, "player_tile_y"));
+		cannon_.SetPos(dm.GetValueInt(0, "cannon_tile_x"), dm.GetValueInt(0, "cannon_tile_y"));
 	}
 }

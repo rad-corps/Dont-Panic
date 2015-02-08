@@ -33,7 +33,7 @@ PSLevelSelect::PSLevelSelect(void)
 	cout << endl << endl << "-------Select a Level---------" << endl;
 	DatabaseManager dm;
 	char * error = "";
-	dm.Select("./resources/db/dontpanic.db", "tbl_level", "id", "", "", error);
+	dm.Select("./resources/db/dontpanic.db", "tbl_level", "id, name", "", "", error);
 
 	textPos = Vector2(1024/2, 700);
 	GLText txtTemp;
@@ -43,7 +43,7 @@ PSLevelSelect::PSLevelSelect(void)
 	for ( int i = 0; i < dm.Rows(); ++i )
 	{
 		levelMap[i] = dm.GetValueInt(i, "id");
-		txtTemp.SetText(to_string(dm.GetValueInt(i, "id")));
+		txtTemp.SetText(dm.GetValueString(i, "name"));
 		txtTemp.SetPos(textPos);
 		levelText.push_back(txtTemp);
 		textPos -= Vector2(0, 30);

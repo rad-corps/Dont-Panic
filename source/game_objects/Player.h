@@ -26,7 +26,7 @@ public:
 	virtual void Update(float delta_, std::vector<Environment>& environment_);
 	virtual void Draw();
 
-	void SetPos(int col_, int row_);
+	
 
 private:
 	void ApplyVelocity(Vector2 velocity_);
@@ -38,7 +38,7 @@ private:
 	void UpdateAnimation(float delta_);
 	void ApplyGravity();
 	void UpdateColliders();
-	Vector2 pos;
+	//Vector2 pos;
 	float prevY;
 	float prevX;
 	Vector2 velocity;

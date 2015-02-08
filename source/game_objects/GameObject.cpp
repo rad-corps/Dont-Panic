@@ -8,6 +8,7 @@
 
 #include "GameObject.h"
 #include <iostream>
+#include "../globals/consts.h"
 
 using namespace std;
 
@@ -18,6 +19,21 @@ GameObject::GameObject(void)
 
 GameObject::~GameObject(void)
 {
+}
+
+void GameObject::SetPos(int col_, int row_)
+{
+	pos = Vector2(col_ * TILE_S, row_ * TILE_S);
+}
+
+int GameObject::Row()
+{
+	return pos.y / TILE_S;
+}
+
+int GameObject::Col()
+{
+	return pos.x / TILE_S;
 }
 
 bool GameObject::IsActive()

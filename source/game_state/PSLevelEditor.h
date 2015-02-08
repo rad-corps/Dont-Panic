@@ -4,6 +4,9 @@
 #include "GLAH/InputHelper.h"
 #include <vector>
 #include "../game_objects/Environment.h"
+#include "../game_objects/Cannon.h"
+#include "../game_objects/Player.h"
+#include "../game_objects/GLText.h"
 
 class PSLevelEditor : public ProgramState
 {
@@ -28,7 +31,13 @@ private:
 
 	InputHelper inputHelper;
 	std::vector<Environment> environment;
+	Cannon cannon;
+	Player player;
 
+	bool inputName;
 	bool saving;
+
+	std::string levelName;
+	GLText promptText;
 };
 

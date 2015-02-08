@@ -7,6 +7,7 @@
 #include "../game_objects/Player.h"
 #include "../game_objects/Cannon.h"
 #include "../game_objects/Shell.h"
+#include "../game_objects/Enemy.h"
 #include "../listeners/CannonListener.h"
 #include "GLAH/Vector.h"
 
@@ -33,6 +34,7 @@ private:
 	
 	Player player;
 	Cannon cannon;
+	std::vector<Enemy> enemies;
 	std::vector<Environment> environment;
 	std::vector<Shell> shells;
 

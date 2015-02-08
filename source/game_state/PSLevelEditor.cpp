@@ -24,6 +24,7 @@ PSLevelEditor::PSLevelEditor(void)
 	cout << "Move Active Tile            Arrow Keys" << endl;
 	cout << "Change Active Tile          Space Bar" << endl;
 	cout << "Save Level                  CTRL + S" << endl;
+	cout << "Place Cannon                C Key" << endl;
 	cout << "Quit To Main Menu           Escape key" << endl;
 
 	UVTranslator trans(800,1280,16,16);
@@ -35,8 +36,24 @@ PSLevelEditor::PSLevelEditor(void)
 	inputHelper.AddKey(KEY_UP);
 	inputHelper.AddKey(KEY_DOWN);
 	inputHelper.AddKey(KEY_SPACE);
+	inputHelper.AddKey(KEY_ENTER);
+	
+
+	vector<int> keys;
+	//A to Z
+	for (int i = 65; i <= 90; ++i)
+	{
+		keys.push_back(i);
+	}
+
+	inputHelper.AddKeys(keys);
 
 	saving = false;
+	inputName = false;
+
+	promptText.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
+	promptText.SetPos(Vector2(1024/2, 700));
+	promptText.SetText("");
 }
 
 
@@ -53,39 +70,65 @@ bool PSLevelEditor::FindMatchingEnvironment(Environment& env_)
 
 void PSLevelEditor::KeyDown(int key_)
 {
-	switch (key_)
+	if ( inputName )
 	{
-	case KEY_UP : 
-		++row;
-		break;
-	case KEY_DOWN : 
-		--row;
-		break;
-	case KEY_LEFT : 
-		--col;
-		break;
-	case KEY_RIGHT : 
-		++col;
-		break;
-	case KEY_SPACE : 
-		//find environment tile at this space.
-		auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
-		
-		//if found, we want to set this environment to the next tile
-		if ( it != environment.end() )
+		if (key_ == KEY_ENTER)
 		{
-			//change to the next tile
-			it->IncrementTileType();
-			
-			//if we are at the end, remove the tile
-			if ( it->TileType() == ENVIRO_TILE::ENVIRO_TILE_END )
+			//submit
+			cout << "...Saving Level..." << endl;
+			saving = false;
+			DBLevel db;
+			db.SaveData(environment, player, cannon, levelName);
+			inputName = false;
+			promptText.SetText(levelName + " Saved");
+		}
+		else
+		{			
+			//turn key into a char
+			char x = (char)key_;
+			levelName += x;
+			cout << "Level Name: " << levelName;
+		}
+	}
+	if ( !inputName )
+	{
+		if (key_ == KEY_UP)
+			++row;
+		if (key_ == KEY_DOWN)	
+			--row;
+		if( key_ == KEY_LEFT)
+			--col;
+		if( key_ == KEY_RIGHT)
+			++col;
+		if ( key_ == KEY_SPACE )
+		{
+			//find environment tile at this space.
+			auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
+		
+			//if found, we want to set this environment to the next tile
+			if ( it != environment.end() )
 			{
-				it = environment.erase(it);
+				//change to the next tile
+				it->IncrementTileType();
+			
+				//if we are at the end, remove the tile
+				if ( it->TileType() == ENVIRO_TILE::ENVIRO_TILE_END )
+				{
+					it = environment.erase(it);
+				}
+			}
+			else //if no tiles found, add a new one. 
+			{
+				environment.push_back(Environment(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
 			}
 		}
-		else //if no tiles found, add a new one. 
+		if ( key_ == KEY_C )
 		{
-			environment.push_back(Environment(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
+			cannon.SetPos(col, row);
+		}
+		if ( key_ == KEY_P )
+		{
+			player.SetPos(col, row);
 		}
 	}
 }
@@ -103,11 +146,13 @@ ProgramState* PSLevelEditor::Update(float delta_)
 
 	if ( IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_S) && !saving)
 	{
-		cout << "...Saving Level..." << endl;
-		saving = true;
-		DBLevel db;
-		Player temp;
-		db.SaveData(environment, temp);
+		inputName = true;
+		levelName = "";
+	}
+
+	if ( inputName )
+	{
+		promptText.SetText("Enter Level Name - " + levelName);
 	}
 
 	if (  !IsKeyDown(KEY_LEFT_CONTROL) || !IsKeyDown(KEY_S) ) 
@@ -124,7 +169,12 @@ void PSLevelEditor::Draw()
 		env.Draw();
 	}
 
+	cannon.Draw();
+	player.Draw();
+
 	SetSpriteUVCoordinates(SpriteSheet::Sprite(), uv);
 	MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);
 	DrawSprite(SpriteSheet::Sprite());
+
+	promptText.Draw();
 }

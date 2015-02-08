@@ -17,6 +17,7 @@ public:
 
 	void RegisterCannonListener(CannonListener *cannonListener_);
 
+
 private:
 	float UVs[4];
 	float rotation;

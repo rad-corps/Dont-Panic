@@ -43,6 +43,7 @@
     <ClCompile Include="source\tests\Databases.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\globals\consts.h" />
     <ClInclude Include="source\game_objects\GLText.h" />
     <ClInclude Include="include\GLAH\InputHelper.h" />
     <ClInclude Include="source\game_state\PSLevelSelect.h" />

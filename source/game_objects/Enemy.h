@@ -19,7 +19,8 @@ enum DIRECTION
 class Enemy : public GameObject
 {
 public:
-	Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_);
+	Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, Vector2 pos_);
+	Enemy(const Enemy& enemy_); //copy ctor
 	~Enemy(void);
 
 	void Update(float delta_, std::vector<Environment>& environment_);
