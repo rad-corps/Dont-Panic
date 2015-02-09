@@ -7,6 +7,7 @@
 #include "../game_objects/Cannon.h"
 #include "../game_objects/Player.h"
 #include "../game_objects/GLText.h"
+#include "../game_objects/EnemySpawner.h"
 
 class PSLevelEditor : public ProgramState
 {
@@ -20,6 +21,7 @@ public:
 	void KeyDown(int key_);
 
 	static bool FindMatchingEnvironment(Environment& env_);
+	static bool FindMatchingEnemySpawner(EnemySpawner& env_);
 
 private:
 
@@ -31,8 +33,10 @@ private:
 
 	InputHelper inputHelper;
 	std::vector<Environment> environment;
+	std::vector<EnemySpawner> enemySpawners;
 	Cannon cannon;
 	Player player;
+	
 
 	bool inputName;
 	bool saving;

@@ -8,7 +8,9 @@
 #include "DatabaseManager.h"
 #include "sqlite3.h"
 #include <assert.h>
-//#include <iostream>
+#include <iostream>
+
+using namespace std;
 
 int DatabaseManager::s_Callback(void* dmInstance, int numArgs, char **data, char **columnName)
 {	
@@ -87,7 +89,11 @@ bool DatabaseManager::Insert(string dbFile, string table, string colNames, strin
 
 	lastInsertedRowID = sqlite3_last_insert_rowid(db);
 
-	assert (errorMsg == NULL && "Something went wrong trying to insert a record to database");	
+	//assert (errorMsg == NULL && "Something went wrong trying to insert a record to database: ");	
+	if ( errorMsg != NULL )
+	{
+		cout << endl << errorMsg << endl;
+	}
 	return true;
 }
 	

@@ -68,6 +68,13 @@ bool PSLevelEditor::FindMatchingEnvironment(Environment& env_)
 	return false;
 }
 
+bool PSLevelEditor::FindMatchingEnemySpawner(EnemySpawner& spawner_)
+{
+	if ( spawner_.Col() == col && spawner_.Row() == row )
+		return true;
+	return false;
+}
+
 void PSLevelEditor::KeyDown(int key_)
 {
 	if ( inputName )
@@ -78,7 +85,7 @@ void PSLevelEditor::KeyDown(int key_)
 			cout << "...Saving Level..." << endl;
 			saving = false;
 			DBLevel db;
-			db.SaveData(environment, player, cannon, levelName);
+			db.SaveData(environment, player, cannon, levelName, enemySpawners);
 			inputName = false;
 			promptText.SetText(levelName + " Saved");
 		}
@@ -120,6 +127,21 @@ void PSLevelEditor::KeyDown(int key_)
 			else //if no tiles found, add a new one. 
 			{
 				environment.push_back(Environment(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
+			}
+		}
+		if ( key_ == KEY_E )
+		{
+			//find enemySpawner tile at this space.
+			auto it = find_if(enemySpawners.begin(), enemySpawners.end(), FindMatchingEnemySpawner);
+		
+			//if found, we want to set this environment to the next tile
+			if ( it != enemySpawners.end() )
+			{
+				it = enemySpawners.erase(it);
+			}
+			else //if no tiles found, add a new one. 
+			{
+				enemySpawners.push_back(EnemySpawner(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, col, row)));
 			}
 		}
 		if ( key_ == KEY_C )
@@ -164,13 +186,11 @@ ProgramState* PSLevelEditor::Update(float delta_)
 }
 void PSLevelEditor::Draw()
 {
-	for ( auto &env : environment ) 
-	{
-		env.Draw();
-	}
-
+	for ( auto &env : environment ) env.Draw();
+	for ( auto &spawner : enemySpawners ) spawner.Draw();
 	cannon.Draw();
 	player.Draw();
+	
 
 	SetSpriteUVCoordinates(SpriteSheet::Sprite(), uv);
 	MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);

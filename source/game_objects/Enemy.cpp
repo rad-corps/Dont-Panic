@@ -39,6 +39,34 @@ Enemy::Enemy(const Enemy& enemy_)
 	onPlatform = false;
 }
 
+Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, int col_, int row_)
+{
+	UVTranslator trans(800,1280,16,16);
+
+	switch (type_)
+	{
+	case ZOMBIE: 
+		trans.GetUV(walk1, 5, 26);
+		//trans.GetUV(walk1, 1, 26);
+		trans.GetUV(walk2, 5, 27);
+		trans.GetUV(walk3, 5, 28);
+		break;
+	case SKELETON:
+		trans.GetUV(walk1, 6, 26);
+		//trans.GetUV(walk1, 1, 26);
+		trans.GetUV(walk2, 6, 27);
+		trans.GetUV(walk3, 6, 28);
+		break;
+	}
+
+	currentAnimation = walk1;
+	dir = initialDirection_;
+	timer = 0.0f;
+	active = true;
+	SetPos(col_, row_);
+	velocity = Vector2(0,0);
+}
+
 Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, Vector2 pos_)
 {
 	UVTranslator trans(800,1280,16,16);

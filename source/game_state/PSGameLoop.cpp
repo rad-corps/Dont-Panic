@@ -54,12 +54,7 @@ PSGameLoop::PSGameLoop(int level_)
 {
 	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
 	DBLevel dbLevel;
-	dbLevel.FillData(level_, environment, player, cannon);
-
-	EnemySpawner es1(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, Vector2(500, 200)));
-	EnemySpawner es2(Enemy(ENEMY_TYPE::ZOMBIE, DIRECTION::DIR_RIGHT, Vector2(700, 200)));
-	enemySpawners.push_back(es1);
-	enemySpawners.push_back(es2);
+	dbLevel.FillData(level_, environment, player, cannon, enemySpawners);
 
 	gameTimer = 0.f;
 	

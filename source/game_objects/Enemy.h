@@ -25,6 +25,7 @@ enum ENEMY_STATUS
 class Enemy : public GameObject
 {
 public:
+	Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, int col_, int row_);
 	Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, Vector2 pos_);
 	Enemy(const Enemy& enemy_); //copy ctor
 	~Enemy(void);
