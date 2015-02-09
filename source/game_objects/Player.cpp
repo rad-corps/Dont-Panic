@@ -100,12 +100,9 @@ void Player::HandleCollision(vector<Environment>& environment_, std::vector<Enem
 
 	//check player enemy collision
 	for ( auto &enemy : enemies_ )
-	{
 		if ( Collision::RectCollision(hitCollider, enemy.GetRect()))
-		{
-			alive = false;
-		}
-	}
+			if ( enemy.IsActive() )
+				alive = false;
 }
 
 void Player::UndoX()

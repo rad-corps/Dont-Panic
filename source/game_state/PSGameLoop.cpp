@@ -112,7 +112,7 @@ ProgramState* PSGameLoop::Update(float delta_)
 
 	//update enemies
 	for ( auto &enemy : enemies )
-		enemy.Update(delta_, environment);
+		enemy.Update(delta_, environment, shells);
 
 	//update the spawners
 	for ( auto &spawner : enemySpawners )

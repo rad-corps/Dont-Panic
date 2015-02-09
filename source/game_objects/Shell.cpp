@@ -14,6 +14,9 @@ Shell::Shell(Vector2 pos_, Vector2 velocity_)
 		init = true;
 	}
 
+	width = 32;
+	height = 32;
+
 	Shoot(pos_,velocity_);
 }
 
@@ -27,6 +30,7 @@ void Shell::Shoot(Vector2 pos_, Vector2 velocity_)
 	timer = 0.0f;
 	active = true;
 	pos = pos_;
+	
 	velocity = velocity_;
 	cout << "Shoot(Vector2 " << pos_ << ", Vector2 " << velocity_ << ")" << endl;
 }

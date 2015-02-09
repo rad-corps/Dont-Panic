@@ -39,7 +39,7 @@ Enemy::Enemy(const Enemy& enemy_)
 	UpdateColliders();
 	velocity = Vector2(0,0);
 
-	active = true;
+	active = enemy_.active;
 	onPlatform = false;
 }
 
@@ -149,7 +149,7 @@ void Enemy::UndoY()
 	MoveTo(Vector2(pos.x, prevY));
 }
 
-void Enemy::HandleCollision(vector<Environment>& environment_)
+void Enemy::HandleCollision(vector<Environment>& environment_, std::vector<Shell>& shells_)
 {
 	onPlatform = false;
 	//check collision	
@@ -183,6 +183,15 @@ void Enemy::HandleCollision(vector<Environment>& environment_)
 	{
 		status = ENEMY_STATUS::WALKING;
 	}
+
+	//check if shot
+	for ( auto &shell : shells_ )
+	{
+		if ( Collision::RectCollision(shell.GetRect(), GetRect()) )
+		{
+			active = false;
+		}
+	}
 }
 
 void Enemy::ApplyGravity()
@@ -201,8 +210,11 @@ void Enemy::ApplyVelocity(Vector2 velocity_)
 	UpdateColliders();
 }
 
-void Enemy::Update(float delta_, vector<Environment>& environment_)
+void Enemy::Update(float delta_, vector<Environment>& environment_, std::vector<Shell>& shells_)
 {
+	if ( !active )
+		return;
+
 	timer += delta_;
 
 	prevX = pos.x;
@@ -215,7 +227,7 @@ void Enemy::Update(float delta_, vector<Environment>& environment_)
 	}
 
 	
-	HandleCollision(environment_);
+	HandleCollision(environment_, shells_);
 	ApplyGravity();
 	ApplyVelocity(velocity);
 
@@ -232,6 +244,9 @@ void Enemy::Update(float delta_, vector<Environment>& environment_)
 
 void Enemy::Draw()
 {
+	if ( !active )
+		return;
+
 	SetSpriteUVCoordinates(SpriteSheet::Sprite(),currentAnimation);
 	//SetSpriteUVCoordinates(SpriteSheet::Sprite(),walk1);
 	
