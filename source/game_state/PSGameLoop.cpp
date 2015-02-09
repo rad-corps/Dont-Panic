@@ -101,7 +101,7 @@ PSGameLoop::~PSGameLoop(void)
 ProgramState* PSGameLoop::Update(float delta_)
 {
 	//update player
-	player.Update(delta_, environment);
+	player.Update(delta_, environment, enemies);
 	
 	//update cannon
 	cannon.Update(delta_);

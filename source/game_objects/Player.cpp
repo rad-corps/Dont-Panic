@@ -13,6 +13,8 @@ Player::Player(void)
 
 	pos = Vector2(200,200);
 
+	alive = true;
+
 	//initialise colliders
 	topCollider.width = 10;
 	topCollider.height = 3;
@@ -23,6 +25,9 @@ Player::Player(void)
 	leftCollider.height = 10;
 	rightCollider.width = 3;
 	rightCollider.height = 10;
+	hitCollider.width = 26;
+	hitCollider.height = 26;
+
 	
 	UpdateColliders();
 
@@ -35,6 +40,7 @@ Player::Player(void)
 	translator.GetUV(animMove1, 1, 27);
 	translator.GetUV(animMove2, 1, 28);
 	translator.GetUV(animMove3, 1, 27);
+	translator.GetUV(animDead, 1, 31);
 	currentAnimation = animStationary;
 
 	animationTimer = 0.0f;
@@ -55,9 +61,11 @@ void Player::UpdateColliders()
 	bottomCollider.centre = pos + Vector2(0, -16);
 	leftCollider.centre = pos + Vector2(-12, 0);
 	rightCollider.centre = pos + Vector2(12, 0);
+
+	hitCollider.centre = pos;
 }
 
-void Player::HandleCollision(vector<Environment>& environment_)
+void Player::HandleCollision(vector<Environment>& environment_, std::vector<Enemy>& enemies_)
 {
 	onPlatform = false;
 	//check collision	
@@ -88,6 +96,15 @@ void Player::HandleCollision(vector<Environment>& environment_)
 	if ( !onPlatform )
 	{
 		status = JUMPING;
+	}
+
+	//check player enemy collision
+	for ( auto &enemy : enemies_ )
+	{
+		if ( Collision::RectCollision(hitCollider, enemy.GetRect()))
+		{
+			alive = false;
+		}
 	}
 }
 
@@ -145,6 +162,11 @@ void Player::HandleInput(float delta_)
 
 void Player::UpdateAnimation(float delta_)
 {
+	if ( !alive ) 
+	{
+		currentAnimation = animDead;
+		return;
+	}
 	//pick the animation
 	animationTimer += delta_;
 	if ( animationTimer > 0.1f )
@@ -174,17 +196,19 @@ void Player::UpdateAnimation(float delta_)
 
 }
 
-void Player::Update(float delta_, vector<Environment>& environment_)
+void Player::Update(float delta_, vector<Environment>& environment_, std::vector<Enemy>& enemies_ )
 {
+
 	prevX = pos.x;
 	prevY = pos.y;
 	
-	HandleInput(delta_);
+	if (alive )	
+		HandleInput(delta_);	
+
 	
-	ApplyGravity();
-	
+	ApplyGravity();	
 	ApplyVelocity(velocity);	
-	HandleCollision(environment_);
+	HandleCollision(environment_, enemies_);
 	UpdateAnimation(delta_);
 
 }

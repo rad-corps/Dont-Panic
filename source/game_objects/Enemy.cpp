@@ -32,6 +32,10 @@ Enemy::Enemy(const Enemy& enemy_)
 	rightCollider.width = 3;
 	rightCollider.height = 18;
 	
+
+	width = 32;
+	height = 32;
+
 	UpdateColliders();
 	velocity = Vector2(0,0);
 
@@ -58,6 +62,10 @@ Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, int col_, int row_)
 		trans.GetUV(walk3, 6, 28);
 		break;
 	}
+
+	width = 32;
+	height = 32;
+
 
 	currentAnimation = walk1;
 	dir = initialDirection_;
@@ -92,6 +100,11 @@ Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, Vector2 pos_)
 	timer = 0.0f;
 	active = true;
 	pos = pos_;
+
+	width = 32;
+	height = 32;
+
+
 	velocity = Vector2(0,0);
 }
 
