@@ -3,9 +3,11 @@
 #include "GameObject.h"
 #include "Environment.h"
 #include "Enemy.h"
+#include "Goal.h"
 #include "../math/Vector.h"
 #include "../math/Rect.h"
 #include <vector>
+#include "GLText.h"
 
 //#include "GLAH\GLAHInput.h"
 #include "GLAH\GLAHGraphics.h"
@@ -24,7 +26,7 @@ public:
 	Player(void);
 	~Player(void);
 
-	virtual void Update(float delta_, std::vector<Environment>& environment_, std::vector<Enemy>& enemies);
+	virtual void Update(float delta_, std::vector<Environment>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
 	virtual void Draw();
 
 	
@@ -34,7 +36,7 @@ private:
 	void MoveTo(Vector2 pos_);
 	void UndoX();
 	void UndoY();
-	void HandleCollision(std::vector<Environment>& environment_, std::vector<Enemy>& enemies);
+	void HandleCollision(std::vector<Environment>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
 	void HandleInput(float delta_);
 	void UpdateAnimation(float delta_);
 	void ApplyGravity();
@@ -66,8 +68,7 @@ private:
 	bool faceLeft;
 	bool alive;
 
-//	GLAHGraphics * gfx;
-//	GLAHInput * inpt;
+	GLText playerSpeak;
 
 
 };

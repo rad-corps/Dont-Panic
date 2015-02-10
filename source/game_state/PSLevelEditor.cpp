@@ -85,7 +85,7 @@ void PSLevelEditor::KeyDown(int key_)
 			cout << "...Saving Level..." << endl;
 			saving = false;
 			DBLevel db;
-			db.SaveData(environment, player, cannon, levelName, enemySpawners);
+			db.SaveData(environment, player, cannon, levelName, enemySpawners, goal);
 			inputName = false;
 			promptText.SetText(levelName + " Saved");
 		}
@@ -152,6 +152,10 @@ void PSLevelEditor::KeyDown(int key_)
 		{
 			player.SetPos(col, row);
 		}
+		if ( key_ == KEY_G )
+		{
+			goal.SetPos(col, row);
+		}
 	}
 }
 
@@ -190,6 +194,7 @@ void PSLevelEditor::Draw()
 	for ( auto &spawner : enemySpawners ) spawner.Draw();
 	cannon.Draw();
 	player.Draw();
+	goal.Draw();
 	
 
 	SetSpriteUVCoordinates(SpriteSheet::Sprite(), uv);

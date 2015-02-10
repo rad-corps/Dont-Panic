@@ -13,13 +13,20 @@ DBLevel::~DBLevel(void)
 {
 }
 
-void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_)
+void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
 {
 	//save the level table first. record the ID
 	char * error = "";
 	std::stringstream levelValues;
-	levelValues << " " << player_.Col() << ", " << player_.Row() << ", " << cannon_.Col() << ", " << cannon_.Row() << ", '" << levelName_ << "' ";
-	dm.Insert("./resources/db/dontpanic.db", "tbl_level", " player_tile_x, player_tile_y, cannon_tile_x, cannon_tile_y, name ", levelValues.str(), error);
+	levelValues << " " << player_.Col() 
+		<< ", " << player_.Row() 
+		<< ", " << cannon_.Col() 
+		<< ", " << cannon_.Row() 
+		<< ", '" << levelName_ 
+		<< "', " << goal_.Col() 
+		<< ", " << goal_.Row() << " ";
+
+	dm.Insert("./resources/db/dontpanic.db", "tbl_level", " player_tile_x, player_tile_y, cannon_tile_x, cannon_tile_y, name, goal_tile_x, goal_tile_y ", levelValues.str(), error);
 
 	int id = dm.GetLastInsertedRowID();
 
@@ -42,7 +49,7 @@ void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_, 
 	
 }
 
-void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_)
+void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
 {
 	char * error = "";
 	
@@ -83,5 +90,6 @@ void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Playe
 
 		player_.SetPos(dm.GetValueInt(0, "player_tile_x"), dm.GetValueInt(0, "player_tile_y"));
 		cannon_.SetPos(dm.GetValueInt(0, "cannon_tile_x"), dm.GetValueInt(0, "cannon_tile_y"));
+		goal_.SetPos(dm.GetValueInt(0, "goal_tile_x"), dm.GetValueInt(0, "goal_tile_y"));
 	}
 }

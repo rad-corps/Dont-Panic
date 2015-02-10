@@ -46,6 +46,8 @@ Player::Player(void)
 	animationTimer = 0.0f;
 	faceLeft = false;
 	onPlatform = false;
+
+	playerSpeak.SetAlignment(TEXT_ALIGNMENT::ALIGN_RIGHT);
 }
 
 
@@ -65,7 +67,7 @@ void Player::UpdateColliders()
 	hitCollider.centre = pos;
 }
 
-void Player::HandleCollision(vector<Environment>& environment_, std::vector<Enemy>& enemies_)
+void Player::HandleCollision(vector<Environment>& environment_, std::vector<Enemy>& enemies_, Goal& goal_)
 {
 	onPlatform = false;
 	//check collision	
@@ -103,6 +105,13 @@ void Player::HandleCollision(vector<Environment>& environment_, std::vector<Enem
 		if ( Collision::RectCollision(hitCollider, enemy.GetRect()))
 			if ( enemy.IsActive() )
 				alive = false;
+
+	//check player goal collision
+	if ( Collision::RectCollision(hitCollider, goal_.GetRect()))
+	{
+		playerSpeak.SetText("WOO! ");
+		
+	}
 }
 
 void Player::UndoX()
@@ -193,7 +202,7 @@ void Player::UpdateAnimation(float delta_)
 
 }
 
-void Player::Update(float delta_, vector<Environment>& environment_, std::vector<Enemy>& enemies_ )
+void Player::Update(float delta_, vector<Environment>& environment_, std::vector<Enemy>& enemies_, Goal& goal_ )
 {
 
 	prevX = pos.x;
@@ -205,7 +214,8 @@ void Player::Update(float delta_, vector<Environment>& environment_, std::vector
 	
 	ApplyGravity();	
 	ApplyVelocity(velocity);	
-	HandleCollision(environment_, enemies_);
+	playerSpeak.SetPos(pos);
+	HandleCollision(environment_, enemies_, goal_);
 	UpdateAnimation(delta_);
 
 }
@@ -213,6 +223,7 @@ void Player::Update(float delta_, vector<Environment>& environment_, std::vector
 void Player::MoveTo(Vector2 pos_)
 {
 	pos = pos_;
+
 	UpdateColliders();
 }
 
@@ -231,4 +242,6 @@ void Player::Draw()
 	MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);
 	DrawSprite(SpriteSheet::Sprite(), faceLeft);
 	//DrawString(to_string(FPS).c_str(), 50, 500);
+
+	playerSpeak.Draw();
 }

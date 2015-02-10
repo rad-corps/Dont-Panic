@@ -8,6 +8,7 @@
 #include "../game_objects/Player.h"
 #include "../game_objects/GLText.h"
 #include "../game_objects/EnemySpawner.h"
+#include "../game_objects/Goal.h"
 
 class PSLevelEditor : public ProgramState
 {
@@ -36,6 +37,7 @@ private:
 	std::vector<EnemySpawner> enemySpawners;
 	Cannon cannon;
 	Player player;
+	Goal goal;
 	
 
 	bool inputName;
