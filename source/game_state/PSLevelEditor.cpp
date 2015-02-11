@@ -11,6 +11,8 @@ using namespace std;
 
 int PSLevelEditor::col = 0;
 int PSLevelEditor::row = 0;
+int PSLevelEditor::lastCol = 0;
+int PSLevelEditor::lastRow = 0;
 
 void MyKeyEvent(int key_, void* caller_)
 {
@@ -54,6 +56,8 @@ PSLevelEditor::PSLevelEditor(void)
 	promptText.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
 	promptText.SetPos(Vector2(1024/2, 700));
 	promptText.SetText("");
+
+	lmbDown = false;
 }
 
 
@@ -73,6 +77,29 @@ bool PSLevelEditor::FindMatchingEnemySpawner(EnemySpawner& spawner_)
 	if ( spawner_.Col() == col && spawner_.Row() == row )
 		return true;
 	return false;
+}
+
+void PSLevelEditor::ChangePlatformTile()
+{
+	//find environment tile at this space.
+	auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
+		
+	//if found, we want to set this environment to the next tile
+	if ( it != environment.end() )
+	{
+		//change to the next tile
+		it->IncrementTileType();
+			
+		//if we are at the end, remove the tile
+		if ( it->TileType() == ENVIRO_TILE::ENVIRO_TILE_END )
+		{
+			it = environment.erase(it);
+		}
+	}
+	else //if no tiles found, add a new one. 
+	{
+		environment.push_back(Environment(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
+	}
 }
 
 void PSLevelEditor::KeyDown(int key_)
@@ -109,25 +136,7 @@ void PSLevelEditor::KeyDown(int key_)
 			++col;
 		if ( key_ == KEY_SPACE )
 		{
-			//find environment tile at this space.
-			auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
-		
-			//if found, we want to set this environment to the next tile
-			if ( it != environment.end() )
-			{
-				//change to the next tile
-				it->IncrementTileType();
-			
-				//if we are at the end, remove the tile
-				if ( it->TileType() == ENVIRO_TILE::ENVIRO_TILE_END )
-				{
-					it = environment.erase(it);
-				}
-			}
-			else //if no tiles found, add a new one. 
-			{
-				environment.push_back(Environment(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
-			}
+			ChangePlatformTile();
 		}
 		if ( key_ == KEY_E )
 		{
@@ -159,11 +168,41 @@ void PSLevelEditor::KeyDown(int key_)
 	}
 }
 
+void PSLevelEditor::UpdateRowCol()
+{
+	//get mouse location
+	double mouseX, mouseY;
+	GetMouseLocation(mouseX, mouseY);
+	mousePos.x = (float)mouseX + 16;//offset x due to drawing from centre
+	mousePos.y = (float)mouseY + 16;
+	//get row and column based on mousePos
+	col = mousePos.x / 32;
+	row = mousePos.y / 32;
+}
 
+void PSLevelEditor::HandleMouseDown()
+{
+	//if left mouse button is down
+	if ( GetMouseButtonDown(0) )
+	{
+		if (!lmbDown || (lastCol != col || lastRow != row))
+		{
+			ChangePlatformTile();
+			lmbDown = true;
+		}
+	}
+	else if ( !GetMouseButtonDown(0) )
+	{
+		lmbDown = false;
+	}
+}
 
 ProgramState* PSLevelEditor::Update(float delta_)
 {
 	pos = Vector2(col * 32, row * 32);
+	
+	UpdateRowCol();
+	HandleMouseDown();
 
 	inputHelper.Update();
 
@@ -185,6 +224,9 @@ ProgramState* PSLevelEditor::Update(float delta_)
 	{
 		saving = false;
 	}
+
+	lastCol = col;
+	lastRow = row;
 
 	return nullptr;
 }

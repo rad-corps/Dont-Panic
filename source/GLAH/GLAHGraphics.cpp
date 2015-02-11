@@ -280,7 +280,7 @@ void DrawSprite(unsigned int spriteID_, bool xFlip_)
 	CreateSpriteVertexData(vertices, tl, tr, bl, br, spriteList[spriteID_].UV, xFlip_);
 	glBindTexture(GL_TEXTURE_2D, spriteID_);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex)*4, vertices);                                          //Updates VBO's data on the fly 
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex)*4, vertices);//Updates VBO's data on the fly 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 
@@ -421,7 +421,10 @@ bool GetMouseButtonDown( int a_iMouseButtonToTest )
 
 void GetMouseLocation( double& a_iMouseX, double& a_iMouseY )
 {
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
 	glfwGetCursorPos(window, &a_iMouseX, &a_iMouseY);
+	a_iMouseY = height - a_iMouseY;
 }
 //END INPUT HANDLING
 ///////////////////////////////////////////////////////////////////////

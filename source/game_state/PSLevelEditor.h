@@ -26,8 +26,15 @@ public:
 
 private:
 
+	void ChangePlatformTile();
+	void UpdateRowCol();
+	void HandleMouseDown();
+	bool lmbDown;
+
 	static int col;
 	static int row;
+	static int lastRow;
+	static int lastCol;
 
 	float uv[4];
 	Vector2 pos;
@@ -45,5 +52,7 @@ private:
 
 	std::string levelName;
 	GLText promptText;
+
+	Vector2 mousePos;
 };
 
