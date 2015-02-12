@@ -28,9 +28,11 @@ public:
 
 	~UVTranslator();
 
-private:
 	//default ctor, object is in an invalid state until Init is called.
 	UVTranslator();
+
+private:
+	
 
 	int tileWidth;
 	int tileHeight;

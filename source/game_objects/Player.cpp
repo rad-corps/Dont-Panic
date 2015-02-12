@@ -35,12 +35,14 @@ Player::Player(void)
 	status = PLAYER_STATUS::STATIONARY;
 
 	//initialise animations
-	UVTranslator translator(800, 1280, 16, 16);
-	translator.GetUV(animStationary, 1, 26);
-	translator.GetUV(animMove1, 1, 27);
-	translator.GetUV(animMove2, 1, 28);
-	translator.GetUV(animMove3, 1, 27);
-	translator.GetUV(animDead, 1, 31);
+	//UVTranslator translator(800, 1280, 16, 16);
+	//translator.GetUV(animStationary, 1, 26);
+	SpriteSheet::FillUV(animStationary, SPRITE_TYPE::M_P1_STAT);
+	SpriteSheet::FillUV(animMove1, SPRITE_TYPE::M_P1_MOVE1);
+	SpriteSheet::FillUV(animMove2, SPRITE_TYPE::M_P1_MOVE2);
+	SpriteSheet::FillUV(animMove3, SPRITE_TYPE::M_P1_MOVE1);
+	SpriteSheet::FillUV(animDead, SPRITE_TYPE::M_P1_DEATH);
+	
 	currentAnimation = animStationary;
 
 	animationTimer = 0.0f;
