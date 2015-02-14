@@ -9,10 +9,19 @@
 
 using namespace std;
 
+
+
+
 int PSLevelEditor::col = 0;
 int PSLevelEditor::row = 0;
 int PSLevelEditor::lastCol = 0;
 int PSLevelEditor::lastRow = 0;
+
+//void ScrollCallback(GLFWWindow* 
+void ScrollCallback(GLFWwindow* window_, double x_, double y_)
+{
+	cout << "ScrollCallback: x - " << x_ << "   y - " << y_ <<  endl;
+}
 
 void MyKeyEvent(int key_, void* caller_)
 {
@@ -49,6 +58,8 @@ PSLevelEditor::PSLevelEditor(void)
 	promptText.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
 	promptText.SetPos(Vector2(1024/2, 700));
 	promptText.SetText("");
+
+	glfwSetScrollCallback(GetWindow(), ScrollCallback); 
 
 	lmbDown = false;
 	rmbDown = false;

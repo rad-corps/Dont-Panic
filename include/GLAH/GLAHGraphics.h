@@ -1,5 +1,9 @@
 #pragma once
 
+#include <GL/glew.h>
+#include <GL/wglew.h>
+#include <GLFW/glfw3.h>
+
 #include <map>
 #include <string>
 //#include "SpriteFont.h"
@@ -186,6 +190,8 @@ typedef enum
 	int				Initialise( int a_iWidth, int a_iHeight, bool a_bFullscreen = false, const char* a_pWindowTitle = nullptr );
 
 	float			GetDeltaTime();
+
+	GLFWwindow*		GetWindow();
 
 	//NOT YET IMPLEMENTED
 	void			ClearScreen();	

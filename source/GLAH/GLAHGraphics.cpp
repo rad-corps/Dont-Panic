@@ -2,14 +2,13 @@
 //Author: Adam Hulbert
 //
 
-#include <GL/glew.h>
-#include <GL/wglew.h>
+
 #include "GLAH/GLAHGraphics.h"
 //#include "GLAH/GLAHInput.h"
 #include "GLAH/Shaders.h"
 #include <iostream>
 //glfw include
-#include <GLFW/glfw3.h>
+
 #include "GLAH/SOIL.h"
 #include "GLAH/Vertex.h"
 #include <chrono> //std::chrono::time_point
@@ -43,6 +42,10 @@ double delta;
 //orthographic projection matrix
 Matrix4x4 ortho;
 
+GLFWwindow*		GetWindow()
+{
+	return window;
+}
 
 //unsigned int	GLAHGraphics::CreateSprite	
 // textureName_		: filename/path of the texture to load
