@@ -22,13 +22,6 @@ void MyKeyEvent(int key_, void* caller_)
 
 PSLevelEditor::PSLevelEditor(void)
 {
-	cout << endl << "--------Don't Panic : Level Editor----------" << endl;
-	cout << "Move Active Tile            Arrow Keys" << endl;
-	cout << "Change Active Tile          Space Bar" << endl;
-	cout << "Save Level                  CTRL + S" << endl;
-	cout << "Place Cannon                C Key" << endl;
-	cout << "Quit To Main Menu           Escape key" << endl;
-
 	UVTranslator trans(800,1280,16,16);
 	trans.GetUV(uv, 16, 0);
 
@@ -58,6 +51,7 @@ PSLevelEditor::PSLevelEditor(void)
 	promptText.SetText("");
 
 	lmbDown = false;
+	rmbDown = false;
 }
 
 
@@ -79,24 +73,24 @@ bool PSLevelEditor::FindMatchingEnemySpawner(EnemySpawner& spawner_)
 	return false;
 }
 
+void PSLevelEditor::RemovePlatformTile()
+{
+	auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
+
+	//if found remove
+	if ( it != environment.end() )
+	{		
+		it = environment.erase(it);
+	}
+}
+
 void PSLevelEditor::ChangePlatformTile()
 {
 	//find environment tile at this space.
 	auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
 		
-	//if found, we want to set this environment to the next tile
-	if ( it != environment.end() )
-	{
-		//change to the next tile
-		it->IncrementTileType();
-			
-		//if we are at the end, remove the tile
-		if ( it->TileType() == ENVIRO_TILE::ENVIRO_TILE_END )
-		{
-			it = environment.erase(it);
-		}
-	}
-	else //if no tiles found, add a new one. 
+	//if not found, add one
+	if ( it == environment.end() )
 	{
 		environment.push_back(Environment(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
 	}
@@ -194,6 +188,19 @@ void PSLevelEditor::HandleMouseDown()
 	else if ( !GetMouseButtonDown(0) )
 	{
 		lmbDown = false;
+	}
+
+	if ( GetMouseButtonDown(1) )
+	{
+		if (!rmbDown || (lastCol != col || lastRow != row))
+		{
+			RemovePlatformTile();
+			rmbDown = true;
+		}
+	}
+	else if ( !GetMouseButtonDown(1) )
+	{
+		rmbDown = false;
 	}
 }
 

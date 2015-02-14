@@ -27,9 +27,11 @@ public:
 private:
 
 	void ChangePlatformTile();
+	void RemovePlatformTile();
 	void UpdateRowCol();
 	void HandleMouseDown();
 	bool lmbDown;
+	bool rmbDown;
 
 	static int col;
 	static int row;
