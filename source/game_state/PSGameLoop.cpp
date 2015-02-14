@@ -14,7 +14,7 @@
 #include <string>
 
 #include "../game_objects/Player.h"
-#include "../game_objects/Environment.h"
+#include "../game_objects/Platform.h"
 #include "../spritesheet/UVTranslator.h"
 #include "../spritesheet/spritesheet.h"
 #include "../data/DBLevel.h"

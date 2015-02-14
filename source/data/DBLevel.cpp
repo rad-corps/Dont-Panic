@@ -13,7 +13,7 @@ DBLevel::~DBLevel(void)
 {
 }
 
-void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
+void DBLevel::SaveData(std::vector<Platform>& environment_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
 {
 	//save the level table first. record the ID
 	char * error = "";
@@ -49,7 +49,7 @@ void DBLevel::SaveData(std::vector<Environment>& environment_, Player& player_, 
 	
 }
 
-void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
+void DBLevel::FillData(int level_, std::vector<Platform>& environment_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
 {
 	char * error = "";
 	
@@ -61,7 +61,7 @@ void DBLevel::FillData(int level_, std::vector<Environment>& environment_, Playe
 	
 		for (int i = 0; i < dm.Rows(); ++i)
 		{
-			Environment env(dm.GetValueInt(i, "col"), dm.GetValueInt(i, "row"), (ENVIRO_TILE)dm.GetValueInt(i, "tile_type"));
+			Platform env(dm.GetValueInt(i, "col"), dm.GetValueInt(i, "row"), (ENVIRO_TILE)dm.GetValueInt(i, "tile_type"));
 			environment_.push_back(env);
 		}
 	}

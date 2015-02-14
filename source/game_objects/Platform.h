@@ -11,11 +11,11 @@ enum ENVIRO_TILE
 	ENVIRO_TILE_END
 };
 
-class Environment :	public Rect
+class Platform :	public Rect
 {
 public:
-	Environment(int col_, int row_, ENVIRO_TILE tileType_);
-	~Environment(void);
+	Platform(int col_, int row_, ENVIRO_TILE tileType_);
+	~Platform(void);
 
 	void Draw();
 	void Update(float delta_);

@@ -69,7 +69,7 @@ void Player::UpdateColliders()
 	hitCollider.centre = pos;
 }
 
-void Player::HandleCollision(vector<Environment>& environment_, std::vector<Enemy>& enemies_, Goal& goal_)
+void Player::HandleCollision(vector<Platform>& environment_, std::vector<Enemy>& enemies_, Goal& goal_)
 {
 	onPlatform = false;
 	//check collision	
@@ -204,7 +204,7 @@ void Player::UpdateAnimation(float delta_)
 
 }
 
-void Player::Update(float delta_, vector<Environment>& environment_, std::vector<Enemy>& enemies_, Goal& goal_ )
+void Player::Update(float delta_, vector<Platform>& environment_, std::vector<Enemy>& enemies_, Goal& goal_ )
 {
 
 	prevX = pos.x;

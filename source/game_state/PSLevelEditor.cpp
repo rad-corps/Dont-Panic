@@ -63,6 +63,7 @@ PSLevelEditor::PSLevelEditor(void)
 
 	lmbDown = false;
 	rmbDown = false;
+	currentCategory = TILE_CATEGORY::PLATFORM;
 }
 
 
@@ -70,7 +71,7 @@ PSLevelEditor::~PSLevelEditor(void)
 {
 }
 
-bool PSLevelEditor::FindMatchingEnvironment(Environment& env_)
+bool PSLevelEditor::FindMatchingEnvironment(Platform& env_)
 {
 	if ( env_.Col() == col && env_.Row() == row )
 		return true;
@@ -103,7 +104,7 @@ void PSLevelEditor::ChangePlatformTile()
 	//if not found, add one
 	if ( it == environment.end() )
 	{
-		environment.push_back(Environment(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
+		environment.push_back(Platform(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
 	}
 }
 

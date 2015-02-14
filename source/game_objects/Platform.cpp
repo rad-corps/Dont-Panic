@@ -1,9 +1,9 @@
-#include "Environment.h"
+#include "Platform.h"
 //#include "aie.h"
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
 
-Environment::Environment(int col_, int row_, ENVIRO_TILE tileType_) : tileType(tileType_), row(row_), col(col_)
+Platform::Platform(int col_, int row_, ENVIRO_TILE tileType_) : tileType(tileType_), row(row_), col(col_)
 {
 //	gfx = GLAHGraphics::Instance();
 	width = 32;
@@ -13,11 +13,11 @@ Environment::Environment(int col_, int row_, ENVIRO_TILE tileType_) : tileType(t
 }
 
 
-Environment::~Environment(void)
+Platform::~Platform(void)
 {
 }
 
-void Environment::InitialiseGraphic()
+void Platform::InitialiseGraphic()
 {
 	UVTranslator translator(800, 1280, 16, 16);
 	switch ( tileType )
@@ -31,35 +31,35 @@ void Environment::InitialiseGraphic()
 	}
 }
 
-void Environment::IncrementTileType()
+void Platform::IncrementTileType()
 {
 	tileType = (ENVIRO_TILE)((int)tileType + 1);
 	InitialiseGraphic();
 }
 
-ENVIRO_TILE Environment::TileType()
+ENVIRO_TILE Platform::TileType()
 {
 	return tileType;
 }
 
-int Environment::Row()
+int Platform::Row()
 {
 	return row;
 }
 
-int Environment::Col()
+int Platform::Col()
 {
 	return col;
 }
 
-void Environment::Draw()
+void Platform::Draw()
 {
 	SetSpriteUVCoordinates(SpriteSheet::Sprite(), UV);
 	MoveSprite(SpriteSheet::Sprite(), centre.x, centre.y);
 	DrawSprite(SpriteSheet::Sprite());
 }
 
-void Environment::Update(float delta_)
+void Platform::Update(float delta_)
 {
 
 }

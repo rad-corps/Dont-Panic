@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Environment.h"
+#include "Platform.h"
 #include "Enemy.h"
 #include "Goal.h"
 #include "../math/Vector.h"
@@ -26,7 +26,7 @@ public:
 	Player(void);
 	~Player(void);
 
-	virtual void Update(float delta_, std::vector<Environment>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
+	virtual void Update(float delta_, std::vector<Platform>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
 	virtual void Draw();
 
 	
@@ -36,7 +36,7 @@ private:
 	void MoveTo(Vector2 pos_);
 	void UndoX();
 	void UndoY();
-	void HandleCollision(std::vector<Environment>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
+	void HandleCollision(std::vector<Platform>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
 	void HandleInput(float delta_);
 	void UpdateAnimation(float delta_);
 	void ApplyGravity();

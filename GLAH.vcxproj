@@ -24,7 +24,7 @@
     <ClCompile Include="source\game_objects\Enemy.cpp" />
     <ClCompile Include="source\game_objects\Shell.cpp" />
     <ClCompile Include="source\game_objects\Cannon.cpp" />
-    <ClCompile Include="source\game_objects\Environment.cpp" />
+    <ClCompile Include="source\game_objects\Platform.cpp" />
     <ClCompile Include="source\game_objects\GameObject.cpp" />
     <ClCompile Include="source\game_objects\Player.cpp" />
     <ClCompile Include="source\game_state\PSGameLoop.cpp" />
@@ -73,7 +73,7 @@
     <ClInclude Include="include\GLAH\SOIL.h" />
     <ClInclude Include="include\GLAH\Vector.h" />
     <ClInclude Include="include\GLAH\Vertex.h" />
-    <ClInclude Include="source\game_objects\Environment.h" />
+    <ClInclude Include="source\game_objects\Platform.h" />
     <ClInclude Include="source\game_objects\GameObject.h" />
     <ClInclude Include="source\game_objects\Player.h" />
     <ClInclude Include="source\game_state\PSGameLoop.h" />

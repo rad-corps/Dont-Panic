@@ -3,7 +3,7 @@
 #include <vector>
 #include "ProgramState.h"
 #include "GLAH\GLAHGraphics.h"
-#include "../game_objects/Environment.h"
+#include "../game_objects/Platform.h"
 #include "../game_objects/Player.h"
 #include "../game_objects/Cannon.h"
 #include "../game_objects/Shell.h"
@@ -38,7 +38,7 @@ private:
 	Cannon cannon;
 	Goal goal;
 	std::vector<Enemy> enemies;
-	std::vector<Environment> environment;
+	std::vector<Platform> environment;
 	std::vector<Shell> shells;
 	std::vector<EnemySpawner> enemySpawners;
 
