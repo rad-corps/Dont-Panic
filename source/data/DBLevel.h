@@ -16,8 +16,8 @@ public:
 	DBLevel(void);
 	~DBLevel(void);
 
-	void FillData(int level_, std::vector<Platform>& environment_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_, Goal& goal_);
-	void SaveData(std::vector<Platform>& environment_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_, Goal& goal_);
+	void FillData(int level_, std::vector<Platform>& platform_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_, Goal& goal_);
+	void SaveData(std::vector<Platform>& platform_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_, Goal& goal_);
 
 private:
 	DatabaseManager dm;

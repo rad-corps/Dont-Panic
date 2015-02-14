@@ -31,7 +31,7 @@ public:
 	Enemy(const Enemy& enemy_); //copy ctor
 	~Enemy(void);
 
-	void Update(float delta_, std::vector<Platform>& environment_, std::vector<Shell>& shells_);
+	void Update(float delta_, std::vector<Platform>& platform_, std::vector<Shell>& shells_);
 	void Draw();
 
 private:
@@ -41,7 +41,7 @@ private:
 	void MoveTo(Vector2 pos_);
 	void ApplyGravity();
 	void ApplyVelocity(Vector2 velocity_);
-	void HandleCollision(std::vector<Platform>& environment_, std::vector<Shell>& shells_);
+	void HandleCollision(std::vector<Platform>& platform_, std::vector<Shell>& shells_);
 	void UndoX();
 	void UndoY();
 

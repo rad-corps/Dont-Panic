@@ -69,11 +69,11 @@ void Player::UpdateColliders()
 	hitCollider.centre = pos;
 }
 
-void Player::HandleCollision(vector<Platform>& environment_, std::vector<Enemy>& enemies_, Goal& goal_)
+void Player::HandleCollision(vector<Platform>& platform_, std::vector<Enemy>& enemies_, Goal& goal_)
 {
 	onPlatform = false;
 	//check collision	
-	for ( auto &env : environment_ )
+	for ( auto &env : platform_ )
 	{
 		if ( Collision::RectCollision(topCollider, env))
 		{
@@ -204,7 +204,7 @@ void Player::UpdateAnimation(float delta_)
 
 }
 
-void Player::Update(float delta_, vector<Platform>& environment_, std::vector<Enemy>& enemies_, Goal& goal_ )
+void Player::Update(float delta_, vector<Platform>& platform_, std::vector<Enemy>& enemies_, Goal& goal_ )
 {
 
 	prevX = pos.x;
@@ -217,7 +217,7 @@ void Player::Update(float delta_, vector<Platform>& environment_, std::vector<En
 	ApplyGravity();	
 	ApplyVelocity(velocity);	
 	playerSpeak.SetPos(pos);
-	HandleCollision(environment_, enemies_, goal_);
+	HandleCollision(platform_, enemies_, goal_);
 	UpdateAnimation(delta_);
 
 }

@@ -30,7 +30,7 @@ public:
 
 	void KeyDown(int key_);
 
-	static bool FindMatchingEnvironment(Platform& env_);
+	static bool FindMatchingPlatform(Platform& env_);
 	static bool FindMatchingEnemySpawner(EnemySpawner& env_);
 
 private:
@@ -51,7 +51,7 @@ private:
 	Vector2 pos;
 
 	InputHelper inputHelper;
-	std::vector<Platform> environment;
+	std::vector<Platform> platforms;
 	std::vector<EnemySpawner> enemySpawners;
 	Cannon cannon;
 	Player player;

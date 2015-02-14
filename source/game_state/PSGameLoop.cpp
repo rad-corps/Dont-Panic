@@ -20,41 +20,12 @@
 #include "../data/DBLevel.h"
 #include "PSMainMenu.h"
 
-//GameLoop::GameLoop(int screenW_, int screenH_, float updateInterval_)
-//	: updateInterval(updateInterval_)
-//{
-//		//\ Lets initialise the AIE Framework and give the window it creates an appropriate title
-//	Initialise( screenW_, screenH_, false, "Dont Panic" );
-//
-//	SpriteSheet::Init();
-//
-//	DBLevel dbLevel;
-//	dbLevel.FillData(1, environment, player);
-//
-//	//SetBackgroundColour( SColour( 0x00, 0x00, 0x00, 0xFF ) );
-//	//AddFont( "./fonts/invaders.fnt" );
-//
-//	gameTimer = 0.f;
-//	
-//	cannon.RegisterCannonListener(this);
-//}
-
-//PSGameLoop::PSGameLoop()
-//{
-//	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
-//	DBLevel dbLevel;
-//	dbLevel.FillData(5, environment, player);
-//
-//	gameTimer = 0.f;
-//	
-//	cannon.RegisterCannonListener(this);
-//}
 
 PSGameLoop::PSGameLoop(int level_)
 {
 	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
 	DBLevel dbLevel;
-	dbLevel.FillData(level_, environment, player, cannon, enemySpawners, goal);
+	dbLevel.FillData(level_, platforms, player, cannon, enemySpawners, goal);
 
 	gameTimer = 0.f;
 	
@@ -67,51 +38,22 @@ PSGameLoop::~PSGameLoop(void)
 	//Shutdown();
 }
 
-//void
-//GameLoop::Run()
-//{
-//	do 
-//	{
-//		
-//		//not yet implemented
-//		//ClearScreen();
-//
-//		float delta = GetDeltaTime();
-//		
-//		//not yet implemented
-//		//SetFont( "./fonts/invaders.fnt" );
-//
-//		//runs at 60FPS
-//		gameTimer += delta;
-//		if ( gameTimer > updateInterval ) 
-//		{
-//			gameTimer -= updateInterval;
-//			Update(delta);
-//		}
-//		
-//		Draw();
-//
-//		//not yet implemented
-//		//SetFont( nullptr );
-//
-//	} while ( FrameworkUpdate() == false );
-//}
 
 ProgramState* PSGameLoop::Update(float delta_)
 {
 	//update player
-	player.Update(delta_, environment, enemies, goal);
+	player.Update(delta_, platforms, enemies, goal);
 	
 	//update cannon
 	cannon.Update(delta_);
 
-	//update environment
-	for ( auto &env : environment )
+	//update platforms
+	for ( auto &env : platforms )
 		env.Update(delta_);		
 
 	//update enemies
 	for ( auto &enemy : enemies )
-		enemy.Update(delta_, environment, shells);
+		enemy.Update(delta_, platforms, shells);
 
 	//update the spawners
 	for ( auto &spawner : enemySpawners )
@@ -136,7 +78,7 @@ ProgramState* PSGameLoop::Update(float delta_)
 void PSGameLoop::Draw()
 {
 
-	for (auto &env : environment )
+	for (auto &env : platforms )
 		env.Draw();		
 
 	for (auto &shell : shells )

@@ -149,11 +149,11 @@ void Enemy::UndoY()
 	MoveTo(Vector2(pos.x, prevY));
 }
 
-void Enemy::HandleCollision(vector<Platform>& environment_, std::vector<Shell>& shells_)
+void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& shells_)
 {
 	onPlatform = false;
 	//check collision	
-	for ( auto &env : environment_ )
+	for ( auto &env : platform_ )
 	{
 		if ( Collision::RectCollision(topCollider, env))
 		{
@@ -210,7 +210,7 @@ void Enemy::ApplyVelocity(Vector2 velocity_)
 	UpdateColliders();
 }
 
-void Enemy::Update(float delta_, vector<Platform>& environment_, std::vector<Shell>& shells_)
+void Enemy::Update(float delta_, vector<Platform>& platform_, std::vector<Shell>& shells_)
 {
 	if ( !active )
 		return;
@@ -227,7 +227,7 @@ void Enemy::Update(float delta_, vector<Platform>& environment_, std::vector<She
 	}
 
 	
-	HandleCollision(environment_, shells_);
+	HandleCollision(platform_, shells_);
 	ApplyGravity();
 	ApplyVelocity(velocity);
 

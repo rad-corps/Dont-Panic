@@ -71,7 +71,7 @@ PSLevelEditor::~PSLevelEditor(void)
 {
 }
 
-bool PSLevelEditor::FindMatchingEnvironment(Platform& env_)
+bool PSLevelEditor::FindMatchingPlatform(Platform& env_)
 {
 	if ( env_.Col() == col && env_.Row() == row )
 		return true;
@@ -87,24 +87,24 @@ bool PSLevelEditor::FindMatchingEnemySpawner(EnemySpawner& spawner_)
 
 void PSLevelEditor::RemovePlatformTile()
 {
-	auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
+	auto it = find_if(platforms.begin(), platforms.end(), FindMatchingPlatform );
 
 	//if found remove
-	if ( it != environment.end() )
+	if ( it != platforms.end() )
 	{		
-		it = environment.erase(it);
+		it = platforms.erase(it);
 	}
 }
 
 void PSLevelEditor::ChangePlatformTile()
 {
-	//find environment tile at this space.
-	auto it = find_if(environment.begin(), environment.end(), FindMatchingEnvironment );
+	//find platform tile at this space.
+	auto it = find_if(platforms.begin(), platforms.end(), FindMatchingPlatform );
 		
 	//if not found, add one
-	if ( it == environment.end() )
+	if ( it == platforms.end() )
 	{
-		environment.push_back(Platform(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
+		platforms.push_back(Platform(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
 	}
 }
 
@@ -118,7 +118,7 @@ void PSLevelEditor::KeyDown(int key_)
 			cout << "...Saving Level..." << endl;
 			saving = false;
 			DBLevel db;
-			db.SaveData(environment, player, cannon, levelName, enemySpawners, goal);
+			db.SaveData(platforms, player, cannon, levelName, enemySpawners, goal);
 			inputName = false;
 			promptText.SetText(levelName + " Saved");
 		}
@@ -149,7 +149,7 @@ void PSLevelEditor::KeyDown(int key_)
 			//find enemySpawner tile at this space.
 			auto it = find_if(enemySpawners.begin(), enemySpawners.end(), FindMatchingEnemySpawner);
 		
-			//if found, we want to set this environment to the next tile
+			//if found, we want to set this platform to the next tile
 			if ( it != enemySpawners.end() )
 			{
 				it = enemySpawners.erase(it);
@@ -251,7 +251,7 @@ ProgramState* PSLevelEditor::Update(float delta_)
 }
 void PSLevelEditor::Draw()
 {
-	for ( auto &env : environment ) env.Draw();
+	for ( auto &env : platforms ) env.Draw();
 	for ( auto &spawner : enemySpawners ) spawner.Draw();
 	cannon.Draw();
 	player.Draw();

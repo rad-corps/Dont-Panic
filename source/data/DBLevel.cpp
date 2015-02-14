@@ -13,7 +13,7 @@ DBLevel::~DBLevel(void)
 {
 }
 
-void DBLevel::SaveData(std::vector<Platform>& environment_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
+void DBLevel::SaveData(std::vector<Platform>& platform_, Player& player_, Cannon& cannon_, std::string levelName_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
 {
 	//save the level table first. record the ID
 	char * error = "";
@@ -31,7 +31,7 @@ void DBLevel::SaveData(std::vector<Platform>& environment_, Player& player_, Can
 	int id = dm.GetLastInsertedRowID();
 
 	//save each table tile
-	for ( auto& env : environment_ )
+	for ( auto& env : platform_ )
 	{
 		std::stringstream tileValues;
 		tileValues << " " << id << ", " << env.Row() << ", " << env.Col() << ", " << (int)env.TileType() << " ";
@@ -49,11 +49,11 @@ void DBLevel::SaveData(std::vector<Platform>& environment_, Player& player_, Can
 	
 }
 
-void DBLevel::FillData(int level_, std::vector<Platform>& environment_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
+void DBLevel::FillData(int level_, std::vector<Platform>& platform_, Player& player_, Cannon& cannon_, std::vector<EnemySpawner>& spawners_, Goal& goal_)
 {
 	char * error = "";
 	
-	//get environment tiles
+	//get platform_ tiles
 	{
 		std::stringstream ss;
 		ss << "level_id=" << level_;		
@@ -62,7 +62,7 @@ void DBLevel::FillData(int level_, std::vector<Platform>& environment_, Player& 
 		for (int i = 0; i < dm.Rows(); ++i)
 		{
 			Platform env(dm.GetValueInt(i, "col"), dm.GetValueInt(i, "row"), (ENVIRO_TILE)dm.GetValueInt(i, "tile_type"));
-			environment_.push_back(env);
+			platform_.push_back(env);
 		}
 	}
 

@@ -26,7 +26,7 @@ public:
 	Player(void);
 	~Player(void);
 
-	virtual void Update(float delta_, std::vector<Platform>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
+	virtual void Update(float delta_, std::vector<Platform>& platform_, std::vector<Enemy>& enemies, Goal& goal_);
 	virtual void Draw();
 
 	
@@ -36,7 +36,7 @@ private:
 	void MoveTo(Vector2 pos_);
 	void UndoX();
 	void UndoY();
-	void HandleCollision(std::vector<Platform>& environment_, std::vector<Enemy>& enemies, Goal& goal_);
+	void HandleCollision(std::vector<Platform>& platform_, std::vector<Enemy>& enemies, Goal& goal_);
 	void HandleInput(float delta_);
 	void UpdateAnimation(float delta_);
 	void ApplyGravity();

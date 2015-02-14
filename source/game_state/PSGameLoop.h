@@ -38,7 +38,7 @@ private:
 	Cannon cannon;
 	Goal goal;
 	std::vector<Enemy> enemies;
-	std::vector<Platform> environment;
+	std::vector<Platform> platforms;
 	std::vector<Shell> shells;
 	std::vector<EnemySpawner> enemySpawners;
 
