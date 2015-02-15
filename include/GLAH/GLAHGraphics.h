@@ -177,7 +177,7 @@ typedef enum
 	void			SetSpriteUVCoordinates	( unsigned int a_uiSpriteID, float* a_fUVVec4 );
 
 	//draw the sprite to screen
-	void			DrawSprite				( unsigned int spriteID_, bool xFlip_ = false);
+	void			DrawSprite				( unsigned int spriteID_, bool xFlip_ = false, float alpha_ = 1.0f);
 
 	//Get information about the sprite based on spriteID_ 
 	GLAHEntity		GetGLAHEntity			(unsigned int spriteID_);

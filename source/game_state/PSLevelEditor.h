@@ -3,6 +3,7 @@
 #include "GLAH/Vector.h"
 #include "GLAH/InputHelper.h"
 #include <vector>
+#include <memory>
 #include "../game_objects/Platform.h"
 #include "../game_objects/Cannon.h"
 #include "../game_objects/Player.h"
@@ -16,7 +17,7 @@ enum TILE_CATEGORY
 	ENVIRONMENT,
 	PLAYER,
 	CANNON, 
-	GOAL
+	GOA
 };
 
 class PSLevelEditor : public ProgramState
@@ -42,16 +43,20 @@ private:
 	bool lmbDown;
 	bool rmbDown;
 
+	static void ScrollCallback(GLFWwindow* window_, double x_, double y_);
 	static int col;
 	static int row;
 	static int lastRow;
 	static int lastCol;
+	static Platform* currentPlatform;
+
 
 	float uv[4];
 	Vector2 pos;
 
 	InputHelper inputHelper;
-	std::vector<Platform> platforms;
+	std::vector<Platform> platforms;	
+	
 	std::vector<EnemySpawner> enemySpawners;
 	Cannon cannon;
 	Player player;

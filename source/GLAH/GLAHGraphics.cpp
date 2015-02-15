@@ -18,7 +18,7 @@ using namespace std::chrono;
 
 
 //used internally by DrawSprite
-void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_);
+void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_ = 1.0f);
 	
 //Create the SpriteMatrix on the fly
 Matrix3x3		CreateSpriteTransformation	( unsigned int spriteID_ );
@@ -231,7 +231,7 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
 }
 
 //GLAH::DrawSprite ( unsigned int spriteID_)
-void DrawSprite(unsigned int spriteID_, bool xFlip_)
+void DrawSprite(unsigned int spriteID_, bool xFlip_, float alpha_)
 {
 	//get width and height variables
 	GLAHEntity entity = spriteList[spriteID_];
@@ -280,7 +280,7 @@ void DrawSprite(unsigned int spriteID_, bool xFlip_)
 
 	//create the Vertices and send to the GPU
 	Vertex vertices[4];
-	CreateSpriteVertexData(vertices, tl, tr, bl, br, spriteList[spriteID_].UV, xFlip_);
+	CreateSpriteVertexData(vertices, tl, tr, bl, br, spriteList[spriteID_].UV, xFlip_, alpha_);
 	glBindTexture(GL_TEXTURE_2D, spriteID_);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex)*4, vertices);//Updates VBO's data on the fly 
@@ -337,7 +337,7 @@ void SetSpriteUVCoordinates	( unsigned int spriteID_, float* UVVec4_ )
 //tr			: top right position
 //bl			: bottom left position
 //br			: bottom right position
-void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_)
+void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_)
 {
 	const int VERTICES = 4;
 	
@@ -357,7 +357,7 @@ void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector
 			verticesOut_[i].colour.x = 1.0f;                            //R
             verticesOut_[i].colour.y = 1.0f;                            //G
 			verticesOut_[i].colour.z = 1.0f;                            //B
-			verticesOut_[i].colour.w = 1.0f;                            //A
+			verticesOut_[i].colour.w = alpha_;                            //A
     }
 
 	////THIS IS WHERE TO PROGRAM UV'S!!!!!!!!!

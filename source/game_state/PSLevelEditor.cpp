@@ -16,11 +16,19 @@ int PSLevelEditor::col = 0;
 int PSLevelEditor::row = 0;
 int PSLevelEditor::lastCol = 0;
 int PSLevelEditor::lastRow = 0;
+Platform* PSLevelEditor::currentPlatform = nullptr;
 
-//void ScrollCallback(GLFWWindow* 
-void ScrollCallback(GLFWwindow* window_, double x_, double y_)
+void PSLevelEditor::ScrollCallback(GLFWwindow* window_, double x_, double y_)
 {
-	cout << "ScrollCallback: x - " << x_ << "   y - " << y_ <<  endl;
+	//change the current platform tile
+	if ( y_ > 0 )
+	{
+		currentPlatform->DecrementTileType();
+	}
+	else if ( y_ < 0 )
+	{
+		currentPlatform->IncrementTileType();		
+	}		 
 }
 
 void MyKeyEvent(int key_, void* caller_)
@@ -64,11 +72,21 @@ PSLevelEditor::PSLevelEditor(void)
 	lmbDown = false;
 	rmbDown = false;
 	currentCategory = TILE_CATEGORY::PLATFORM;
+	
+	if ( currentPlatform == nullptr )
+	{
+		currentPlatform = new Platform(col, row, ENVIRO_TILE::RED_BRICK_SURFACE);
+	}
 }
 
 
 PSLevelEditor::~PSLevelEditor(void)
 {
+	if ( currentPlatform != nullptr ) 
+	{
+		delete currentPlatform;
+		currentPlatform = nullptr;
+	}
 }
 
 bool PSLevelEditor::FindMatchingPlatform(Platform& env_)
@@ -104,7 +122,7 @@ void PSLevelEditor::ChangePlatformTile()
 	//if not found, add one
 	if ( it == platforms.end() )
 	{
-		platforms.push_back(Platform(col, row, ENVIRO_TILE::RED_BRICK_SURFACE));
+		platforms.push_back(Platform(col, row, currentPlatform->TileType()));
 	}
 }
 
@@ -258,9 +276,12 @@ void PSLevelEditor::Draw()
 	goal.Draw();
 	
 
-	SetSpriteUVCoordinates(SpriteSheet::Sprite(), uv);
-	MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);
-	DrawSprite(SpriteSheet::Sprite());
+	currentPlatform->SetX(pos.x);
+	currentPlatform->SetY(pos.y);
+	currentPlatform->Draw(0.3f);
+	//SetSpriteUVCoordinates(SpriteSheet::Sprite(), uv);
+	//MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);
+	//DrawSprite(SpriteSheet::Sprite());
 
 	promptText.Draw();
 }
