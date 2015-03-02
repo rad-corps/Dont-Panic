@@ -30,6 +30,9 @@ PSGameLoop::PSGameLoop(int level_)
 	gameTimer = 0.f;
 	
 	cannon.RegisterCannonListener(this);	
+	
+	decorations.push_back(Decoration(10, 10, DECORATION_TYPE::TREE_SM_SIL_5));
+	decorations.push_back(Decoration(2, 2, DECORATION_TYPE::TREE_LG_SILVER));
 }
 
 
@@ -94,6 +97,9 @@ void PSGameLoop::Draw()
 	
 	cannon.Draw();
 	player.Draw();
+
+	for ( auto &dec : decorations)
+		dec.Draw();
 }
 
 void PSGameLoop::ShotFired(Vector2 pos_, Vector2 velocity_)

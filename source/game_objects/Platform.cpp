@@ -25,18 +25,6 @@ float* Platform::UV()
 void Platform::InitialiseGraphic()
 {
 	UVTranslator translator(800, 1280, 16, 16);
-	
-
-	//	RED_BRICK_SURFACE,
-	//BLUE_BRICK_SURFACE,
-	//GREY_BRICK_SURFACE,
-	//GOLD_BRICK_SURFACE,
-	//GREEN_BRICK_SURFACE,
-	//RED2_BRICK_SURFACE,
-	//SILVER_BRICK_SURFACE,
-	//RED3_BRICK_SURFACE,
-	//GOLD2_BRICK_SURFACE,
-	//GOLD3_BRICK_SURFACE,
 
 	switch ( tileType )
 	{

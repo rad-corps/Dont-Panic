@@ -228,14 +228,14 @@ void Matrix3x3::SetupTranslation	(Vector3  vec_)
 	matrix[2][2] = 1.0;
 }
 
-void Matrix3x3::SetupScale			(float scalar_)
+void Matrix3x3::SetupScale(float scalarX_, float scalarY_)
 {
-	matrix[0][0] = scalar_;
+	matrix[0][0] = scalarX_;
 	matrix[0][1] = 0.0f;
 	matrix[0][2] = 0.0f;
 
 	matrix[1][0] = 0.0f;
-	matrix[1][1] = scalar_;
+	matrix[1][1] = scalarY_;
 	matrix[1][2] = 0.0f;
 
 	matrix[2][0] = 0.0f;
@@ -243,15 +243,15 @@ void Matrix3x3::SetupScale			(float scalar_)
 	matrix[2][2] = 1.0f;
 }
 
-Matrix3x3 Matrix3x3::CreateScaleMatrix(float scalar_)
+Matrix3x3 Matrix3x3::CreateScaleMatrix(float scalarX_, float scalarY_)
 {
 	Matrix3x3 ret;
 
-	ret.matrix[0][0] = scalar_;
+	ret.matrix[0][0] = scalarX_;
 	ret.matrix[0][1] = 0.0f;
 	ret.matrix[0][2] = 0.0f;
 	ret.matrix[1][0] = 0.0f;
-	ret.matrix[1][1] = scalar_;
+	ret.matrix[1][1] = scalarY_;
 	ret.matrix[1][2] = 0.0f;
 	ret.matrix[2][0] = 0.0f;
 	ret.matrix[2][1] = 0.0f;

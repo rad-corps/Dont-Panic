@@ -90,15 +90,23 @@ CreateSpriteTransformation( unsigned int spriteID_ )
 {
 	Matrix3x3 translationMat = Matrix3x3::CreateTranslationMatrix(spriteList[spriteID_].position);
 	Matrix3x3 rotationMat = Matrix3x3::CreateRotationMatrix(spriteList[spriteID_].rotation);
-	Matrix3x3 scaleMatrix = Matrix3x3::CreateScaleMatrix(spriteList[spriteID_].scale);
+	Matrix3x3 scaleMatrix = Matrix3x3::CreateScaleMatrix(spriteList[spriteID_].scaleX, spriteList[spriteID_].scaleY);
 	return scaleMatrix * rotationMat * translationMat;
 }
 
 //modify the scale of the sprite
+//void			
+//ScaleSprite( unsigned int spriteID_, float scalar_ )
+//{
+//	spriteList[spriteID_].scaleX = scalar_;
+//	spriteList[spriteID_].scaleY = scalar_;
+//}
+
 void			
-ScaleSprite( unsigned int spriteID_, float scalar_ )
+ScaleSprite( unsigned int spriteID_, float scalarX_, float scalarY_ )
 {
-	spriteList[spriteID_].scale = scalar_;
+	spriteList[spriteID_].scaleX = scalarX_;
+	spriteList[spriteID_].scaleY = scalarY_;
 }
 
 void GLAHErroCallback(int errorCode_, const char *errStr_)
@@ -267,7 +275,7 @@ void DrawSprite(unsigned int spriteID_, bool xFlip_, float alpha_)
 
 	//Scale Matric
 	Matrix3x3 scaleMatrix;
-	scaleMatrix.SetupScale(entity.scale);
+	scaleMatrix.SetupScale(entity.scaleX, entity.scaleY);
 	
 	//create the final transform
 	Matrix3x3 transform = scaleMatrix * rotationMat * translationMat;

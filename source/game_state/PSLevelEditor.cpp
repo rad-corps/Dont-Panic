@@ -9,9 +9,6 @@
 
 using namespace std;
 
-
-
-
 int PSLevelEditor::col = 0;
 int PSLevelEditor::row = 0;
 int PSLevelEditor::lastCol = 0;
@@ -87,6 +84,7 @@ PSLevelEditor::~PSLevelEditor(void)
 		delete currentPlatform;
 		currentPlatform = nullptr;
 	}
+	glfwSetScrollCallback(GetWindow(), NULL); 
 }
 
 bool PSLevelEditor::FindMatchingPlatform(Platform& env_)

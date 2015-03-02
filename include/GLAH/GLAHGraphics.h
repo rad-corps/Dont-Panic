@@ -183,7 +183,8 @@ typedef enum
 	GLAHEntity		GetGLAHEntity			(unsigned int spriteID_);
 
 	//Scale sprite (both x and y scaled by scalar_)
-	void			ScaleSprite				( unsigned int spriteID_, float scalar_ );
+//	void			ScaleSprite				( unsigned int spriteID_, float scalar_ );
+	void			ScaleSprite				( unsigned int spriteID_, float scalarX_, float scalarY_ );
 
 	bool			FrameworkUpdate();
 
