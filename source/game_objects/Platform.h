@@ -3,9 +3,13 @@
 #include "../math/Rect.h"
 #include "GLAH\GLAHGraphics.h"
 #include "GLAH\Vector.h"
+#include "Shell.h"
+#include <vector>
 
 enum ENVIRO_TILE
 {
+	//player/enemy can touch 
+	PLATFORMS_START=-1,
 	RED_BRICK_SURFACE,RED_BRICK_BASE,
 	BLUE_BRICK_SURFACE,BLUE_BRICK_BASE,
 	GREY_BRICK_SURFACE,GREY_BRICK_BASE,
@@ -20,17 +24,34 @@ enum ENVIRO_TILE
 	DIRT_SURFACE,DIRT_BASE,
 	MUD_SURFACE,MUD_BASE,
 	DENSE_MUD_SURFACE,DENSE_MUD_BASE,
+	PLATFORMS_END,
+
+	//decoration tiles
+	DECORATION_BEGIN=1024,
+	TREE_SM_SIL_1,
+	TREE_SM_SIL_2,
+	TREE_SM_SIL_3,
+	TREE_SM_SIL_4,
+	TREE_SM_SIL_5,
+	TREE_LG_SILVER,
+	DECORATION_END,
+
+	//Hazards begin
+
+
 	ENVIRO_TILE_END
 };
 
-class Platform :	public Rect
+class Platform : public Rect
 {
 public:
 	Platform(int col_, int row_, ENVIRO_TILE tileType_);
 	~Platform(void);
 
 	void Draw(float alpha_ = 1.0f);
-	void Update(float delta_);
+	void Update(float delta_, std::vector<Shell>& shells_);
+
+	void Fall();
 
 	void IncrementTileType();
 	void DecrementTileType();
@@ -44,10 +65,12 @@ public:
 private:
 	void InitialiseGraphic();
 	float uv[4];
+	int scaleX, scaleY;
 	unsigned int sprite;
 	ENVIRO_TILE tileType;
-	int row;
-	int col;
+	int row, col;
+	bool isFalling;
+	bool active;
 
 //	GLAHGraphics * gfx;
 };

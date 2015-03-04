@@ -46,6 +46,8 @@ PSLevelEditor::PSLevelEditor(void)
 	inputHelper.AddKey(KEY_DOWN);
 	inputHelper.AddKey(KEY_SPACE);
 	inputHelper.AddKey(KEY_ENTER);
+
+	
 	
 
 	vector<int> keys;
@@ -54,8 +56,14 @@ PSLevelEditor::PSLevelEditor(void)
 	{
 		keys.push_back(i);
 	}
+	//0 to 9
+	for (int i = 48; i <= 57; ++i)
+	{
+		keys.push_back(i);
+	}
 
 	inputHelper.AddKeys(keys);
+
 
 	saving = false;
 	inputName = false;
@@ -187,6 +195,14 @@ void PSLevelEditor::KeyDown(int key_)
 		{
 			goal.SetPos(col, row);
 		}
+		if ( key_ == KEY_0 )
+		{
+
+		}
+		if ( key_ == KEY_1 )
+		{
+
+		}
 	}
 }
 
@@ -195,8 +211,8 @@ void PSLevelEditor::UpdateRowCol()
 	//get mouse location
 	double mouseX, mouseY;
 	GetMouseLocation(mouseX, mouseY);
-	mousePos.x = (float)mouseX + 16;//offset x due to drawing from centre
-	mousePos.y = (float)mouseY + 16;
+	mousePos.x = (float)mouseX;//offset x due to drawing from centre
+	mousePos.y = (float)mouseY;
 	//get row and column based on mousePos
 	col = mousePos.x / 32;
 	row = mousePos.y / 32;

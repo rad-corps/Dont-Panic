@@ -42,27 +42,33 @@ Cannon::Update(float delta_)
 	{
 		rotation -= delta_ * 10;
 	}
-	if  (IsKeyDown(KEY_SPACE)) 
+
+	//mouse controlled
+	double mouseX, mouseY;
+	GetMouseLocation(mouseX, mouseY);
+	Vector2 mousePos(mouseX, mouseY);
+
+	//angle 
+	rotation = ((pos - mousePos).GetAngle()) - 3.14;
+	//cout << pos.AngleBetweenVectors(mousePos) << endl;
+
+	if  (GetMouseButtonDown(0)) 
 	{
 		if ( reloadTime > 0.3 ) 
 		{
 			reloadTime = 0.0f;
 			Vector2 velocity;
 			velocity.SetAngle(rotation);
-			velocity.SetMagnitude(1000);
+			velocity.SetMagnitude(3000);
 			cannonListener->ShotFired(pos, velocity);	
-		}
-		
+		}		
 	}
-	
 }
 
 void Cannon::Draw()
 {
 	SetSpriteUVCoordinates(SpriteSheet::Sprite(), UVs);
-	
 	MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);
-	
 	RotateSprite(SpriteSheet::Sprite(), 3.14f/2 + 3.14);
 	RotateSpriteRelative(SpriteSheet::Sprite(), -rotation);
 	DrawSprite(SpriteSheet::Sprite());

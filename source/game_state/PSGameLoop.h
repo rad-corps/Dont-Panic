@@ -10,7 +10,6 @@
 #include "../game_objects/Enemy.h"
 #include "../game_objects/EnemySpawner.h"
 #include "../game_objects/Goal.h"
-#include "../game_objects/Decoration.h"
 #include "../listeners/CannonListener.h"
 #include "GLAH/Vector.h"
 
@@ -39,7 +38,7 @@ private:
 	Cannon cannon;
 	Goal goal;
 
-	std::vector<Decoration> decorations;
+
 	std::vector<Enemy> enemies;
 	std::vector<Platform> platforms;
 	std::vector<Shell> shells;
