@@ -77,32 +77,35 @@ void Player::HandleCollision(vector<Platform>& platform_, std::vector<Enemy>& en
 	{
 		if ( env.TileType() > ENVIRO_TILE::PLATFORMS_START && env.TileType() < ENVIRO_TILE::PLATFORMS_END )
 		{
-			if ( Collision::RectCollision(topCollider, env))
+			if ( env.Active() )
 			{
-				if  (velocity.y > 0)
-					velocity.y = 0;
-					//velocity.y = -velocity.y;
-			}
-			if ( Collision::RectCollision(bottomCollider, env))
-			{
-				onPlatform = true;
-				velocity.y = 0;
-				//push him back up to the top of the platform
-				MoveTo(Vector2(pos.x, env.Top() + 16));
-				
-				//if the env is a falling type, then make it fall!
-				if ( env.TileType() == ENVIRO_TILE::RED_BRICK_BASE || env.TileType() == ENVIRO_TILE::RED_BRICK_SURFACE ) 
+				if ( Collision::RectCollision(topCollider, env))
 				{
-					env.Fall();
+					if  (velocity.y > 0)
+						velocity.y = 0;
+						//velocity.y = -velocity.y;
 				}
-			}
-			if ( Collision::RectCollision(leftCollider, env))
-			{
-				UndoX();
-			}
-			if ( Collision::RectCollision(rightCollider, env))
-			{
-				UndoX();
+				if ( Collision::RectCollision(bottomCollider, env))
+				{
+					onPlatform = true;
+					velocity.y = 0;
+					//push him back up to the top of the platform
+					MoveTo(Vector2(pos.x, env.Top() + 16));
+				
+					//if the env is a falling type, then make it fall!
+					if ( env.TileType() == ENVIRO_TILE::RED_BRICK_BASE || env.TileType() == ENVIRO_TILE::RED_BRICK_SURFACE ) 
+					{
+						env.Fall();
+					}
+				}
+				if ( Collision::RectCollision(leftCollider, env))
+				{
+					UndoX();
+				}
+				if ( Collision::RectCollision(rightCollider, env))
+				{
+					UndoX();
+				}
 			}
 		}
 	}

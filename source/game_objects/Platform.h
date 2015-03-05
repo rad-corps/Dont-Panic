@@ -52,6 +52,7 @@ public:
 	void Update(float delta_, std::vector<Shell>& shells_);
 
 	void Fall();
+	bool Active();
 
 	void IncrementTileType();
 	void DecrementTileType();

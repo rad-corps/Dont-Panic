@@ -158,28 +158,31 @@ void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& she
 		//only check collision with platforms
 		if ( env.TileType() > ENVIRO_TILE::PLATFORMS_START && env.TileType() < ENVIRO_TILE::PLATFORMS_END )
 		{
-			if ( Collision::RectCollision(topCollider, env))
+			if ( env.Active() ) 
 			{
-				if  (velocity.y > 0)
+				if ( Collision::RectCollision(topCollider, env))
+				{
+					if  (velocity.y > 0)
+						velocity.y = 0;
+						//velocity.y = -velocity.y;
+				}
+				if ( Collision::RectCollision(bottomCollider, env))
+				{
+					onPlatform = true;
 					velocity.y = 0;
-					//velocity.y = -velocity.y;
-			}
-			if ( Collision::RectCollision(bottomCollider, env))
-			{
-				onPlatform = true;
-				velocity.y = 0;
-				//push him back up to the top of the platform
-				MoveTo(Vector2(pos.x, env.Top() + 16));
-			}
-			if ( Collision::RectCollision(leftCollider, env))
-			{
-				UndoX();
-				dir = DIRECTION::DIR_RIGHT;
-			}
-			if ( Collision::RectCollision(rightCollider, env))
-			{
-				UndoX();
-				dir = DIRECTION::DIR_LEFT;
+					//push him back up to the top of the platform
+					MoveTo(Vector2(pos.x, env.Top() + 16));
+				}
+				if ( Collision::RectCollision(leftCollider, env))
+				{
+					UndoX();
+					dir = DIRECTION::DIR_RIGHT;
+				}
+				if ( Collision::RectCollision(rightCollider, env))
+				{
+					UndoX();
+					dir = DIRECTION::DIR_LEFT;
+				}
 			}
 		}
 	}
@@ -190,12 +193,15 @@ void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& she
 
 	//check if shot
 	for ( auto &shell : shells_ )
-	{
-		if ( Collision::RectCollision(shell.GetRect(), GetRect()) )
-		{
-			active = false;
-		}
-	}
+		if ( shell.IsActive() )
+			if ( Collision::RectCollision(shell.GetRect(), GetRect()) )		
+			{
+				active = false;
+				shell.SetActive(false);
+			}
+
+		
+	
 }
 
 void Enemy::ApplyGravity()

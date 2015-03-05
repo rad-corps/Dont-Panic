@@ -25,6 +25,11 @@ float* Platform::UV()
 	return uv;
 }
 
+bool Platform::Active()
+{
+	return active;
+}
+
 void Platform::InitialiseGraphic()
 {
 	UVTranslator translator(800, 1280, 16, 16);
@@ -166,7 +171,10 @@ void Platform::Update(float delta_, std::vector<Shell>& shells_)
 		for ( auto& shell : shells_ )
 		{
 			if ( Collision::RectCollision(shell.GetRect(), *this) ) 
+			{
 				active = false;
+				shell.SetActive(false);
+			}
 		}
 	}
 }
