@@ -82,6 +82,28 @@ PSLevelEditor::PSLevelEditor(void)
 	{
 		currentPlatform = new Platform(col, row, ENVIRO_TILE::RED_BRICK_SURFACE);
 	}
+
+	//instructions
+	showInstructions = true;
+	std::vector<string> instructionsStr;
+	instructionsStr.push_back("1: PLATFORMS");
+	instructionsStr.push_back("2: DECORATIONS");
+	instructionsStr.push_back("3: ENEMIES");
+	instructionsStr.push_back("SCROLL MOUSE WHEEL TO SWAP OBJECT");
+	instructionsStr.push_back("LEFT MOUSE BUTTON TO PLACE");
+	instructionsStr.push_back("RIGHT MOUSE BUTTON TO DELETE");
+	instructionsStr.push_back("I: SHOW/HIDE INSTRUCTIONS");
+
+	GLText tempText;
+	Vector2 instPos(30, 700);
+	for (auto &text : instructionsStr)
+	{
+		tempText.SetText(text);
+		tempText.SetPos(instPos);
+		instructions.push_back(tempText);
+		instPos.y -= 30;
+	}
+	
 }
 
 
@@ -195,13 +217,17 @@ void PSLevelEditor::KeyDown(int key_)
 		{
 			goal.SetPos(col, row);
 		}
-		if ( key_ == KEY_0 )
-		{
-
-		}
 		if ( key_ == KEY_1 )
 		{
-
+			currentPlatform->SetTileset(ENVIRO_TILE::PLATFORMS_START);
+		}
+		if ( key_ == KEY_2 )
+		{
+			currentPlatform->SetTileset(ENVIRO_TILE::DECORATION_BEGIN);
+		}
+		if ( key_ == KEY_I )
+		{
+			showInstructions = !showInstructions;
 		}
 	}
 }
@@ -298,4 +324,9 @@ void PSLevelEditor::Draw()
 	//DrawSprite(SpriteSheet::Sprite());
 
 	promptText.Draw();
+
+	if ( showInstructions )
+		for ( auto& text : instructions )
+			text.Draw();
+	
 }

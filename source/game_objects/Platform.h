@@ -39,7 +39,7 @@ enum ENVIRO_TILE
 	//Hazards begin
 
 
-	ENVIRO_TILE_END
+
 };
 
 class Platform : public Rect
@@ -55,6 +55,7 @@ public:
 
 	void IncrementTileType();
 	void DecrementTileType();
+	void SetTileset(ENVIRO_TILE);
 	ENVIRO_TILE TileType();
 
 	int Row();

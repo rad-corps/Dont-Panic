@@ -28,7 +28,8 @@ float* Platform::UV()
 void Platform::InitialiseGraphic()
 {
 	UVTranslator translator(800, 1280, 16, 16);
-
+	scaleX = 1;
+	scaleY = 1;
 	switch ( tileType )
 	{
 	//player / enemy can touch
@@ -78,29 +79,47 @@ void Platform::Fall()
 	isFalling = true;
 }
 
+//scroll down
 void Platform::IncrementTileType()
 {
 	tileType = (ENVIRO_TILE)((int)tileType + 1);
 	
-	if ( tileType == ENVIRO_TILE::ENVIRO_TILE_END )
-	{
-		tileType = ENVIRO_TILE::RED_BRICK_SURFACE;
-	}
 	if ( tileType == ENVIRO_TILE::PLATFORMS_END ) 
 	{
-		tileType = ENVIRO_TILE::DECORATION_BEGIN;
+		tileType = (ENVIRO_TILE)((int)ENVIRO_TILE::PLATFORMS_START + 1);
+	}
+	if ( tileType == ENVIRO_TILE::DECORATION_END ) 
+	{
+		tileType = (ENVIRO_TILE)((int)ENVIRO_TILE::DECORATION_BEGIN + 1);
 	}
 	InitialiseGraphic();
 }
 
+//scroll up
 void Platform::DecrementTileType()
 {
 	tileType = (ENVIRO_TILE)((int)tileType - 1);
 	
-	if ( (int) tileType < 0 )
+	if ( tileType == ENVIRO_TILE::PLATFORMS_START )
 	{		
-		tileType = ENVIRO_TILE::ENVIRO_TILE_END;
-		return DecrementTileType();
+		tileType = (ENVIRO_TILE)((int)ENVIRO_TILE::PLATFORMS_END - 1);
+	}
+	if ( tileType == ENVIRO_TILE::DECORATION_BEGIN)
+	{		
+		tileType = (ENVIRO_TILE)((int)ENVIRO_TILE::DECORATION_END - 1);
+	}
+	InitialiseGraphic();
+}
+
+void Platform::SetTileset(ENVIRO_TILE tile_)
+{
+	if ( tile_ == ENVIRO_TILE::PLATFORMS_START ) 
+	{
+		tileType = (ENVIRO_TILE)((int)ENVIRO_TILE::PLATFORMS_START + 1);
+	}
+	if ( tile_ == ENVIRO_TILE::DECORATION_BEGIN )
+	{
+		tileType = (ENVIRO_TILE)((int)ENVIRO_TILE::DECORATION_BEGIN + 1);
 	}
 	InitialiseGraphic();
 }

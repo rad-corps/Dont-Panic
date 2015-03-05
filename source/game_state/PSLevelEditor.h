@@ -65,9 +65,11 @@ private:
 
 	bool inputName;
 	bool saving;
+	bool showInstructions;
 
 	std::string levelName;
 	GLText promptText;
+	std::vector<GLText> instructions;
 	Vector2 mousePos;
 
 	TILE_CATEGORY currentCategory;
