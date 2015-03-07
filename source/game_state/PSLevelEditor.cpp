@@ -34,9 +34,9 @@ void MyKeyEvent(int key_, void* caller_)
 	caller->KeyDown(key_);
 }
 
-PSLevelEditor::PSLevelEditor(void)
+void PSLevelEditor::Init()
 {
-	UVTranslator trans(800,1280,16,16);
+		UVTranslator trans(800,1280,16,16);
 	trans.GetUV(uv, 16, 0);
 
 	inputHelper.RegisterCallback(&MyKeyEvent, this);
@@ -46,9 +46,6 @@ PSLevelEditor::PSLevelEditor(void)
 	inputHelper.AddKey(KEY_DOWN);
 	inputHelper.AddKey(KEY_SPACE);
 	inputHelper.AddKey(KEY_ENTER);
-
-	
-	
 
 	vector<int> keys;
 	//A to Z
@@ -108,7 +105,18 @@ PSLevelEditor::PSLevelEditor(void)
 		instructions.push_back(tempText);
 		instPos.y -= 30;
 	}
-	
+}
+
+PSLevelEditor::PSLevelEditor(int levelID_)
+{
+	DBLevel dbLevel;
+	dbLevel.FillData(levelID_, platforms, player, cannon, enemySpawners, goal);
+	Init();
+}
+
+PSLevelEditor::PSLevelEditor(void)
+{
+	Init();	
 }
 
 

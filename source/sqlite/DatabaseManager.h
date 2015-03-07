@@ -49,6 +49,7 @@ public:
 	//Create a database table with the colNames and datatypes
 	bool Create(string dbFile, string tableName, map<string, DB_SQLITE_DATATYPE> colNames, char* errorMsg);
 
+	bool Delete(string dbFile, string tableName, string sqlWhere, char* errorMsg);
 
 	//returns the value at row row for col
 	string GetValueString(unsigned int row, string col); 

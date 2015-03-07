@@ -96,6 +96,23 @@ bool DatabaseManager::Insert(string dbFile, string table, string colNames, strin
 	}
 	return true;
 }
+
+bool DatabaseManager::Delete(string dbFile, string tableName, string sqlWhere, char* errorMsg)
+{
+	sqlite3* db = nullptr; //this is the database object
+	sqlite3_open(dbFile.c_str(), &db);
+
+	//create the statement
+	string sql = "DELETE FROM " + tableName + " WHERE " + sqlWhere;
+
+	sqlite3_exec(db, sql.c_str(), this->s_Callback, this, &errorMsg);
+
+	if  (errorMsg != NULL )
+	{
+		return false;
+	}
+	return true;
+}
 	
 //DatabaseManager::Select
 //table		- the table to select from	

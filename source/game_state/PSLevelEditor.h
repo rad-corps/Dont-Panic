@@ -23,6 +23,8 @@ enum TILE_CATEGORY
 class PSLevelEditor : public ProgramState
 {
 public:
+	//use this constructor to load a level into the editor
+	PSLevelEditor(int levelID_);
 	PSLevelEditor(void);
 	~PSLevelEditor(void);
 
@@ -35,7 +37,7 @@ public:
 	static bool FindMatchingEnemySpawner(EnemySpawner& env_);
 
 private:
-
+	void Init();
 	void ChangePlatformTile();
 	void RemovePlatformTile();
 	void UpdateRowCol();

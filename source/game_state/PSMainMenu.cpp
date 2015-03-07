@@ -2,6 +2,7 @@
 #include "PSGameLoop.h"
 #include "PSLevelEditor.h"
 #include "PSLevelSelect.h"
+#include "PSLevelModifySelect.h"
 #include "GLAH/GLAHGraphics.h"
 #include <iostream>
 
@@ -11,7 +12,8 @@ PSMainMenu::PSMainMenu(void)
 {
 	menuStrings.push_back("----------Dont Panic Alpha----------");
 	menuStrings.push_back("Play Game                          1");
-	menuStrings.push_back("Level Designer                     2");
+	menuStrings.push_back("Create New Level                   2");
+	menuStrings.push_back("Modify Existing Level              3");
 
 	//create the GLText objects
 	Vector2 textPos(1024/2, 700);
@@ -38,8 +40,9 @@ ProgramState* PSMainMenu::Update(float delta_)
 		return new PSLevelSelect();
 	if ( IsKeyDown(KEY_2) )
 		return new PSLevelEditor();
-	//if ( IsKeyDown(KEY_ESCAPE) )
-	//{}
+	if ( IsKeyDown(KEY_3) )
+		return new PSLevelModifySelect();
+
 	return nullptr;
 }
 
