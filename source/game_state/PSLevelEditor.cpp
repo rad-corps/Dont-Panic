@@ -88,11 +88,16 @@ PSLevelEditor::PSLevelEditor(void)
 	std::vector<string> instructionsStr;
 	instructionsStr.push_back("1: PLATFORMS");
 	instructionsStr.push_back("2: DECORATIONS");
-	instructionsStr.push_back("3: ENEMIES");
+	//instructionsStr.push_back("3: ENEMIES");
 	instructionsStr.push_back("SCROLL MOUSE WHEEL TO SWAP OBJECT");
 	instructionsStr.push_back("LEFT MOUSE BUTTON TO PLACE");
 	instructionsStr.push_back("RIGHT MOUSE BUTTON TO DELETE");
 	instructionsStr.push_back("I: SHOW/HIDE INSTRUCTIONS");
+	instructionsStr.push_back("P: SET PLAYER POSITION");
+	instructionsStr.push_back("C: SET CANON POSITION");
+	instructionsStr.push_back("G: SET GOAL POSITION");
+	instructionsStr.push_back("E: SET ENEMY SPAWN POSITION");
+	instructionsStr.push_back("CTRL + S: SAVE LEVEL");
 
 	GLText tempText;
 	Vector2 instPos(30, 700);

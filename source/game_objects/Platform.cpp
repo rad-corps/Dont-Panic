@@ -177,4 +177,14 @@ void Platform::Update(float delta_, std::vector<Shell>& shells_)
 			}
 		}
 	}
+	if ( tileType == ENVIRO_TILE::GREY_BRICK_BASE|| tileType == ENVIRO_TILE::GREY_BRICK_SURFACE) 
+	{
+		for ( auto& shell : shells_ )
+		{
+			if ( Collision::RectCollision(shell.GetRect(), *this) ) 
+			{
+				shell.SetActive(false);
+			}
+		}
+	}
 }

@@ -16,15 +16,15 @@ Player::Player(void)
 	alive = true;
 
 	//initialise colliders
-	topCollider.width = 10;
+	topCollider.width = 16;
 	topCollider.height = 3;
-	bottomCollider.width = 10;
+	bottomCollider.width = 16;
 	bottomCollider.height = 3;
 
 	leftCollider.width = 3;
-	leftCollider.height = 10;
+	leftCollider.height = 16;
 	rightCollider.width = 3;
-	rightCollider.height = 10;
+	rightCollider.height = 16;
 	hitCollider.width = 26;
 	hitCollider.height = 26;
 
@@ -101,10 +101,13 @@ void Player::HandleCollision(vector<Platform>& platform_, std::vector<Enemy>& en
 				if ( Collision::RectCollision(leftCollider, env))
 				{
 					UndoX();
+					//PUSH HIM ONE PIXEL RIGHT
+					pos.x += 1;
 				}
 				if ( Collision::RectCollision(rightCollider, env))
 				{
 					UndoX();
+					pos.x -= 1;
 				}
 			}
 		}
@@ -153,14 +156,14 @@ void Player::HandleInput(float delta_)
 	if ( IsKeyDown(KEY_A ) )
 	{
 		faceLeft = true;
-		pos.x -= 300 * delta_;
+		pos.x -= 160 * delta_;
 		if ( onPlatform ) 
 			status = RUNNING;
 	}
 	else if ( IsKeyDown(KEY_D ) )
 	{
 		faceLeft = false;
-		pos.x += 300 * delta_;
+		pos.x += 160 * delta_;
 		
 		if ( onPlatform ) 
 			status = RUNNING;
