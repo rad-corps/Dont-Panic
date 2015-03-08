@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../sqlite/DatabaseManager.h"
 #include "PSGameLoop.h"
+#include "PSMainMenu.h"
 using namespace std;
 
 void MyLevelSelectKeyEvent(int key_, void* caller_)
@@ -70,6 +71,10 @@ ProgramState* PSLevelSelect::Update(float delta_)
 
 	if ( lvlToStart != -1)
 		return new PSGameLoop(lvlToStart);
+
+	if ( IsKeyDown( KEY_ESCAPE ) )
+		return new PSMainMenu();
+	
 	return nullptr;
 }
 

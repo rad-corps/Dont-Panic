@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../sqlite/DatabaseManager.h"
 #include "PSLevelEditor.h"
+#include "PSMainMenu.h"
 using namespace std;
 
 void MyModifyLevelSelectKeyEvent(int key_, void* caller_)
@@ -32,7 +33,7 @@ void PSLevelModifySelect::KeyDown(int key_)
 		promptText << "Are you sure you want to delete level " << GetLevelString(lvlToStart) << " Y/N";
 		prompt.SetText(promptText.str());
 		prompt.SetPos(Vector2(50, 300));
-		break;
+		break;	
 	}
 
 	if  ( deletePrompt ) 
@@ -104,6 +105,7 @@ PSLevelModifySelect::PSLevelModifySelect(void)
 	inputHelper.AddKey(KEY_DELETE);
 	inputHelper.AddKey(KEY_N);
 	inputHelper.AddKey(KEY_Y);
+	inputHelper.AddKey(KEY_ESCAPE);
 
 
 }
@@ -120,6 +122,9 @@ ProgramState* PSLevelModifySelect::Update(float delta_)
 	if ( lvlToStart != -1 && !deletePrompt)
 		return new PSLevelEditor(lvlToStart);
 	
+	if ( IsKeyDown( KEY_ESCAPE ) )
+		return new PSMainMenu();	
+
 	return nullptr;
 }
 
