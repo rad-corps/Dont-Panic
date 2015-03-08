@@ -121,7 +121,10 @@ void Player::HandleCollision(vector<Platform>& platform_, std::vector<Enemy>& en
 	for ( auto &enemy : enemies_ )
 		if ( Collision::RectCollision(hitCollider, enemy.GetRect()))
 			if ( enemy.IsActive() )
+			{
 				alive = false;
+				playerSpeak.SetText("R TO RESTART");
+			}
 
 	//check player goal collision
 	if ( Collision::RectCollision(hitCollider, goal_.GetRect()))
@@ -144,7 +147,7 @@ void Player::UndoY()
 void Player::ApplyGravity()
 {
 	//gravity only if jumping
-	Vector2 gravity(0, -1); 
+	Vector2 gravity(0, -0.75); 
 	if ( status == JUMPING )
 	{
 		velocity += gravity;	
@@ -174,12 +177,18 @@ void Player::HandleInput(float delta_)
 	}
 
 	//only jump if not already jumping
-	if ( IsKeyDown(KEY_W ) && status != PLAYER_STATUS::JUMPING)
+	if ( IsKeyDown(KEY_W ) && status != PLAYER_STATUS::JUMPING && !jumpHeld)
 	{
+		jumpHeld = true;
 		status = JUMPING;	
 		
 		//will only happen for one frame
-		velocity.y += 15;
+		velocity.y += 10;
+	}
+
+	if ( !IsKeyDown(KEY_W) )
+	{
+		jumpHeld = false;
 	}
 }
 

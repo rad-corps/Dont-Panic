@@ -23,13 +23,15 @@
 
 PSGameLoop::PSGameLoop(int level_)
 {
+	level = level_;
 	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
 	DBLevel dbLevel;
-	dbLevel.FillData(level_, platforms, player, cannon, enemySpawners, goal);
+	dbLevel.FillData(level, platforms, player, cannon, enemySpawners, goal);
 
 	gameTimer = 0.f;
 	
 	cannon.RegisterCannonListener(this);	
+	rHeld = IsKeyDown(KEY_R);
 }
 
 
@@ -69,6 +71,13 @@ ProgramState* PSGameLoop::Update(float delta_)
 	if ( IsKeyDown(KEY_ESCAPE) ) 
 		return new PSMainMenu();
 
+	if ( !IsKeyDown(KEY_R) ) 
+		rHeld = false;
+	if ( IsKeyDown(KEY_R) && rHeld == false ) 
+		return new PSGameLoop(level);
+
+
+
 	return nullptr;
 }
 
@@ -78,7 +87,7 @@ void PSGameLoop::Draw()
 	for ( auto &enemy : enemies )
 		enemy.Draw();
 
-	player.Draw();
+	
 	
 	for (auto &env : platforms )
 		env.Draw();		
@@ -91,6 +100,8 @@ void PSGameLoop::Draw()
 
 	goal.Draw();	
 	cannon.Draw();
+
+	player.Draw();
 	
 }
 

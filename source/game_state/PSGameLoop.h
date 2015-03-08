@@ -37,6 +37,8 @@ private:
 	Player player;
 	Cannon cannon;
 	Goal goal;
+	int level;
+	bool rHeld;
 
 
 	std::vector<Enemy> enemies;

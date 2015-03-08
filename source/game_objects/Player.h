@@ -67,6 +67,7 @@ private:
 	bool onPlatform;
 	bool faceLeft;
 	bool alive;
+	bool jumpHeld;
 
 	GLText playerSpeak;
 

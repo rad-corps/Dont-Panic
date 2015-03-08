@@ -54,9 +54,7 @@ OuterLoop::OuterLoop(void)
 	AddFont("./resources/fonts/arial.fnt");
 
 	cout << "OuterLoop()" << endl;
-	
-	
-	
+
 	mouseX = 0.0;
 	mouseY = 0.0;
 	gameTimer = 0.0f;
@@ -93,12 +91,9 @@ void OuterLoop::Go()
 		{
 			delete currentProgramState;
 			currentProgramState = newState;
-			//if ( currentProgramState->ShuttingDown() ) 
-			//	break;
 		}
 
 		currentProgramState->Draw();
-		
-	
+			
 	}while ( FrameworkUpdate() == false );
 }

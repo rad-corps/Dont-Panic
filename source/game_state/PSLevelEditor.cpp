@@ -46,6 +46,7 @@ void PSLevelEditor::Init()
 	inputHelper.AddKey(KEY_DOWN);
 	inputHelper.AddKey(KEY_SPACE);
 	inputHelper.AddKey(KEY_ENTER);
+	inputHelper.AddKey(KEY_BACKSPACE);
 
 	vector<int> keys;
 	//A to Z
@@ -91,9 +92,11 @@ void PSLevelEditor::Init()
 	instructionsStr.push_back("RIGHT MOUSE BUTTON TO DELETE");
 	instructionsStr.push_back("I: SHOW/HIDE INSTRUCTIONS");
 	instructionsStr.push_back("P: SET PLAYER POSITION");
-	instructionsStr.push_back("C: SET CANON POSITION");
+	instructionsStr.push_back("O: SET CANON POSITION");
 	instructionsStr.push_back("G: SET GOAL POSITION");
 	instructionsStr.push_back("E: SET ENEMY SPAWN POSITION");
+	//instructionsStr.push_back("C: COPY TILE");
+	//instructionsStr.push_back("V: PASTE TILE");
 	instructionsStr.push_back("CTRL + S: SAVE LEVEL");
 
 	GLText tempText;
@@ -181,12 +184,18 @@ void PSLevelEditor::KeyDown(int key_)
 			inputName = false;
 			promptText.SetText(levelName + " Saved");
 		}
+		else if ( key_ == KEY_BACKSPACE )
+		{
+			if ( levelName.size() > 0 )
+			{
+				levelName = levelName.substr(0, levelName.size()-1);
+			}
+		}
 		else
 		{			
 			//turn key into a char
 			char x = (char)key_;
 			levelName += x;
-			cout << "Level Name: " << levelName;
 		}
 	}
 	if ( !inputName )
@@ -218,7 +227,7 @@ void PSLevelEditor::KeyDown(int key_)
 				enemySpawners.push_back(EnemySpawner(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, col, row)));
 			}
 		}
-		if ( key_ == KEY_C )
+		if ( key_ == KEY_O )
 		{
 			cannon.SetPos(col, row);
 		}
