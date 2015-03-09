@@ -23,29 +23,29 @@
 using namespace std;
 
 // Get the horizontal and vertical screen sizes in pixel
-void GetDesktopResolution(int& horizontal, int& vertical)
-{
-   RECT desktop;
-   // Get a handle to the desktop window
-   const HWND hDesktop = GetDesktopWindow();
-   // Get the size of screen to the variable desktop
-   GetWindowRect(hDesktop, &desktop);
-   // The top left corner will have coordinates (0,0)
-   // and the bottom right corner will have coordinates
-   // (horizontal, vertical)
-   horizontal = desktop.right;
-   vertical = desktop.bottom;
-}
+//void GetDesktopResolution(int& horizontal, int& vertical)
+//{
+//   RECT desktop;
+//   // Get a handle to the desktop window
+//   const HWND hDesktop = GetDesktopWindow();
+//   // Get the size of screen to the variable desktop
+//   GetWindowRect(hDesktop, &desktop);
+//   // The top left corner will have coordinates (0,0)
+//   // and the bottom right corner will have coordinates
+//   // (horizontal, vertical)
+//   horizontal = desktop.right;
+//   vertical = desktop.bottom;
+//}
 
 OuterLoop::OuterLoop(void)
 	: updateInterval(0.0166666666666666667f)
 {
 	//set the screen resolution variables in the filesettings map
-	int hor, ver;
-	GetDesktopResolution(hor, ver);
-	cout << "Screen Res: " << hor << "x" << ver << endl;
-	FileSettings::AddIntValue("SCREEN_W", hor);
-	FileSettings::AddIntValue("SCREEN_H", ver);
+	//int hor, ver;
+	//GetDesktopResolution(hor, ver);
+	//cout << "Screen Res: " << hor << "x" << ver << endl;
+	FileSettings::AddIntValue("SCREEN_W", 1024);
+	FileSettings::AddIntValue("SCREEN_H", 768);
 
 	//Initialise( FileSettings::GetInt("SCREEN_W"), FileSettings::GetInt("SCREEN_H"),  FileSettings::GetBool("FULL_SCREEN"), "Dont Panic" );
 	Initialise( 1024, 768, false, "Dont Panic" );
