@@ -274,7 +274,14 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 	GLAHEntity entity = spriteList[sprite_];
 	SDL_Rect src = { entity.UV[0], entity.UV[1], entity.UV[2], entity.UV[3] };
 	SDL_Rect dst = { entity.position.x, 768 - entity.position.y, entity.size.x, entity.size.y };
-    SDL_RenderCopy( renderer, sprite_, &src, &dst );
+
+	//flipping horizontally?
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	if ( xFlip_ )
+	{
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, 0, NULL, flip );
 }
 
 //GLAH::DrawSprite

@@ -84,12 +84,15 @@ ProgramState* PSGameLoop::Update(float delta_)
 
 //Draw Game
 void PSGameLoop::Draw()
-{	
+{
+
+	cannon.Draw();
+
+	player.Draw();
+
 	for ( auto &enemy : enemies )
 		enemy.Draw();
 
-	
-	
 	for (auto &env : platforms )
 		env.Draw();		
 
@@ -100,9 +103,9 @@ void PSGameLoop::Draw()
 		es.Draw();
 
 	goal.Draw();	
-	cannon.Draw();
+	
 
-	player.Draw();
+	
 	
 }
 
