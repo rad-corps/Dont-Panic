@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../math/Rect.h"
-#include "GLAH\GLAHGraphics.h"
-#include "GLAH\Vector.h"
+#include "GLAH/GLAHGraphics.h"
+#include "GLAH/Vector.h"
 #include "Shell.h"
 #include <vector>
 

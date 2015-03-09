@@ -1,5 +1,5 @@
-#include "tests\Databases.h"
-#include "game_state\OuterLoop.h"
+//#include "tests\Databases.h"
+#include "game_state/OuterLoop.h"
 
 //The Original resolution of Space Invaders was 224 x 260 
 //For comparison the Nintendo DS has a resolution of 292 x 192
