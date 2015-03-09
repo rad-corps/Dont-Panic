@@ -291,7 +291,7 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 	{
 		flip = SDL_FLIP_HORIZONTAL;
 	}
-	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, 0, NULL, flip );
+	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, NULL, flip );
 }
 
 //GLAH::DrawSprite
@@ -316,14 +316,13 @@ void MoveSpriteRelative(unsigned int spriteID_, float xMovement_, float yMovemen
 
 void RotateSpriteRelative(SDL_Texture* sprite_, float rotation_ )
 {
-	//spriteList[spriteID_].rotation += rotation_;
-	//cout << "stubbed: RotateSpriteRelative" << endl;
+	spriteList[sprite_].rotation += rotation_;
 }
 
 void RotateSprite(SDL_Texture* sprite_, float rotation_ )
 {
-	//spriteList[spriteID_].rotation = rotation_;
-	//cout << "stubbed: RotateSprite" << endl;
+	spriteList[sprite_].rotation = rotation_;
+	
 }
 
 GLAHEntity GetGLAHEntity(SDL_Texture* sprite_)

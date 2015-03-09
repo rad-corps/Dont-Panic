@@ -45,8 +45,8 @@ void Shell::Update(float delta_)
 	if ( active ) 
 	{
 		//apply gravity
-		Vector2 gravity(0, -50); 
-		velocity += gravity;	
+		//Vector2 gravity(0, -50); 
+		//velocity += gravity;	
 
 		pos += velocity * delta_;
 		timer += delta_;

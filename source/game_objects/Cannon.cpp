@@ -59,7 +59,7 @@ Cannon::Update(float delta_)
 			reloadTime = 0.0f;
 			Vector2 velocity;
 			velocity.SetAngle(rotation);
-			velocity.SetMagnitude(3500);
+			velocity.SetMagnitude(2000);
 			cannonListener->ShotFired(pos, velocity);	
 		}		
 	}
