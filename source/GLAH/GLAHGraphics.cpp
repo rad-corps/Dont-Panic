@@ -190,7 +190,7 @@ bool FrameworkUpdate()
         {
             quit = true;
         }
-		if ( e.type == SDL_KEYDOWN ) 
+		else if ( e.type == SDL_KEYDOWN ) 
 		{
 			if ( inputListener != nullptr ) 
 			{
@@ -198,20 +198,35 @@ bool FrameworkUpdate()
 				keyDownList[e.key.keysym.sym] = true;
 			}
 		}
-		if ( e.type == SDL_KEYUP ) 
+		else if ( e.type == SDL_KEYUP ) 
 		{
 			if ( inputListener != nullptr ) 
 			{
 				keyDownList[e.key.keysym.sym] = false;
 			}
 		}
-		if ( e.type == SDL_MOUSEBUTTONDOWN ) 
-		{
-			msBtnDwn[0] = true;
+		else if ( e.type == SDL_MOUSEBUTTONDOWN ) 
+		{			
+			if ( e.button.button == SDL_BUTTON_LEFT )
+			{
+				msBtnDwn[0] = true;
+			}
+			if ( e.button.button == SDL_BUTTON_RIGHT )
+			{
+				msBtnDwn[1] = true;
+			}
+			
 		}
-		if ( e.type == SDL_MOUSEBUTTONUP ) 
+		else if ( e.type == SDL_MOUSEBUTTONUP ) 
 		{
-			msBtnDwn[0] = false;
+			if ( e.button.button == SDL_BUTTON_LEFT )
+			{
+				msBtnDwn[0] = false;
+			}
+			if ( e.button.button == SDL_BUTTON_RIGHT )
+			{
+				msBtnDwn[1] = false;
+			}
 		}
 
     }
@@ -386,7 +401,7 @@ bool IsKeyDown( SDL_Keycode key_ )
 
 bool GetMouseButtonDown( int a_iMouseButtonToTest )
 {
-	return msBtnDwn[0];
+	return msBtnDwn[a_iMouseButtonToTest];
 }
 
 void GetMouseLocation( int& a_iMouseX, int& a_iMouseY )

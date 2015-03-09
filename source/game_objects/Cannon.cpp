@@ -47,8 +47,6 @@ Cannon::Update(float delta_)
 	int mouseX, mouseY;
 	GetMouseLocation(mouseX, mouseY);
 	Vector2 mousePos(mouseX, mouseY);
-	cout << "mousepos: " << mousePos << endl;
-	//angle 
 	rotation = ((pos - mousePos).GetAngle()) - 3.14;
 	//cout << pos.AngleBetweenVectors(mousePos) << endl;
 

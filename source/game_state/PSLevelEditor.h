@@ -1,7 +1,7 @@
 #pragma once
 #include "ProgramState.h"
 #include "GLAH/Vector.h"
-//#include "GLAH/InputHelper.h"
+#include "GLAH/InputListener.h"
 #include <vector>
 #include <memory>
 #include "../game_objects/Platform.h"
@@ -20,7 +20,7 @@ enum TILE_CATEGORY
 	GOA
 };
 
-class PSLevelEditor : public ProgramState
+class PSLevelEditor : public ProgramState, InputListener
 {
 public:
 	//use this constructor to load a level into the editor
@@ -31,7 +31,8 @@ public:
 	virtual ProgramState* Update(float delta_);
 	virtual void Draw();
 
-	void KeyDown(int key_);
+//	void KeyDown(int key_);
+	virtual void KeyDown(SDL_Keycode key_);
 
 	static bool FindMatchingPlatform(Platform& env_);
 	static bool FindMatchingEnemySpawner(EnemySpawner& env_);

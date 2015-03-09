@@ -112,9 +112,11 @@ void PSLevelEditor::Init()
 
 PSLevelEditor::PSLevelEditor(int levelID_)
 {
+	
 	DBLevel dbLevel;
 	dbLevel.FillData(levelID_, platforms, player, cannon, enemySpawners, goal);
 	Init();
+	AddInputListener(this);
 }
 
 PSLevelEditor::PSLevelEditor(void)
@@ -171,11 +173,11 @@ void PSLevelEditor::ChangePlatformTile()
 	}
 }
 
-void PSLevelEditor::KeyDown(int key_)
+void PSLevelEditor::KeyDown(SDL_Keycode key_)
 {
 	if ( inputName )
 	{
-		if (key_ == KEY_ENTER)
+		if (key_ == SDLK_RETURN)
 		{
 			//submit
 			cout << "...Saving Level..." << endl;
@@ -185,7 +187,7 @@ void PSLevelEditor::KeyDown(int key_)
 			inputName = false;
 			promptText.SetText(levelName + " Saved");
 		}
-		else if ( key_ == KEY_BACKSPACE )
+		else if ( key_ == SDLK_BACKSPACE )
 		{
 			if ( levelName.size() > 0 )
 			{
@@ -201,19 +203,19 @@ void PSLevelEditor::KeyDown(int key_)
 	}
 	if ( !inputName )
 	{
-		if (key_ == KEY_UP)
+		if (key_ == SDLK_UP)
 			++row;
-		if (key_ == KEY_DOWN)	
+		if (key_ == SDLK_DOWN)	
 			--row;
-		if( key_ == KEY_LEFT)
+		if( key_ == SDLK_LEFT)
 			--col;
-		if( key_ == KEY_RIGHT)
+		if( key_ == SDLK_RIGHT)
 			++col;
-		if ( key_ == KEY_SPACE )
+		if ( key_ == SDLK_SPACE )
 		{
 			ChangePlatformTile();
 		}
-		if ( key_ == KEY_E )
+		if ( key_ == SDLK_e )
 		{
 			//find enemySpawner tile at this space.
 			auto it = find_if(enemySpawners.begin(), enemySpawners.end(), FindMatchingEnemySpawner);
@@ -228,27 +230,27 @@ void PSLevelEditor::KeyDown(int key_)
 				enemySpawners.push_back(EnemySpawner(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, col, row)));
 			}
 		}
-		if ( key_ == KEY_O )
+		if ( key_ == SDLK_o )
 		{
 			cannon.SetPos(col, row);
 		}
-		if ( key_ == KEY_P )
+		if ( key_ == SDLK_p)
 		{
 			player.SetPos(col, row);
 		}
-		if ( key_ == KEY_G )
+		if ( key_ == SDLK_g )
 		{
 			goal.SetPos(col, row);
 		}
-		if ( key_ == KEY_1 )
+		if ( key_ == SDLK_1 )
 		{
 			currentPlatform->SetTileset(ENVIRO_TILE::PLATFORMS_START);
 		}
-		if ( key_ == KEY_2 )
+		if ( key_ == SDLK_2 )
 		{
 			currentPlatform->SetTileset(ENVIRO_TILE::DECORATION_BEGIN);
 		}
-		if ( key_ == KEY_I )
+		if ( key_ == SDLK_i )
 		{
 			showInstructions = !showInstructions;
 		}
