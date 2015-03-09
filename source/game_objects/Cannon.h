@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 //#include "GLAH\GLAHInput.h"
-#include "GLAH\GLAHGraphics.h"
+#include "GLAH/GLAHGraphics.h"
 #include "../listeners/CannonListener.h"
 
 class Cannon : public GameObject

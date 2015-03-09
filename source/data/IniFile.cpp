@@ -7,7 +7,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 //#include "StdAfx.h"
-#include ".\inifile.h"
+#include "./inifile.h"
 
 CIniFile::CIniFile(void)													// Default constructor
 {
