@@ -7,7 +7,7 @@
 /////////////////////////////////////////////////////////////////////////
 
 #include "OuterLoop.h"
-#include "./GLAH/GLAHGraphics.h"
+#include "GLAH/GLAHGraphics.h"
 #include "ProgramState.h"
 #include "PSGameLoop.h"
 #include "PSMainMenu.h"
