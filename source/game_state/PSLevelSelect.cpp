@@ -11,26 +11,31 @@ void MyLevelSelectKeyEvent(int key_, void* caller_)
 	caller->KeyDown(key_);
 }
 
-void PSLevelSelect::KeyDown(int key_)
+void PSLevelSelect::KeyDown(SDL_Keycode key_)
 {
 	switch (key_)
 	{
-	case KEY_UP : 
+	case SDLK_UP : 
 		if ( selection > 0 )
 			--selection;
 		break;
-	case KEY_DOWN : 
+	case SDLK_DOWN : 
 		if ( selection < levelText.size() - 1 )
 			++selection;
 		break;
-	case KEY_ENTER : 
-		lvlToStart = levelMap[selection];
+	case SDLK_RETURN : 
+		nextProgramState = new PSGameLoop(levelMap[selection]); 
+		break;
+	case SDLK_ESCAPE : 
+		nextProgramState = new PSMainMenu(); 
 		break;
 	}
 }
 
-PSLevelSelect::PSLevelSelect(void)
+PSLevelSelect::PSLevelSelect(void) : nextProgramState(nullptr)
 {
+	AddInputListener(this);
+
 	cout << endl << endl << "-------Select a Level---------" << endl;
 	DatabaseManager dm;
 	char * error = "";
@@ -51,13 +56,6 @@ PSLevelSelect::PSLevelSelect(void)
 	}
 
 	selection = 0;
-
-	inputHelper.RegisterCallback(&MyLevelSelectKeyEvent, this);
-	inputHelper.AddKey(KEY_UP);
-	inputHelper.AddKey(KEY_DOWN);
-	inputHelper.AddKey(KEY_ENTER);
-
-	lvlToStart = -1;
 }
 
 
@@ -67,15 +65,7 @@ PSLevelSelect::~PSLevelSelect(void)
 
 ProgramState* PSLevelSelect::Update(float delta_)
 {
-	inputHelper.Update();
-
-	if ( lvlToStart != -1)
-		return new PSGameLoop(lvlToStart);
-
-	if ( IsKeyDown( KEY_ESCAPE ) )
-		return new PSMainMenu();
-	
-	return nullptr;
+	return nextProgramState;
 }
 
 void PSLevelSelect::Draw()

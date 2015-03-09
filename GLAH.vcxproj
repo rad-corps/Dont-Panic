@@ -30,12 +30,9 @@
     <ClCompile Include="source\game_objects\Player.cpp" />
     <ClCompile Include="source\game_state\PSGameLoop.cpp" />
     <ClCompile Include="source\game_state\ProgramState.cpp" />
-    <ClCompile Include="source\GLAH\GLAHSound.cpp" />
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp" />
     <ClCompile Include="source\GLAH\FileIO.cpp" />
-    <ClCompile Include="source\GLAH\InputHelper.cpp" />
     <ClCompile Include="source\GLAH\Matrix.cpp" />
-    <ClCompile Include="source\GLAH\Shaders.cpp" />
     <ClCompile Include="source\GLAH\Vector.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math\Collision.cpp" />
@@ -46,12 +43,12 @@
     <ClCompile Include="source\tests\Databases.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\GLAH\InputListener.h" />
     <ClInclude Include="source\game_objects\EnemySpawner.h" />
     <ClInclude Include="source\game_objects\Goal.h" />
     <ClInclude Include="source\game_state\PSLevelModifySelect.h" />
     <ClInclude Include="source\globals\consts.h" />
     <ClInclude Include="source\game_objects\GLText.h" />
-    <ClInclude Include="include\GLAH\InputHelper.h" />
     <ClInclude Include="source\game_state\PSLevelSelect.h" />
     <ClInclude Include="source\game_state\PSLevelEditor.h" />
     <ClInclude Include="source\game_state\PSMainMenu.h" />
@@ -62,16 +59,13 @@
     <ClInclude Include="source\game_objects\Enemy.h" />
     <ClInclude Include="source\game_objects\Shell.h" />
     <ClInclude Include="source\game_objects\Cannon.h" />
-    <ClInclude Include="include\GLAH\bass.h" />
     <ClInclude Include="include\GLAH\CONSTS.h" />
     <ClInclude Include="include\GLAH\GLAHColour.h" />
-    <ClInclude Include="include\GLAH\GLAHSound.h" />
     <ClInclude Include="include\GLAH\GLAHGraphics.h" />
     <ClInclude Include="include\GLAH\FileIO.h" />
     <ClInclude Include="include\GLAH\GLAHEntity.h" />
     <ClInclude Include="include\GLAH\GLAHSoundInfo.h" />
     <ClInclude Include="include\GLAH\Matrix.h" />
-    <ClInclude Include="include\GLAH\Shaders.h" />
     <ClInclude Include="include\GLAH\SOIL.h" />
     <ClInclude Include="include\GLAH\Vector.h" />
     <ClInclude Include="include\GLAH\Vertex.h" />
@@ -135,7 +129,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;bass.lib;glfw3dll.lib;soil_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -151,7 +145,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;bass.lib;glfw3.lib;soil_r.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

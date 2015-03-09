@@ -29,17 +29,23 @@ void UVTranslator::GetUV(float* out_, int row_, int col_, int blockCols_, int bl
 {
 	//{ U_MIN , V_MIN , U_MIN + U_STEP, V_MIN + V_STEP };
 
-	float u_min, v_min, u_max, v_max, u_step, v_step;
+	//float u_min, v_min, u_max, v_max, u_step, v_step;
 
-	u_min = col_ * ((float)tileWidth / sheetWidth); //sheetwidth and sheetheight are floats and passed into UVTranslator on construction
-	v_min = row_ * ((float)tileHeight / sheetHeight);
-	u_step = (blockCols_ * tileWidth) / (float)sheetWidth;
-	v_step = (blockRows_ * tileHeight) / (float)sheetHeight;
-	u_max = u_min + u_step;
-	v_max = v_min + v_step;
-	
-	out_[0] = u_min;
-	out_[1] = v_min;
-	out_[2] = u_max;
-	out_[3] = v_max;	
+	//u_min = col_ * ((float)tileWidth / sheetWidth); //sheetwidth and sheetheight are floats and passed into UVTranslator on construction
+	//v_min = row_ * ((float)tileHeight / sheetHeight);
+	//u_step = (blockCols_ * tileWidth) / (float)sheetWidth;
+	//v_step = (blockRows_ * tileHeight) / (float)sheetHeight;
+	//u_max = u_min + u_step;
+	//v_max = v_min + v_step;
+	//
+	//out_[0] = u_min;
+	//out_[1] = v_min;
+	//out_[2] = u_max;
+	//out_[3] = v_max;	
+
+	out_[0] = col_ * tileWidth;
+	out_[1] = row_ * tileHeight;
+	out_[2] = tileWidth;
+	out_[3] = tileHeight;
+
 }

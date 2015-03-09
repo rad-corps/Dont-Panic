@@ -3,8 +3,8 @@
 
 
 bool SpriteSheet::init;
-unsigned int SpriteSheet::sprite;
-unsigned int SpriteSheet::fontSprite;
+SDL_Texture* SpriteSheet::sprite;
+SDL_Texture* SpriteSheet::fontSprite;
 UVTranslator SpriteSheet::translator;
 
 
@@ -38,16 +38,16 @@ void SpriteSheet::Init()
 	}
 }
 
-unsigned int SpriteSheet::Sprite()
+SDL_Texture* SpriteSheet::Sprite()
 {
 	if ( !init ) 
-		return 0;
+		return nullptr;
 	return sprite;
 }
 
-unsigned int SpriteSheet::FontSprite()
+SDL_Texture* SpriteSheet::FontSprite()
 {
 	if ( !init ) 
-		return 0;
+		return nullptr;
 	return fontSprite;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "ProgramState.h"
 #include "GLAH/Vector.h"
-#include "GLAH/InputHelper.h"
+//#include "GLAH/InputHelper.h"
 #include <vector>
 #include <memory>
 #include "../game_objects/Platform.h"
@@ -45,7 +45,7 @@ private:
 	bool lmbDown;
 	bool rmbDown;
 
-	static void ScrollCallback(GLFWwindow* window_, double x_, double y_);
+//	static void ScrollCallback(GLFWwindow* window_, double x_, double y_);
 	static int col;
 	static int row;
 	static int lastRow;
@@ -56,7 +56,6 @@ private:
 	float uv[4];
 	Vector2 pos;
 
-	InputHelper inputHelper;
 	std::vector<Platform> platforms;	
 	
 	std::vector<EnemySpawner> enemySpawners;

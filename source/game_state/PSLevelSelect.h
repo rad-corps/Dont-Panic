@@ -3,9 +3,9 @@
 #include "../game_objects/GLText.h"
 #include <vector>
 #include <map>
-#include "GLAH/InputHelper.h"
+#include "GLAH/InputListener.h"
 
-class PSLevelSelect : public ProgramState
+class PSLevelSelect : public ProgramState, public InputListener
 {
 public:
 	PSLevelSelect(void);
@@ -14,7 +14,7 @@ public:
 	virtual ProgramState* Update(float delta_);
 	virtual void Draw();
 
-	void KeyDown(int key_);
+	virtual void KeyDown(SDL_Keycode key_);
 
 private:
 
@@ -22,7 +22,6 @@ private:
 	Vector2 textPos;
 	int selection; //the vector subscript index (not the database level id)
 	std::map<int, int> levelMap; //vector subcript, level ID
-	InputHelper inputHelper;
-	int lvlToStart;
+	ProgramState* nextProgramState;
 };
 

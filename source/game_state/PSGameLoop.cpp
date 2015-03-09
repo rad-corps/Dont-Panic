@@ -21,8 +21,10 @@
 #include "PSMainMenu.h"
 
 
-PSGameLoop::PSGameLoop(int level_)
+PSGameLoop::PSGameLoop(int level_) : newProgramState(nullptr)
 {
+	AddInputListener(this);
+	cout << "PSGameLoop" << endl;
 	level = level_;
 	cout << endl << "-------Playing Game: ESC to quit-----------" << endl;
 	DBLevel dbLevel;
@@ -31,14 +33,21 @@ PSGameLoop::PSGameLoop(int level_)
 	gameTimer = 0.f;
 	
 	cannon.RegisterCannonListener(this);	
-	rHeld = IsKeyDown(KEY_R);
 }
 
 
 PSGameLoop::~PSGameLoop(void)
+{}
+
+void PSGameLoop::KeyDown(SDL_Keycode key_)
 {
-	//Shutdown();
+	if ( key_ == SDLK_ESCAPE ) 
+		newProgramState = new PSMainMenu();
+
+	if ( key_ == SDLK_r ) 
+		newProgramState = new PSGameLoop(level);
 }
+
 
 
 ProgramState* PSGameLoop::Update(float delta_)
@@ -68,17 +77,9 @@ ProgramState* PSGameLoop::Update(float delta_)
 	//update goal
 	goal.Update(delta_);
 
-	if ( IsKeyDown(KEY_ESCAPE) ) 
-		return new PSMainMenu();
-
-	if ( !IsKeyDown(KEY_R) ) 
-		rHeld = false;
-	if ( IsKeyDown(KEY_R) && rHeld == false ) 
-		return new PSGameLoop(level);
 
 
-
-	return nullptr;
+	return newProgramState;
 }
 
 //Draw Game

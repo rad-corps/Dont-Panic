@@ -21,13 +21,7 @@
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\GLAH\GLAHSound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\GLAH\Matrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GLAH\Shaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\GLAH\Vector.cpp">
@@ -93,9 +87,6 @@
     <ClCompile Include="source\game_state\PSLevelEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\GLAH\InputHelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\game_state\PSLevelSelect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -116,9 +107,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\GLAH\bass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GLAH\CONSTS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -134,16 +122,10 @@
     <ClInclude Include="include\GLAH\GLAHGraphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GLAH\GLAHSound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GLAH\GLAHSoundInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\Matrix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\Shaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\SOIL.h">
@@ -218,9 +200,6 @@
     <ClInclude Include="source\game_state\PSLevelEditor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GLAH\InputHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\game_state\PSLevelSelect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -240,6 +219,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\game_state\PSLevelModifySelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GLAH\InputListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

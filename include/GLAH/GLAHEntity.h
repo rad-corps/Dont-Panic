@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Matrix.h"
+#include "SDL2/SDL.h"
 
 struct GLAHEntity
 {
-	unsigned int spriteID;
+	//SDL_Texture* spriteID;
 	//Matrix3x3 translation;
 	Vector3 position;
 	unsigned int parentSpriteID; //if null, no parent. 

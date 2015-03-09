@@ -1,8 +1,5 @@
 #pragma once
-
-#include <GL/glew.h>
-#include <GL/wglew.h>
-#include <GLFW/glfw3.h>
+#include <SDL2/SDL.h>
 
 #include <map>
 #include <string>
@@ -10,6 +7,8 @@
 #include "Vertex.h"
 #include "GLAHEntity.h"
 #include "GLAHColour.h"
+
+#include "InputListener.h"
 
 using namespace std;
 
@@ -144,7 +143,10 @@ typedef enum
 };
 
 	//input handling
- bool			IsKeyDown( int a_iKey );
+void			AddInputListener(InputListener* inputListener_);
+void			RemoveInputListener();
+
+ bool			IsKeyDown( SDL_Keycode a_iKey );
 
  void			GetMouseLocation( double& a_iMouseX, double& a_iMouseY );
 
@@ -155,7 +157,7 @@ typedef enum
 	//create a sprite (returns a spriteID)
 	//This also creates a GLAHEntity that maps to the sprite ID
 	//See GLAHEntity for more info
-	unsigned int CreateSprite( const char* textureName_, //the filename/path of the sprite
+	SDL_Texture* CreateSprite( const char* textureName_, //the filename/path of the sprite
 								int width_, int height_, //width and height in pixels
 								unsigned int parentSpriteID_ = 0, //sprite to parent to (0 if none)
 								Vector3 originOffset_ = Vector3(0.f,0.f,0.f), //rotation origin (bottom left by default)
@@ -163,36 +165,38 @@ typedef enum
 								
 
 	//Move the sprite in world space to the absolute coordinate xPos_, yPos_
-	void			MoveSprite				( unsigned int spriteID_, float xPos_, float yPos_ );
+	void			MoveSprite				( SDL_Texture*, float xPos_, float yPos_ );
 	
 	//move the sprite relative to its current position
 	void			MoveSpriteRelative		( unsigned int spriteID_, float xMovement_, float yMovement_ = 0.0f, float rotation_ = 0.0f);
 	
 	//rotate the sprite to this rotation_
-	void			RotateSprite					( unsigned int spriteID_, float rotation_ );
+	void			RotateSprite					( SDL_Texture*, float rotation_ );
 	
 	//rotate the sprite relative to current rotation
-	void			RotateSpriteRelative			( unsigned int spriteID_, float rotation_ );
+	void			RotateSpriteRelative			( SDL_Texture*, float rotation_ );
 		
-	void			SetSpriteUVCoordinates	( unsigned int a_uiSpriteID, float* a_fUVVec4 );
+	void			SetSpriteUVCoordinates	( SDL_Texture*, float* a_fUVVec4 );
 
 	//draw the sprite to screen
-	void			DrawSprite				( unsigned int spriteID_, bool xFlip_ = false, float alpha_ = 1.0f);
+	void			DrawSprite				( SDL_Texture* sprite_,  bool xFlip_ = false, float alpha_ = 1.0f);
 
 	//Get information about the sprite based on spriteID_ 
-	GLAHEntity		GetGLAHEntity			(unsigned int spriteID_);
+	GLAHEntity		GetGLAHEntity			(SDL_Texture* spriteID_);
 
 	//Scale sprite (both x and y scaled by scalar_)
 //	void			ScaleSprite				( unsigned int spriteID_, float scalar_ );
-	void			ScaleSprite				( unsigned int spriteID_, float scalarX_, float scalarY_ );
+	void			ScaleSprite				( SDL_Texture*, float scalarX_, float scalarY_ );
 
 	bool			FrameworkUpdate();
 
 	int				Initialise( int a_iWidth, int a_iHeight, bool a_bFullscreen = false, const char* a_pWindowTitle = nullptr );
 
+	void			Shutdown();
+
 	float			GetDeltaTime();
 
-	GLFWwindow*		GetWindow();
+	SDL_Window*		GetWindow();
 
 	//NOT YET IMPLEMENTED
 	void			ClearScreen();	

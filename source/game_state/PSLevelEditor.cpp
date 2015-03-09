@@ -15,18 +15,18 @@ int PSLevelEditor::lastCol = 0;
 int PSLevelEditor::lastRow = 0;
 Platform* PSLevelEditor::currentPlatform = nullptr;
 
-void PSLevelEditor::ScrollCallback(GLFWwindow* window_, double x_, double y_)
-{
-	//change the current platform tile
-	if ( y_ > 0 )
-	{
-		currentPlatform->DecrementTileType();
-	}
-	else if ( y_ < 0 )
-	{
-		currentPlatform->IncrementTileType();		
-	}		 
-}
+//void PSLevelEditor::ScrollCallback(GLFWwindow* window_, double x_, double y_)
+//{
+//	//change the current platform tile
+//	if ( y_ > 0 )
+//	{
+//		currentPlatform->DecrementTileType();
+//	}
+//	else if ( y_ < 0 )
+//	{
+//		currentPlatform->IncrementTileType();		
+//	}		 
+//}
 
 void MyKeyEvent(int key_, void* caller_)
 {
@@ -39,28 +39,28 @@ void PSLevelEditor::Init()
 		UVTranslator trans(800,1280,16,16);
 	trans.GetUV(uv, 16, 0);
 
-	inputHelper.RegisterCallback(&MyKeyEvent, this);
-	inputHelper.AddKey(KEY_LEFT);
-	inputHelper.AddKey(KEY_RIGHT);
-	inputHelper.AddKey(KEY_UP);
-	inputHelper.AddKey(KEY_DOWN);
-	inputHelper.AddKey(KEY_SPACE);
-	inputHelper.AddKey(KEY_ENTER);
-	inputHelper.AddKey(KEY_BACKSPACE);
+	//inputHelper.RegisterCallback(&MyKeyEvent, this);
+	//inputHelper.AddKey(KEY_LEFT);
+	//inputHelper.AddKey(KEY_RIGHT);
+	//inputHelper.AddKey(KEY_UP);
+	//inputHelper.AddKey(KEY_DOWN);
+	//inputHelper.AddKey(KEY_SPACE);
+	//inputHelper.AddKey(KEY_ENTER);
+	//inputHelper.AddKey(KEY_BACKSPACE);
 
-	vector<int> keys;
-	//A to Z
-	for (int i = 65; i <= 90; ++i)
-	{
-		keys.push_back(i);
-	}
-	//0 to 9
-	for (int i = 48; i <= 57; ++i)
-	{
-		keys.push_back(i);
-	}
+	//vector<int> keys;
+	////A to Z
+	//for (int i = 65; i <= 90; ++i)
+	//{
+	//	keys.push_back(i);
+	//}
+	////0 to 9
+	//for (int i = 48; i <= 57; ++i)
+	//{
+	//	keys.push_back(i);
+	//}
 
-	inputHelper.AddKeys(keys);
+	//inputHelper.AddKeys(keys);
 
 
 	saving = false;
@@ -70,7 +70,7 @@ void PSLevelEditor::Init()
 	promptText.SetPos(Vector2(1024/2, 700));
 	promptText.SetText("");
 
-	glfwSetScrollCallback(GetWindow(), ScrollCallback); 
+	//glfwSetScrollCallback(GetWindow(), ScrollCallback); 
 
 	lmbDown = false;
 	rmbDown = false;
@@ -130,7 +130,7 @@ PSLevelEditor::~PSLevelEditor(void)
 		delete currentPlatform;
 		currentPlatform = nullptr;
 	}
-	glfwSetScrollCallback(GetWindow(), NULL); 
+//	glfwSetScrollCallback(GetWindow(), NULL); 
 }
 
 bool PSLevelEditor::FindMatchingPlatform(Platform& env_)
@@ -303,7 +303,7 @@ ProgramState* PSLevelEditor::Update(float delta_)
 	UpdateRowCol();
 	HandleMouseDown();
 
-	inputHelper.Update();
+	//inputHelper.Update();
 
 	if ( IsKeyDown(KEY_ESCAPE) ) 
 		return new PSMainMenu();

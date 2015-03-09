@@ -10,6 +10,7 @@ Player::Player(void)
 {
 //	gfx = GLAHGraphics::Instance();
 //	inpt = GLAHInput::Instance();
+	
 
 	pos = Vector2(200,200);
 
@@ -56,6 +57,8 @@ Player::Player(void)
 Player::~Player(void)
 {
 }
+
+
 
 //must be called whenever players position changes
 void Player::UpdateColliders()
@@ -156,14 +159,14 @@ void Player::ApplyGravity()
 
 void Player::HandleInput(float delta_)
 {
-	if ( IsKeyDown(KEY_A ) )
+	if ( IsKeyDown(SDLK_a ) )
 	{
 		faceLeft = true;
 		pos.x -= 160 * delta_;
 		if ( onPlatform ) 
 			status = RUNNING;
 	}
-	else if ( IsKeyDown(KEY_D ) )
+	else if ( IsKeyDown(SDLK_d ) )
 	{
 		faceLeft = false;
 		pos.x += 160 * delta_;
@@ -177,7 +180,7 @@ void Player::HandleInput(float delta_)
 	}
 
 	//only jump if not already jumping
-	if ( IsKeyDown(KEY_W ) && status != PLAYER_STATUS::JUMPING && !jumpHeld)
+	if ( IsKeyDown(SDLK_w ) && status != PLAYER_STATUS::JUMPING && !jumpHeld)
 	{
 		jumpHeld = true;
 		status = JUMPING;	
@@ -186,7 +189,7 @@ void Player::HandleInput(float delta_)
 		velocity.y += 10;
 	}
 
-	if ( !IsKeyDown(KEY_W) )
+	if ( !IsKeyDown(SDLK_w) )
 	{
 		jumpHeld = false;
 	}

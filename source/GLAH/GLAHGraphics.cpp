@@ -3,19 +3,27 @@
 //
 
 
+#include <stdio.h>
+
 #include "GLAH/GLAHGraphics.h"
+#include <SDL2/SDL_image.h>
 //#include "GLAH/GLAHInput.h"
-#include "GLAH/Shaders.h"
+//#include "GLAH/Shaders.h"
 #include <iostream>
 //glfw include
 
-#include "GLAH/SOIL.h"
+//#include "GLAH/SOIL.h"
 #include "GLAH/Vertex.h"
 #include <chrono> //std::chrono::time_point
 #include <fstream>
+#include <vector>
+#include <algorithm>
+#include <map>
+
 
 using namespace std::chrono; 
 
+std::map<SDL_Keycode, bool> keyDownList; //key, isDown
 
 //used internally by DrawSprite
 void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_ = 1.0f);
@@ -24,12 +32,30 @@ void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector
 Matrix3x3		CreateSpriteTransformation	( unsigned int spriteID_ );
 	
 //contains additional information about sprite rotation, scale, position etc.
-std::map<unsigned int, GLAHEntity> spriteList;
+std::map<SDL_Texture*, GLAHEntity> spriteList;
 
-GLFWwindow* window;
+InputListener* inputListener;
 
-GLuint VBO;
-GLuint IBO;
+//GLFWwindow* window;
+
+//SDL Specific
+/////////////////////////////
+//Main loop flag
+bool quit = false;
+
+//Event handler
+SDL_Event e;
+
+//The window we'll be rendering to
+SDL_Window* window = NULL;
+    
+//The surface contained by the window
+SDL_Surface* screenSurface = NULL;
+
+SDL_Renderer* renderer;
+
+//GLuint VBO;
+//GLuint IBO;
 
 //timers for delta time
 std::chrono::time_point<high_resolution_clock> timeBegin;
@@ -37,12 +63,19 @@ std::chrono::time_point<high_resolution_clock> timeEnd;
 
 double delta;
 
-	
+void			AddInputListener(InputListener* inputListener_)
+{
+	inputListener = inputListener_;
+}
+void			RemoveInputListener()
+{
+	inputListener = nullptr;
+}
 
 //orthographic projection matrix
 Matrix4x4 ortho;
 
-GLFWwindow*		GetWindow()
+SDL_Window*		GetWindow()
 {
 	return window;
 }
@@ -55,44 +88,58 @@ GLFWwindow*		GetWindow()
 // originOffset_	: the point of rotation, this is relative to the sprites own space. 
 //						Default value is Vector3
 // colour_			: not implemented
-unsigned int CreateSprite	( const char* textureName_, 
+SDL_Texture* CreateSprite	( const char* textureName_, 
 									 int width_, int height_, 
 									 unsigned int parentSpriteID_, 
 									 Vector3 originOffset_, 
 									 SColour colour_ )
  {
-	//Create the texture and get the handle. 
-	GLuint texture_handle = SOIL_load_OGL_texture(textureName_, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, NULL);
+    //The final texture
+    SDL_Texture* newTexture = NULL;
 
-	//Setup the translation matrix for the sprite
-	//Matrix3x3 translation;
-	//translation.SetupTranslation(Vector3((float)x_, (float)y_, 0.0f));
+    //Load image at specified path
+    SDL_Surface* loadedSurface = IMG_Load( textureName_ );
+    if( loadedSurface == NULL )
+    {
+        printf( "Unable to load image %s! SDL_image Error: %s\n", textureName_, IMG_GetError() );
+    }
+    else
+    {
+        //Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface( renderer, loadedSurface );
+        if( newTexture == NULL )
+        {
+            printf( "Unable to create texture from %s! SDL Error: %s\n", textureName_, SDL_GetError() );
+        }
+
+        //Get rid of old loaded surface
+        SDL_FreeSurface( loadedSurface );
+    }
 
 	//Create an entity with position, scale, rotation info
 	GLAHEntity glahEntity;
 	glahEntity.size.x = (float)width_;
 	glahEntity.size.y = (float)height_;
 	glahEntity.parentSpriteID = parentSpriteID_;
-	glahEntity.spriteID = texture_handle;
+	//glahEntity.spriteID = newTexture;
 	//glahEntity.position = Vector3((float)x_, (float)y_, 1.f);
 	glahEntity.origin = originOffset_;
 
 	//add to the spriteList (map) using the texture_handle as the key
-	spriteList[texture_handle] = glahEntity;
-	
-	//return the sprites ID/Handle
-	return texture_handle;
- }
+	spriteList[newTexture] = glahEntity;
+
+    return newTexture;
+}
 
 //returns the transform matrix based on the sprite
-Matrix3x3		
-CreateSpriteTransformation( unsigned int spriteID_ )
-{
-	Matrix3x3 translationMat = Matrix3x3::CreateTranslationMatrix(spriteList[spriteID_].position);
-	Matrix3x3 rotationMat = Matrix3x3::CreateRotationMatrix(spriteList[spriteID_].rotation);
-	Matrix3x3 scaleMatrix = Matrix3x3::CreateScaleMatrix(spriteList[spriteID_].scaleX, spriteList[spriteID_].scaleY);
-	return scaleMatrix * rotationMat * translationMat;
-}
+//Matrix3x3		
+//CreateSpriteTransformation( unsigned int spriteID_ )
+//{
+//	Matrix3x3 translationMat = Matrix3x3::CreateTranslationMatrix(spriteList[spriteID_].position);
+//	Matrix3x3 rotationMat = Matrix3x3::CreateRotationMatrix(spriteList[spriteID_].rotation);
+//	Matrix3x3 scaleMatrix = Matrix3x3::CreateScaleMatrix(spriteList[spriteID_].scaleX, spriteList[spriteID_].scaleY);
+//	return scaleMatrix * rotationMat * translationMat;
+//}
 
 //modify the scale of the sprite
 //void			
@@ -103,10 +150,10 @@ CreateSpriteTransformation( unsigned int spriteID_ )
 //}
 
 void			
-ScaleSprite( unsigned int spriteID_, float scalarX_, float scalarY_ )
+ScaleSprite( SDL_Texture* sprite_, float scalarX_, float scalarY_ )
 {
-	spriteList[spriteID_].scaleX = scalarX_;
-	spriteList[spriteID_].scaleY = scalarY_;
+	spriteList[sprite_].scaleX = scalarX_;
+	spriteList[sprite_].scaleY = scalarY_;
 }
 
 void GLAHErroCallback(int errorCode_, const char *errStr_)
@@ -129,109 +176,91 @@ float GetDeltaTime()
 
 bool FrameworkUpdate()
 {
-	if (glfwWindowShouldClose(window))
-		return true;
+    CalculateDelta();
+	//Update screen
+    SDL_RenderPresent( renderer );
 
-	CalculateDelta();
+	//While application is running
+    //Handle events on queue
+    while( SDL_PollEvent( &e ) != 0 )
+    {
+        //User requests quit
+        if( e.type == SDL_QUIT )
+        {
+            quit = true;
+        }
+		if ( e.type == SDL_KEYDOWN ) 
+		{
+			if ( inputListener != nullptr ) 
+			{
+				inputListener->KeyDown(e.key.keysym.sym);
+				keyDownList[e.key.keysym.sym] = true;
+			}
+		}
+		if ( e.type == SDL_KEYUP ) 
+		{
+			if ( inputListener != nullptr ) 
+			{
+				keyDownList[e.key.keysym.sym] = false;
+			}
+		}
+    }
 
-	//swap front and back buffers
-	glfwSwapBuffers(window);
- 
-    //poll for and process events
-	glfwPollEvents();
+    //Clear screen
+    SDL_RenderClear( renderer );
 
-	glClearColor(0.1, 0.1, 0.1, 0.1);
-    glClear(GL_COLOR_BUFFER_BIT);
- 
-	return false;
+	return quit;
+}
+
+void Shutdown()
+{
+	//Destroy window
+    SDL_DestroyWindow( window );
+
+    //Quit SDL subsystems
+    SDL_Quit();
 }
 
 int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pWindowTitle  )
 {
-	glfwSetErrorCallback(GLAHErroCallback);
-
-	//Initialise GLFW
-    if(!glfwInit())
+    //Initialize SDL
+    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
-            return -1;
+        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
     }
-
-	//TODO not currently using a_bFullscreen.
-    //create a windowed mode window and it's OpenGL context    
-    window = glfwCreateWindow(a_iWidth, a_iHeight, a_pWindowTitle, NULL, NULL);
-
-    if(!window)
+	else
     {
-            glfwTerminate();
-            return -1;
-    }
- 
-    //make the window's context current
-    glfwMakeContextCurrent(window);
+        //Create window
+        window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, a_iWidth, a_iHeight, SDL_WINDOW_SHOWN );
+        if( window == NULL )
+        {
+            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+        }
+		else
+        {
+			//Create renderer for window
+            renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
+            if( renderer == NULL )
+            {
+                printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+            }
+			else
+            {
+                //Initialize renderer color
+                SDL_SetRenderDrawColor( renderer, 0x2C, 0x2C, 0x2C, 0xFF );
 
-	//initialise input lib
-//	GLAHInput* input = GLAHInput::Instance();
-//	input->Initialise(window);
- 
-    //init glew
-    if (glewInit() != GLEW_OK)
-    {
-            // OpenGL didn't start-up! shutdown GLFW and return an error code
-            glfwTerminate();
-            return -1;
-    }
+                //Initialize PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if( !( IMG_Init( imgFlags ) & imgFlags ) )
+                {
+                    printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+                }
+            }
+        }
+	}
 
-	//create shader program
-    GLuint uiProgramFlat = CreateProgram("./resources/VertexShader.glsl", "./resources/FlatFragmentShader.glsl");
- 
-    //find the position of the matrix variable in the shader so we can send info there later
-    GLuint MatrixIDFlat = glGetUniformLocation(uiProgramFlat, "MVP");
- 
-    //set up the mapping of the screen to pixel co-ordinates. Try changing these values to see what happens.	
-    float* orthographicProjection = Matrix4x4::GetOrtho(0.f, (float)a_iWidth, 0.f, (float)a_iHeight, 0.f, 100.f);
-	//float* orthographicProjection2 = getOrtho(0, a_iWidth, 0, a_iHeight, 0, 100);
-	//orthographicProjection = getOrtho(-1, 1, -1, 1, 0, 100);
-
-	//GenerateVBO();
-
-	//create VBO/IBO	
-    glGenBuffers(1, &VBO);                                                                                                                                  //generate VBO
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);                                                                                                             //Binds VBO once
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*4, NULL, GL_STREAM_DRAW);                  //Reserves the memory on graphics card
-    //glBindBuffer(GL_ARRAY_BUFFER, NULL);                                                                                                  //We won't unbind as we'll pass data using glBufferSubData
-    glEnableVertexAttribArray(0);                                                                                                                           //position - location
-    glEnableVertexAttribArray(1);              
-	glEnableVertexAttribArray(2); //texture coordinates//colour
-    glVertexAttribPointer(0,4,GL_FLOAT,GL_FALSE, sizeof(Vertex), 0);
-    glVertexAttribPointer(1,4,GL_FLOAT,GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)*4));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(Vector4)*2));	
-
-	//turn on transparency
-	glEnable(GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	//texture filtering
-	//
- 
-    //if(IBO == NULL)
-    //{
-    //        glGenBuffers(1, &IBO);                                                                                                                                  //generate IBO
-    //        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);                                                     //binds IBO
-    //        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4*sizeof(char), NULL, GL_STATIC_DRAW);                    //reserves memory on graphics card
-    //        GLvoid *iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);                          //Gets pointer to space on graphics card
- 
-    //        ((char*)iBuffer)[0] = 3;                                                                                                                        //Populate indices - done here as only required once.
-    //        ((char*)iBuffer)[1] = 0;
-    //        ((char*)iBuffer)[2] = 2;
-    //        ((char*)iBuffer)[3] = 1;
- 
-    //        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4*sizeof(char), iBuffer, GL_STATIC_DRAW);                 //copy data to graphics card
-    //        //No need to unbind as IBO is not changing and will be used every call
-    //}	
-
-	glUseProgram(uiProgramFlat); 
-
-	glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, orthographicProjection);
+	//initialise common keys used
+	//keyDownList[
 
 	timeBegin = high_resolution_clock::now();
 
@@ -239,69 +268,23 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
 }
 
 //GLAH::DrawSprite ( unsigned int spriteID_)
-void DrawSprite(unsigned int spriteID_, bool xFlip_, float alpha_)
+void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 {
-	//get width and height variables
-	GLAHEntity entity = spriteList[spriteID_];
-
-	float width = entity.size.x;
-	float height = entity.size.y;
-
-	//get parent translation (already populated with rotation/position)
-	Matrix3x3 parentTrans;
-	if ( spriteList[spriteID_].parentSpriteID != 0 )
-	{
-//		parentTrans = spriteList[entity.parentSpriteID].translation;
-		parentTrans = CreateSpriteTransformation(spriteList[spriteID_].parentSpriteID);
-	}
-	else //if no parent, use an identity matrix for simplicity
-	{
-		parentTrans.SetupIdentity();
-	}
-	
-	//get the offset from parent and add it to the translatedPosition Vector3
-	//Vector3 offset = entity.translation.GetPosition();
-	Vector3 offset = entity.position;
-	Vector3 translatedPosition = parentTrans * offset;
-	
-	//translation matrix
-	Matrix3x3 translationMat;
-	translationMat.SetupTranslation(Vector3(translatedPosition.x, translatedPosition.y, 0.0));
-	
-	//add the child and parent rotations together
-	Matrix3x3 rotationMat;
-	float rotation = spriteList[spriteList[spriteID_].parentSpriteID].rotation + spriteList[spriteID_].rotation;
-	rotationMat.SetupRotation(rotation);
-
-	//Scale Matric
-	Matrix3x3 scaleMatrix;
-	scaleMatrix.SetupScale(entity.scaleX, entity.scaleY);
-	
-	//create the final transform
-	Matrix3x3 transform = scaleMatrix * rotationMat * translationMat;
-
-	//get the locations of the 4 corners of the sprite considering x, y, width, height and rotation
-	Vector3 bl = transform * Vector3(0 - spriteList[spriteID_].origin.x, 0 - spriteList[spriteID_].origin.y, 1);
-	Vector3 br = transform * Vector3(width - spriteList[spriteID_].origin.x, 0 - spriteList[spriteID_].origin.y, 1);
-	Vector3 tl = transform * Vector3(0 - spriteList[spriteID_].origin.x, height - spriteList[spriteID_].origin.y, 1);
-	Vector3 tr = transform * Vector3(width - spriteList[spriteID_].origin.x, height - spriteList[spriteID_].origin.y, 1);
-
-	//create the Vertices and send to the GPU
-	Vertex vertices[4];
-	CreateSpriteVertexData(vertices, tl, tr, bl, br, spriteList[spriteID_].UV, xFlip_, alpha_);
-	glBindTexture(GL_TEXTURE_2D, spriteID_);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex)*4, vertices);//Updates VBO's data on the fly 
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	//Render texture to screen
+	GLAHEntity entity = spriteList[sprite_];
+	SDL_Rect src = { entity.UV[0], entity.UV[1], entity.UV[2], entity.UV[3] };
+	SDL_Rect dst = { entity.position.x, 768 - entity.position.y, entity.size.x, entity.size.y };
+    SDL_RenderCopy( renderer, sprite_, &src, &dst );
 }
 
 //GLAH::DrawSprite
 //spriteID_		: The ID of the sprite to draw
 //x_			: the absolute (world space) x coordinate to draw 
 //y_			: the absolute (world space) y coordinate to draw 
-void MoveSprite(unsigned int spriteID_, float x_, float y_)
+void MoveSprite(SDL_Texture* sprite_, float x_, float y_)
 {
-	spriteList[spriteID_].position = Vector3(x_, y_, 1);
+	spriteList[sprite_].position.x = x_;
+	spriteList[sprite_].position.y = y_;
 }
 
 //GLAH::DrawSpriteRelative
@@ -311,32 +294,33 @@ void MoveSprite(unsigned int spriteID_, float x_, float y_)
 //rotation_		: Amount to rotate sprite by expressed as radians (current rotation + rotation_)
 void MoveSpriteRelative(unsigned int spriteID_, float xMovement_, float yMovement_, float rotation_)
 {			
-	Matrix3x3 spriteMat = CreateSpriteTransformation(spriteID_);
-	spriteList[spriteID_].position = spriteMat * Vector3 (xMovement_, yMovement_, 1.f);
-	spriteList[spriteID_].rotation += rotation_;
+	
 }
 
-void RotateSpriteRelative(unsigned int spriteID_, float rotation_ )
+void RotateSpriteRelative(SDL_Texture* sprite_, float rotation_ )
 {
-	spriteList[spriteID_].rotation += rotation_;
+	//spriteList[spriteID_].rotation += rotation_;
+	cout << "stubbed: RotateSpriteRelative" << endl;
 }
 
-void RotateSprite(unsigned int spriteID_, float rotation_ )
+void RotateSprite(SDL_Texture* sprite_, float rotation_ )
 {
-	spriteList[spriteID_].rotation = rotation_;
+	//spriteList[spriteID_].rotation = rotation_;
+	cout << "stubbed: RotateSprite" << endl;
 }
 
-GLAHEntity GetGLAHEntity(unsigned int spriteID_)
+GLAHEntity GetGLAHEntity(SDL_Texture* sprite_)
 {
-	return spriteList[spriteID_];
+	return spriteList[sprite_];
 }
 
-void SetSpriteUVCoordinates	( unsigned int spriteID_, float* UVVec4_ )
+void SetSpriteUVCoordinates	( SDL_Texture* sprite_, float* UVVec4_ )
 {
 	for ( int i = 0; i < 4; ++i )
 	{
-		spriteList[spriteID_].UV[i] = UVVec4_[i];
+		spriteList[sprite_].UV[i] = UVVec4_[i];
 	}
+	//cout << "stubbed: SetSpriteUVCoordinates" << endl;
 }
 
 //GLAH::CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br)
@@ -347,42 +331,7 @@ void SetSpriteUVCoordinates	( unsigned int spriteID_, float* UVVec4_ )
 //br			: bottom right position
 void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_)
 {
-	const int VERTICES = 4;
 	
-	//find the vertices (draw from center)
-	verticesOut_[0].position.x = bl.x;              //x - vert0
-	verticesOut_[0].position.y = bl.y;             //y - vert0
-	verticesOut_[1].position.x = br.x;              //x - vert1
-	verticesOut_[1].position.y = br.y;             //y - vert1
-	verticesOut_[2].position.x = tr.x;               //x
-	verticesOut_[2].position.y = tr.y;             //y
-	verticesOut_[3].position.x = tl.x;              //x
-	verticesOut_[3].position.y = tl.y;             //y
-    for(int i = 0; i < VERTICES; i++)
-    {
-            verticesOut_[i].position.z = 0.0f;                          //z
-			verticesOut_[i].position.w = 1.0f;                          //w
-			verticesOut_[i].colour.x = 1.0f;                            //R
-            verticesOut_[i].colour.y = 1.0f;                            //G
-			verticesOut_[i].colour.z = 1.0f;                            //B
-			verticesOut_[i].colour.w = alpha_;                            //A
-    }
-
-	////THIS IS WHERE TO PROGRAM UV'S!!!!!!!!!
-	if ( !xFlip_ ) 
-	{
-		verticesOut_[3].textureCoordinate = Vector2(UV_[0], UV_[1]); //BL
-		verticesOut_[0].textureCoordinate = Vector2(UV_[0], UV_[3]); //TL
-		verticesOut_[1].textureCoordinate = Vector2(UV_[2], UV_[3]); //TR
-		verticesOut_[2].textureCoordinate = Vector2(UV_[2], UV_[1]); //BR
-	}
-	else
-	{
-		verticesOut_[3].textureCoordinate = Vector2(UV_[2], UV_[1]); //BR
-		verticesOut_[0].textureCoordinate = Vector2(UV_[2], UV_[3]); //TR
-		verticesOut_[1].textureCoordinate = Vector2(UV_[0], UV_[3]); //TL
-		verticesOut_[2].textureCoordinate = Vector2(UV_[0], UV_[1]); //BL
-	}
 }
 
 void			ClearScreen(){cout << "not yet implemented" << endl;}	
@@ -414,28 +363,26 @@ void			RemoveFont( char* fontName_ )
 
 //INPUT HANDLING-------------------------------------------------------
 ///////////////////////////////////////////////////////////////////////
-bool IsKeyDown( int key_ )
+bool IsKeyDown( SDL_Keycode key_ )
 {
-	if (glfwGetKey(window,key_))
-		return true;
-	return false;
+	return keyDownList[key_];
 }
 
 bool GetMouseButtonDown( int a_iMouseButtonToTest )
 {
-	if(glfwGetMouseButton(window, a_iMouseButtonToTest) == GLFW_PRESS)
-	{
-		return true;
-	}
+	//if(glfwGetMouseButton(window, a_iMouseButtonToTest) == GLFW_PRESS)
+	//{
+	//	return true;
+	//}
 	return false;
 }
 
 void GetMouseLocation( double& a_iMouseX, double& a_iMouseY )
 {
-	int width, height;
-	glfwGetWindowSize(window, &width, &height);
-	glfwGetCursorPos(window, &a_iMouseX, &a_iMouseY);
-	a_iMouseY = height - a_iMouseY;
+	//int width, height;
+	//glfwGetWindowSize(window, &width, &height);
+	//glfwGetCursorPos(window, &a_iMouseX, &a_iMouseY);
+	//a_iMouseY = height - a_iMouseY;
 }
 //END INPUT HANDLING
 ///////////////////////////////////////////////////////////////////////

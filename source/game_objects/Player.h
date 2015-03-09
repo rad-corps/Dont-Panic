@@ -29,8 +29,6 @@ public:
 	virtual void Update(float delta_, std::vector<Platform>& platform_, std::vector<Enemy>& enemies, Goal& goal_);
 	virtual void Draw();
 
-	
-
 private:
 	void ApplyVelocity(Vector2 velocity_);
 	void MoveTo(Vector2 pos_);

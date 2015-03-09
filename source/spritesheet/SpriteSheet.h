@@ -32,15 +32,15 @@ class SpriteSheet
 public:
 	~SpriteSheet(void);
 	static void Init();
-	static unsigned int Sprite();
-	static unsigned int FontSprite();
+	static SDL_Texture* Sprite();
+	static SDL_Texture* FontSprite();
 
 	static void FillUV(float* uv_, SPRITE_TYPE st_);
 
 
 private:
-	static unsigned int sprite;
-	static unsigned int fontSprite;
+	static SDL_Texture* sprite;
+	static SDL_Texture* fontSprite;
 	static bool init;
 	static UVTranslator translator;
 	SpriteSheet(void);

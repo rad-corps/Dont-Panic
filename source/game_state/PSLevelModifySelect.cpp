@@ -5,40 +5,44 @@
 #include "PSMainMenu.h"
 using namespace std;
 
-void MyModifyLevelSelectKeyEvent(int key_, void* caller_)
-{
-	PSLevelModifySelect* caller = (PSLevelModifySelect*)caller_;
-	caller->KeyDown(key_);
-}
+//void MyModifyLevelSelectKeyEvent(int key_, void* caller_)
+//{
+//	PSLevelModifySelect* caller = (PSLevelModifySelect*)caller_;
+//	caller->KeyDown(key_);
+//}
 
-void PSLevelModifySelect::KeyDown(int key_)
+void PSLevelModifySelect::KeyDown(SDL_Keycode key_)
 {
+	stringstream promptText;
+
 	switch (key_)
 	{
-	case KEY_UP : 
+	case SDLK_UP : 
 		if ( selection > 0 )
 			--selection;
 		break;
-	case KEY_DOWN : 
+	case SDLK_DOWN : 
 		if ( selection < levelText.size() - 1 )
 			++selection;
 		break;
-	case KEY_ENTER : 
-		lvlToStart = levelMap[selection];
+	case SDLK_RETURN : 
+		nextProgramState = new PSLevelEditor(levelMap[selection]);
 		break;
-	case KEY_DELETE : 
+	case SDLK_DELETE : 
 		lvlToStart = levelMap[selection];
-		deletePrompt = true;
-		stringstream promptText;
+		deletePrompt = true;		
 		promptText << "Are you sure you want to delete level " << GetLevelString(lvlToStart) << " Y/N";
 		prompt.SetText(promptText.str());
 		prompt.SetPos(Vector2(50, 300));
 		break;	
+	case SDLK_ESCAPE :
+		nextProgramState = new PSMainMenu();
+		break;
 	}
 
 	if  ( deletePrompt ) 
 	{
-		if ( key_ == KEY_Y )
+		if ( key_ == SDLK_y )
 		{
 			cout << "deleting level " << GetLevelString(lvlToStart) << endl;
 			DatabaseManager dm;
@@ -56,7 +60,7 @@ void PSLevelModifySelect::KeyDown(int key_)
 			}
 			Init();
 		}
-		if ( key_ == KEY_N )
+		if ( key_ == SDLK_n )
 		{
 			cout << "not deleting level " << GetLevelString(lvlToStart) << endl;
 			Init();
@@ -66,6 +70,7 @@ void PSLevelModifySelect::KeyDown(int key_)
 
 void PSLevelModifySelect::Init()
 {
+	selection = 0;
 	levelMap.clear();
 	levelText.clear();
 
@@ -92,40 +97,21 @@ void PSLevelModifySelect::Init()
 	deletePrompt = false;
 }
 
-PSLevelModifySelect::PSLevelModifySelect(void)
+PSLevelModifySelect::PSLevelModifySelect(void) : nextProgramState(nullptr)
 {
 	Init();
-
-	selection = 0;
-
-	inputHelper.RegisterCallback(&MyModifyLevelSelectKeyEvent, this);
-	inputHelper.AddKey(KEY_UP);
-	inputHelper.AddKey(KEY_DOWN);
-	inputHelper.AddKey(KEY_ENTER);
-	inputHelper.AddKey(KEY_DELETE);
-	inputHelper.AddKey(KEY_N);
-	inputHelper.AddKey(KEY_Y);
-	inputHelper.AddKey(KEY_ESCAPE);
-
-
+	AddInputListener(this);
 }
 
 
 PSLevelModifySelect::~PSLevelModifySelect(void)
 {
+	//RemoveInputListener(this);
 }
 
 ProgramState* PSLevelModifySelect::Update(float delta_)
 {
-	inputHelper.Update();
-
-	if ( lvlToStart != -1 && !deletePrompt)
-		return new PSLevelEditor(lvlToStart);
-	
-	if ( IsKeyDown( KEY_ESCAPE ) )
-		return new PSMainMenu();	
-
-	return nullptr;
+	return nextProgramState;
 }
 
 string PSLevelModifySelect::GetLevelString(int id_)

@@ -2,7 +2,8 @@
 
 #include <vector>
 #include "ProgramState.h"
-#include "GLAH\GLAHGraphics.h"
+#include "GLAH/GLAHGraphics.h"
+#include "GLAH/InputListener.h"
 #include "../game_objects/Platform.h"
 #include "../game_objects/Player.h"
 #include "../game_objects/Cannon.h"
@@ -13,7 +14,7 @@
 #include "../listeners/CannonListener.h"
 #include "GLAH/Vector.h"
 
-class PSGameLoop : public ProgramState, public CannonListener
+class PSGameLoop : public ProgramState, public CannonListener, public InputListener
 {
 public:
 	//updateInterval defaults to 1/60th of a second (60FPS)
@@ -29,6 +30,7 @@ public:
 	void Draw();
 
 	virtual void ShotFired(Vector2 pos_, Vector2 velocity_);
+	virtual void KeyDown(SDL_Keycode key_);
 
 private:
 	//float updateInterval;
@@ -38,7 +40,6 @@ private:
 	Cannon cannon;
 	Goal goal;
 	int level;
-	bool rHeld;
 
 
 	std::vector<Enemy> enemies;
@@ -46,6 +47,7 @@ private:
 	std::vector<Shell> shells;
 	std::vector<EnemySpawner> enemySpawners;
 
+	ProgramState* newProgramState;
 	//World world;
 };
 
