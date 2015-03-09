@@ -148,7 +148,7 @@ void			RemoveInputListener();
 
  bool			IsKeyDown( SDL_Keycode a_iKey );
 
- void			GetMouseLocation( double& a_iMouseX, double& a_iMouseY );
+ void			GetMouseLocation( int& a_iMouseX, int& a_iMouseY );
 
  bool			GetMouseButtonDown( int a_iMouseButtonToTest );
 

@@ -130,6 +130,7 @@ PSLevelEditor::~PSLevelEditor(void)
 		delete currentPlatform;
 		currentPlatform = nullptr;
 	}
+	RemoveInputListener();
 //	glfwSetScrollCallback(GetWindow(), NULL); 
 }
 
@@ -257,7 +258,7 @@ void PSLevelEditor::KeyDown(int key_)
 void PSLevelEditor::UpdateRowCol()
 {
 	//get mouse location
-	double mouseX, mouseY;
+	int mouseX, mouseY;
 	GetMouseLocation(mouseX, mouseY);
 	mousePos.x = (float)mouseX;//offset x due to drawing from centre
 	mousePos.y = (float)mouseY;

@@ -24,6 +24,7 @@
 using namespace std::chrono; 
 
 std::map<SDL_Keycode, bool> keyDownList; //key, isDown
+std::map<int, bool> msBtnDwn;
 
 //used internally by DrawSprite
 void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_ = 1.0f);
@@ -204,6 +205,15 @@ bool FrameworkUpdate()
 				keyDownList[e.key.keysym.sym] = false;
 			}
 		}
+		if ( e.type == SDL_MOUSEBUTTONDOWN ) 
+		{
+			msBtnDwn[0] = true;
+		}
+		if ( e.type == SDL_MOUSEBUTTONUP ) 
+		{
+			msBtnDwn[0] = false;
+		}
+
     }
 
     //Clear screen
@@ -307,13 +317,13 @@ void MoveSpriteRelative(unsigned int spriteID_, float xMovement_, float yMovemen
 void RotateSpriteRelative(SDL_Texture* sprite_, float rotation_ )
 {
 	//spriteList[spriteID_].rotation += rotation_;
-	cout << "stubbed: RotateSpriteRelative" << endl;
+	//cout << "stubbed: RotateSpriteRelative" << endl;
 }
 
 void RotateSprite(SDL_Texture* sprite_, float rotation_ )
 {
 	//spriteList[spriteID_].rotation = rotation_;
-	cout << "stubbed: RotateSprite" << endl;
+	//cout << "stubbed: RotateSprite" << endl;
 }
 
 GLAHEntity GetGLAHEntity(SDL_Texture* sprite_)
@@ -377,19 +387,14 @@ bool IsKeyDown( SDL_Keycode key_ )
 
 bool GetMouseButtonDown( int a_iMouseButtonToTest )
 {
-	//if(glfwGetMouseButton(window, a_iMouseButtonToTest) == GLFW_PRESS)
-	//{
-	//	return true;
-	//}
-	return false;
+	return msBtnDwn[0];
 }
 
-void GetMouseLocation( double& a_iMouseX, double& a_iMouseY )
+void GetMouseLocation( int& a_iMouseX, int& a_iMouseY )
 {
-	//int width, height;
-	//glfwGetWindowSize(window, &width, &height);
-	//glfwGetCursorPos(window, &a_iMouseX, &a_iMouseY);
-	//a_iMouseY = height - a_iMouseY;
+	SDL_GetMouseState( &a_iMouseX, &a_iMouseY );
+	a_iMouseY = 768 - a_iMouseY;
+	//cout << "mousex: " << x << "  mousey:" << y << endl;
 }
 //END INPUT HANDLING
 ///////////////////////////////////////////////////////////////////////
