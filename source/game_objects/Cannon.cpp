@@ -33,15 +33,15 @@ void
 Cannon::Update(float delta_)
 {
 	reloadTime += delta_;
-	//handle user input
-	if  (IsKeyDown(KEY_LEFT)) 
-	{
-		rotation += delta_ * 10;
-	}
-	if  (IsKeyDown(KEY_RIGHT)) 
-	{
-		rotation -= delta_ * 10;
-	}
+	////handle user input
+	//if  (IsKeyDown(KEY_LEFT)) 
+	//{
+	//	rotation += delta_ * 10;
+	//}
+	//if  (IsKeyDown(KEY_RIGHT)) 
+	//{
+	//	rotation -= delta_ * 10;
+	//}
 
 	//mouse controlled
 	int mouseX, mouseY;

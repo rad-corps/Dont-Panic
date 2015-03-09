@@ -286,24 +286,24 @@ ProgramState* PSLevelEditor::Update(float delta_)
 
 	//inputHelper.Update();
 
-	if ( IsKeyDown(KEY_ESCAPE) ) 
-		return new PSMainMenu();
+//	if ( IsKeyDown(KEY_ESCAPE) ) 
+//		return new PSMainMenu();
 
-	if ( IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_S) && !saving)
-	{
-		inputName = true;
-		levelName = "";
-	}
+	//if ( IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_S) && !saving)
+	//{
+	//	inputName = true;
+	//	levelName = "";
+	//}
 
 	if ( inputName )
 	{
 		promptText.SetText("Enter Level Name - " + levelName);
 	}
 
-	if (  !IsKeyDown(KEY_LEFT_CONTROL) || !IsKeyDown(KEY_S) ) 
-	{
-		saving = false;
-	}
+	//if (  !IsKeyDown(KEY_LEFT_CONTROL) || !IsKeyDown(KEY_S) ) 
+	//{
+	//	saving = false;
+	//}
 
 	lastCol = col;
 	lastRow = row;
