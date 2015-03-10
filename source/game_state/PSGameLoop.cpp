@@ -5,9 +5,6 @@
 #include <cmath>
 #include <time.h>
 #include <assert.h>
-#if !defined(OSX)
-	#include <crtdbg.h>
-#endif
 #include <iostream>
 #include <list>
 #include <vector>
