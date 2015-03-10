@@ -4,7 +4,7 @@
 #include "Platform.h"
 #include "Enemy.h"
 #include "Goal.h"
-#include "../math/Vector.h"
+#include "GLAH/Vector.h"
 #include "../math/Rect.h"
 #include <vector>
 #include "GLText.h"

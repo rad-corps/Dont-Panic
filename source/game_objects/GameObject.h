@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "../math/Vector.h"
+#include "GLAH/Vector.h"
 #include "../math/Rect.h"
 
 class GameObject
