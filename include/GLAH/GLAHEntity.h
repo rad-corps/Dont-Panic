@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Matrix.h"
 #include "SDL2/SDL.h"
 
 struct GLAHEntity

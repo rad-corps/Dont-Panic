@@ -21,9 +21,6 @@
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\GLAH\Matrix.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\GLAH\Vector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\GLAHSoundInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\Matrix.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\SOIL.h">

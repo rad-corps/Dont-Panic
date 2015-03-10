@@ -32,7 +32,6 @@
     <ClCompile Include="source\game_state\ProgramState.cpp" />
     <ClCompile Include="source\GLAH\GLAHGraphics.cpp" />
     <ClCompile Include="source\GLAH\FileIO.cpp" />
-    <ClCompile Include="source\GLAH\Matrix.cpp" />
     <ClCompile Include="source\GLAH\Vector.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\math\Collision.cpp" />
@@ -65,7 +64,6 @@
     <ClInclude Include="include\GLAH\FileIO.h" />
     <ClInclude Include="include\GLAH\GLAHEntity.h" />
     <ClInclude Include="include\GLAH\GLAHSoundInfo.h" />
-    <ClInclude Include="include\GLAH\Matrix.h" />
     <ClInclude Include="include\GLAH\SOIL.h" />
     <ClInclude Include="include\GLAH\Vector.h" />
     <ClInclude Include="include\GLAH\Vertex.h" />

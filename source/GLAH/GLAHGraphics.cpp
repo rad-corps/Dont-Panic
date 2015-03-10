@@ -28,9 +28,7 @@ std::map<int, bool> msBtnDwn;
 
 //used internally by DrawSprite
 void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_ = 1.0f);
-	
-//Create the SpriteMatrix on the fly
-Matrix3x3		CreateSpriteTransformation	( unsigned int spriteID_ );
+
 	
 //contains additional information about sprite rotation, scale, position etc.
 std::map<SDL_Texture*, GLAHEntity> spriteList;
@@ -73,8 +71,6 @@ void			RemoveInputListener()
 	inputListener = nullptr;
 }
 
-//orthographic projection matrix
-Matrix4x4 ortho;
 
 SDL_Window*		GetWindow()
 {
