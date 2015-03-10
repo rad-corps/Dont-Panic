@@ -51,7 +51,7 @@ OuterLoop::OuterLoop(void)
 	Initialise( 1024, 768, false, "Dont Panic" );
 	SpriteSheet::Init();
 	
-	AddFont("./resources/fonts/arial.fnt");
+	//AddFont("./resources/fonts/arial.fnt");
 
 	cout << "OuterLoop()" << endl;
 
