@@ -11,6 +11,8 @@
 #include "GLAH/Vector.h"
 #include "../math/Rect.h"
 
+//trivial change
+
 class GameObject
 {
 public:
