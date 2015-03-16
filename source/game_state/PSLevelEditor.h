@@ -75,5 +75,7 @@ private:
 	Vector2 mousePos;
 
 	TILE_CATEGORY currentCategory;
+
+	ProgramState* newProgramState;
 };
 

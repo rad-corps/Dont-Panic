@@ -36,6 +36,7 @@ void MyKeyEvent(int key_, void* caller_)
 
 void PSLevelEditor::Init()
 {
+	newProgramState=nullptr;
 	UVTranslator trans(800,1280,16,16);
 	trans.GetUV(uv, 16, 0);
 
@@ -88,7 +89,7 @@ void PSLevelEditor::Init()
 	}
 }
 
-PSLevelEditor::PSLevelEditor(int levelID_)
+PSLevelEditor::PSLevelEditor(int levelID_) 
 {
 	
 	DBLevel dbLevel;
@@ -110,7 +111,6 @@ PSLevelEditor::~PSLevelEditor(void)
 		delete currentPlatform;
 		currentPlatform = nullptr;
 	}
-	RemoveInputListener();
 //	glfwSetScrollCallback(GetWindow(), NULL); 
 }
 
@@ -232,6 +232,11 @@ void PSLevelEditor::KeyDown(SDL_Keycode key_)
 		{
 			showInstructions = !showInstructions;
 		}
+		if ( key_ == SDLK_ESCAPE )
+		{
+			RemoveInputListener();
+			newProgramState = new PSMainMenu();
+		}
 	}
 }
 
@@ -308,7 +313,7 @@ ProgramState* PSLevelEditor::Update(float delta_)
 	lastCol = col;
 	lastRow = row;
 
-	return nullptr;
+	return newProgramState;
 }
 void PSLevelEditor::Draw()
 {
