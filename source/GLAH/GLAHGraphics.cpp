@@ -294,7 +294,10 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 	//Render texture to screen
 	GLAHEntity entity = spriteList[sprite_];
 	SDL_Rect src = { (int)entity.UV[0], (int)entity.UV[1], (int)entity.UV[2], (int)entity.UV[3] };
-	SDL_Rect dst = { (int)entity.position.x, 768 - (int)entity.position.y, (int)entity.size.x, (int)entity.size.y };
+	SDL_Rect dst = { (int)entity.position.x, 
+					768 - (int)entity.position.y, 
+					(int)entity.size.x * (int)spriteList[sprite_].scaleX, 
+					(int)entity.size.y * (int)spriteList[sprite_].scaleY };
 
 	//flipping horizontally?
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

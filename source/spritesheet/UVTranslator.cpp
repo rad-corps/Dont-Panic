@@ -45,7 +45,7 @@ void UVTranslator::GetUV(float* out_, int row_, int col_, int blockCols_, int bl
 
 	out_[0] = col_ * tileWidth;
 	out_[1] = row_ * tileHeight;
-	out_[2] = tileWidth;
-	out_[3] = tileHeight;
+	out_[2] = tileWidth * blockCols_;
+	out_[3] = tileHeight * blockRows_;
 
 }
