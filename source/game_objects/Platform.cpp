@@ -3,13 +3,14 @@
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
 #include "../math/Collision.h"
+#include "../globals/consts.h"
 
 Platform::Platform(int col_, int row_, ENVIRO_TILE tileType_) : tileType(tileType_), row(row_), col(col_), scaleX(1), scaleY(1)
 {
 //	gfx = GLAHGraphics::Instance();
-	width = 32;
-	height = 32;
-	centre = Vector2(col_ * 32, row_ * 32);
+	width = TILE_S;
+	height = TILE_S;
+	centre = Vector2(col_ * TILE_S, row_ * TILE_S);
 	InitialiseGraphic();
 	isFalling = false;
 	active = true;

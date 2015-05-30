@@ -20,6 +20,7 @@ g++ \
 ./source/game_objects/Goal.cpp \
 ./source/game_objects/Platform.cpp \
 ./source/game_objects/Player.cpp \
+./source/game_objects/PlayerProjectile.cpp \
 ./source/game_objects/Shell.cpp \
 ./source/data/DBLevel.cpp \
 ./source/data/FileSettings.cpp \

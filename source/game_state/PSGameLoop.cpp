@@ -30,6 +30,10 @@ PSGameLoop::PSGameLoop(int level_) : newProgramState(nullptr)
 	gameTimer = 0.f;
 	
 	cannon.RegisterCannonListener(this);	
+
+	//maximum of 3 player projectiles on screen at once
+	playerProjectiles.resize(3);
+	player.InitListener(this);
 }
 
 
@@ -51,9 +55,13 @@ ProgramState* PSGameLoop::Update(float delta_)
 {
 	//update player
 	player.Update(delta_, platforms, enemies, goal);
+
+	//update Camera
+	camera.pos = player.Pos();
+	MoveCamera(camera.pos.x, camera.pos.y);
 	
 	//update cannon
-	cannon.Update(delta_);
+	//cannon.Update(delta_);
 
 	//update platforms
 	for ( auto &env : platforms )
@@ -71,6 +79,9 @@ ProgramState* PSGameLoop::Update(float delta_)
 	for (auto &shell : shells )
 		shell.Update(delta_);
 
+	for ( auto &projectiles : playerProjectiles)
+		projectiles.Update(delta_);
+
 	//update goal
 	goal.Update(delta_);
 
@@ -83,9 +94,12 @@ ProgramState* PSGameLoop::Update(float delta_)
 void PSGameLoop::Draw()
 {
 
-	cannon.Draw();
+	//cannon.Draw();
 
 	player.Draw();
+
+	for ( auto &projectiles : playerProjectiles)
+		projectiles.Draw();
 
 	for ( auto &enemy : enemies )
 		enemy.Draw();
@@ -100,10 +114,7 @@ void PSGameLoop::Draw()
 		es.Draw();
 
 	goal.Draw();	
-	
-
-	
-	
+		
 }
 
 void PSGameLoop::ShotFired(Vector2 pos_, Vector2 velocity_)
@@ -120,4 +131,17 @@ void PSGameLoop::ShotFired(Vector2 pos_, Vector2 velocity_)
 
 	//if we got this far, than we need to push back a new one	
 	shells.push_back(Shell(pos_, velocity_));
+}
+
+void PSGameLoop::PlayerProjectileFired(Vector2 pos_, Vector2 velocity_)
+{
+	//find an inactive shell
+	for ( auto &projectile : playerProjectiles )
+	{
+		if ( !projectile.IsActive() )
+		{
+			projectile.Shoot(pos_, velocity_);
+			return;
+		}
+	}
 }

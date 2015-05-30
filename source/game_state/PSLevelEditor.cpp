@@ -6,6 +6,7 @@
 #include "../data/DBLevel.h"
 #include <iostream>
 #include <algorithm>
+#include "../globals/consts.h"
 
 using namespace std;
 
@@ -248,8 +249,8 @@ void PSLevelEditor::UpdateRowCol()
 	mousePos.x = (float)mouseX;//offset x due to drawing from centre
 	mousePos.y = (float)mouseY;
 	//get row and column based on mousePos
-	col = mousePos.x / 32;
-	row = mousePos.y / 32;
+	col = mousePos.x / TILE_S;
+	row = mousePos.y / TILE_S;
 }
 
 void PSLevelEditor::HandleMouseDown()
@@ -284,7 +285,7 @@ void PSLevelEditor::HandleMouseDown()
 
 ProgramState* PSLevelEditor::Update(float delta_)
 {
-	pos = Vector2(col * 32, row * 32);
+	pos = Vector2(col * TILE_S, row * TILE_S);
 	
 	UpdateRowCol();
 	HandleMouseDown();

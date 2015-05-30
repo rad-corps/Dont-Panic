@@ -11,10 +11,13 @@
 #include "../game_objects/Enemy.h"
 #include "../game_objects/EnemySpawner.h"
 #include "../game_objects/Goal.h"
+#include "../game_objects/Camera.h"
+#include "../game_objects/PlayerProjectile.h"
 #include "../listeners/CannonListener.h"
+#include "../listeners/PlayerProjectileListener.h"
 #include "GLAH/Vector.h"
 
-class PSGameLoop : public ProgramState, public CannonListener, public InputListener
+class PSGameLoop : public ProgramState, public CannonListener, public InputListener, public PlayerProjectileListener
 {
 public:
 	//updateInterval defaults to 1/60th of a second (60FPS)
@@ -30,6 +33,7 @@ public:
 	void Draw();
 
 	virtual void ShotFired(Vector2 pos_, Vector2 velocity_);
+	virtual void PlayerProjectileFired(Vector2 pos_, Vector2 velocity_);
 	virtual void KeyDown(SDL_Keycode key_);
 
 private:
@@ -38,6 +42,7 @@ private:
 	
 	Player player;
 	Cannon cannon;
+	Camera camera;
 	Goal goal;
 	int level;
 
@@ -46,6 +51,7 @@ private:
 	std::vector<Platform> platforms;
 	std::vector<Shell> shells;
 	std::vector<EnemySpawner> enemySpawners;
+	std::vector<PlayerProjectile> playerProjectiles;
 
 	ProgramState* newProgramState;
 	//World world;

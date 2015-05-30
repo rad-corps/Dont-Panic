@@ -13,8 +13,8 @@ Goal::Goal(void)
 	//translator.GetUV(UVs,51,38);
 	translator.GetUV(UVs,10,0);
 
-	width = 32;
-	height = 32;
+	width = TILE_S;
+	height = TILE_S;
 }
 
 

@@ -3,6 +3,7 @@
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
 #include "../math/Collision.h"
+#include "../globals/consts.h"
 
 using namespace std;
 
@@ -33,8 +34,8 @@ Enemy::Enemy(const Enemy& enemy_)
 	rightCollider.height = 18;
 	
 
-	width = 32;
-	height = 32;
+	width = TILE_S;
+	height = TILE_S;
 
 	UpdateColliders();
 	velocity = Vector2(0,0);
@@ -63,8 +64,8 @@ Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, int col_, int row_)
 		break;
 	}
 
-	width = 32;
-	height = 32;
+	width = TILE_S;
+	height = TILE_S;
 
 
 	currentAnimation = walk1;
@@ -101,8 +102,8 @@ Enemy::Enemy(ENEMY_TYPE type_, DIRECTION initialDirection_, Vector2 pos_)
 	active = true;
 	pos = pos_;
 
-	width = 32;
-	height = 32;
+	width = TILE_S;
+	height = TILE_S;
 
 
 	velocity = Vector2(0,0);

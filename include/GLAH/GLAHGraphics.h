@@ -36,6 +36,8 @@ void			RemoveInputListener();
 
 	//Move the sprite in world space to the absolute coordinate xPos_, yPos_
 	void			MoveSprite				( SDL_Texture*, float xPos_, float yPos_ );
+
+	void 			MoveCamera				(float xPos_, float yPos_);
 	
 	//move the sprite relative to its current position
 	void			MoveSpriteRelative		( unsigned int spriteID_, float xMovement_, float yMovement_ = 0.0f, float rotation_ = 0.0f);

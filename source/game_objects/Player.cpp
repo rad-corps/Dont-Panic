@@ -53,11 +53,14 @@ Player::Player(void)
 	playerSpeak.SetAlignment(TEXT_ALIGNMENT::ALIGN_RIGHT);
 }
 
-
 Player::~Player(void)
 {
 }
 
+void Player::InitListener(PlayerProjectileListener* playerProjectileListener_)
+{
+	playerProjectileListener = playerProjectileListener_;
+}
 
 
 //must be called whenever players position changes
@@ -186,12 +189,28 @@ void Player::HandleInput(float delta_)
 		status = JUMPING;	
 		
 		//will only happen for one frame
-		velocity.y += 10;
+		velocity.y += 17;
 	}
 
 	if ( !IsKeyDown(SDLK_w) )
 	{
 		jumpHeld = false;
+	}
+
+	if ( IsKeyDown(SDLK_SPACE) && shootHeld == false )
+	{
+		shootHeld = true;
+		cout << "SPACE PRESSED" << endl;
+		
+		if ( faceLeft )
+			playerProjectileListener->PlayerProjectileFired(pos, Vector2(-1, 0));
+		else
+			playerProjectileListener->PlayerProjectileFired(pos, Vector2(1, 0));
+
+	}
+	else if (!IsKeyDown(SDLK_SPACE))
+	{
+		shootHeld = false;
 	}
 }
 

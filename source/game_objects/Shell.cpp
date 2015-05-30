@@ -1,6 +1,7 @@
 #include "Shell.h"
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
+#include "../globals/consts.h"
 
 float Shell::uv[4];
 bool Shell::init = false;
@@ -14,8 +15,8 @@ Shell::Shell(Vector2 pos_, Vector2 velocity_)
 		init = true;
 	}
 
-	width = 32;
-	height = 32;
+	width = TILE_S;
+	height = TILE_S;
 
 	Shoot(pos_,velocity_);
 }
@@ -32,7 +33,7 @@ void Shell::Shoot(Vector2 pos_, Vector2 velocity_)
 	pos = pos_;
 	
 	velocity = velocity_;
-	cout << "Shoot(Vector2 " << pos_ << ", Vector2 " << velocity_ << ")" << endl;
+	//cout << "Shoot(Vector2 " << pos_ << ", Vector2 " << velocity_ << ")" << endl;
 }
 
 void Shell::Update(float delta_)

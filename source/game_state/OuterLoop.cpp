@@ -19,6 +19,7 @@
 #include "../data/FileSettings.h"
 #include "../spritesheet/SpriteSheet.h"
 #include <iostream>
+#include "../globals/consts.h"
 
 using namespace std;
 
@@ -44,11 +45,11 @@ OuterLoop::OuterLoop(void)
 	//int hor, ver;
 	//GetDesktopResolution(hor, ver);
 	//cout << "Screen Res: " << hor << "x" << ver << endl;
-	FileSettings::AddIntValue("SCREEN_W", 1024);
-	FileSettings::AddIntValue("SCREEN_H", 768);
+	FileSettings::AddIntValue("SCREEN_W", SCREEN_W);
+	FileSettings::AddIntValue("SCREEN_H", SCREEN_H);
 
 	//Initialise( FileSettings::GetInt("SCREEN_W"), FileSettings::GetInt("SCREEN_H"),  FileSettings::GetBool("FULL_SCREEN"), "Dont Panic" );
-	Initialise( 1024, 768, false, "Dont Panic" );
+	Initialise( SCREEN_W, SCREEN_H, false, "Dont Panic" );
 	SpriteSheet::Init();
 	
 	//AddFont("./resources/fonts/arial.fnt");

@@ -1,5 +1,5 @@
 #include "SpriteSheet.h"
-
+#include "../globals/consts.h"
 
 
 bool SpriteSheet::init;
@@ -32,7 +32,7 @@ void SpriteSheet::Init()
 	{
 		translator = UVTranslator(800, 1280, 16, 16);
 		//sprite = CreateSprite("./resources/images/simples_pimples2.png", 32, 32, 0, Vector3(16.f,16.f,1.f));
-		sprite = CreateSprite("./resources/images/simples_pimples2.png", 32, 32, 0, Vector3(0.f,0.f,1.f));
+		sprite = CreateSprite("./resources/images/simples_pimples2.png", TILE_S, TILE_S, 0, Vector3(0.f,0.f,1.f));
 		fontSprite = CreateSprite("./resources/images/courier.png", 16, 16, 0, Vector3(8.f,8.f,1.f));
 		init = true;
 	}

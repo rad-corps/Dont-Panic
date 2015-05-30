@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include "GLAH/GLAHGraphics.h"
+#include "../globals/consts.h"
 #include <SDL2/SDL_image.h>
 //#include "GLAH/GLAHInput.h"
 //#include "GLAH/Shaders.h"
@@ -22,6 +23,9 @@
 
 
 using namespace std::chrono; 
+
+float camX;
+float camY;
 
 std::map<SDL_Keycode, bool> keyDownList; //key, isDown
 std::map<int, bool> msBtnDwn;
@@ -294,8 +298,8 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 	//Render texture to screen
 	GLAHEntity entity = spriteList[sprite_];
 	SDL_Rect src = { (int)entity.UV[0], (int)entity.UV[1], (int)entity.UV[2], (int)entity.UV[3] };
-	SDL_Rect dst = { (int)entity.position.x, 
-					768 - (int)entity.position.y, 
+	SDL_Rect dst = { (int)entity.position.x - (int)camX + (int)(SCREEN_W * 0.5f), 
+					(int)(SCREEN_H * 0.5f) - (int)entity.position.y + (int)camY, 
 					(int)entity.size.x * (int)spriteList[sprite_].scaleX, 
 					(int)entity.size.y * (int)spriteList[sprite_].scaleY };
 
@@ -316,6 +320,12 @@ void MoveSprite(SDL_Texture* sprite_, float x_, float y_)
 {
 	spriteList[sprite_].position.x = x_;
 	spriteList[sprite_].position.y = y_;
+}
+
+void MoveCamera	(float xPos_, float yPos_)
+{
+	camX = xPos_;
+	camY = yPos_;
 }
 
 //GLAH::DrawSpriteRelative

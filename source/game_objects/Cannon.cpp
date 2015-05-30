@@ -26,6 +26,7 @@ Cannon::~Cannon(void)
 
 void Cannon::RegisterCannonListener(CannonListener *cannonListener_)
 {
+	//commented out as I'm not using a canon any more. 
 	cannonListener = cannonListener_;
 }
 

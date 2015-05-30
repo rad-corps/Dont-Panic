@@ -11,6 +11,7 @@
 
 //#include "GLAH\GLAHInput.h"
 #include "GLAH/GLAHGraphics.h"
+#include "../listeners/PlayerProjectileListener.h"
 
 
 enum PLAYER_STATUS
@@ -23,8 +24,10 @@ enum PLAYER_STATUS
 class Player : public GameObject
 {
 public:
-	Player(void);
+	Player();
 	~Player(void);
+
+	void InitListener(PlayerProjectileListener* playerProjectileListener_);
 
 	virtual void Update(float delta_, std::vector<Platform>& platform_, std::vector<Enemy>& enemies, Goal& goal_);
 	virtual void Draw();
@@ -66,8 +69,11 @@ private:
 	bool faceLeft;
 	bool alive;
 	bool jumpHeld;
+	bool shootHeld;
 
 	GLText playerSpeak;
+
+	PlayerProjectileListener* playerProjectileListener;
 
 
 };
