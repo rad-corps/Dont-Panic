@@ -33,7 +33,7 @@ void PlayerProjectile::Shoot(Vector2 pos_, Vector2 direction_)
 	active = true;
 	pos = pos_;
 	
-	velocity = direction_;
+	velocity = direction_ * 1000;
 }
 
 void
