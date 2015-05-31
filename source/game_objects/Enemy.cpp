@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include "GLAH/GLAHGraphics.h"
+#include "../GLAH/GLAHGraphics.h"
 #include "../spritesheet/SpriteSheet.h"
 #include "../spritesheet/UVTranslator.h"
 #include "../math/Collision.h"

@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 //#include "GLAH/InputHelper.h"
-#include "GLAH/InputListener.h"
+#include "../GLAH/InputListener.h"
 
 class PSLevelModifySelect : public ProgramState, public InputListener
 {

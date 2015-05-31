@@ -4,7 +4,7 @@
 // For AIE Advanced Diploma - Game Math And OpenGL
 /////////////////////////////////////////////////////////////////////////
 
-#include "GLAH/Vector.h"
+#include "Vector.h"
 #include <math.h>
 #include <string>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GLAH/GLAHGraphics.h"
+#include "../GLAH/GLAHGraphics.h"
 #include "UVTranslator.h"
 
 //#include "AIE.h"

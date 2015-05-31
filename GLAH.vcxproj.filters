@@ -107,28 +107,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\GLAH\CONSTS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\FileIO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\GLAHColour.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\GLAHEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\GLAHGraphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\GLAH\GLAHSoundInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\SOIL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GLAH\Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\Vertex.h">
@@ -218,9 +200,6 @@
     <ClInclude Include="source\game_state\PSLevelModifySelect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GLAH\InputListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\game_objects\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -228,6 +207,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\listeners\PlayerProjectileListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GLAH\GLAHGraphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GLAH\FileIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GLAH\InputListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GLAH\GLAHColour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GLAH\GLAHEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GLAH\Vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

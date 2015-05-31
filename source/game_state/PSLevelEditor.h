@@ -1,7 +1,7 @@
 #pragma once
 #include "ProgramState.h"
-#include "GLAH/Vector.h"
-#include "GLAH/InputListener.h"
+#include "../GLAH/Vector.h"
+#include "../GLAH/InputListener.h"
 #include <vector>
 #include <memory>
 #include "../game_objects/Platform.h"

@@ -1,4 +1,4 @@
-#include "GLAH/GLAHGraphics.h"
+#include "../GLAH/GLAHGraphics.h"
 #include "GLText.h"
 #include "../spritesheet/UVTranslator.h"
 #include <locale> //toupper

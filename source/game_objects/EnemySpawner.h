@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Enemy.h"
 #include <vector>
-#include "GLAH/Vector.h"
+#include "../GLAH/Vector.h"
 
 class EnemySpawner : public GameObject
 {

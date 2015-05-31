@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 //#include "SpriteFont.h"
-#include "Vertex.h"
+//#include "Vertex.h"
 #include "GLAHEntity.h"
 #include "GLAHColour.h"
 

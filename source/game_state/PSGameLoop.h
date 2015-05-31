@@ -2,8 +2,8 @@
 
 #include <vector>
 #include "ProgramState.h"
-#include "GLAH/GLAHGraphics.h"
-#include "GLAH/InputListener.h"
+#include "../GLAH/GLAHGraphics.h"
+#include "../GLAH/InputListener.h"
 #include "../game_objects/Platform.h"
 #include "../game_objects/Player.h"
 #include "../game_objects/Cannon.h"
@@ -15,7 +15,7 @@
 #include "../game_objects/PlayerProjectile.h"
 #include "../listeners/CannonListener.h"
 #include "../listeners/PlayerProjectileListener.h"
-#include "GLAH/Vector.h"
+#include "../GLAH/Vector.h"
 
 class PSGameLoop : public ProgramState, public CannonListener, public InputListener, public PlayerProjectileListener
 {

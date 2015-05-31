@@ -3,7 +3,7 @@
 #include "PSLevelEditor.h"
 #include "PSLevelSelect.h"
 #include "PSLevelModifySelect.h"
-#include "GLAH/GLAHGraphics.h"
+#include "../GLAH/GLAHGraphics.h"
 #include <iostream>
 
 using namespace std;

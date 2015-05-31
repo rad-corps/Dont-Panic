@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-#include "GLAH/GLAHGraphics.h"
+#include "../GLAH/GLAHGraphics.h"
 #include "../globals/consts.h"
 #include <SDL2/SDL_image.h>
 //#include "GLAH/GLAHInput.h"

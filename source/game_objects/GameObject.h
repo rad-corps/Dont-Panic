@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "GLAH/Vector.h"
+#include "../GLAH/Vector.h"
 #include "../math/Rect.h"
 
 //trivial change

@@ -43,7 +43,7 @@
     <ClCompile Include="source\tests\Databases.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\GLAH\InputListener.h" />
+    <ClInclude Include="source\GLAH\InputListener.h" />
     <ClInclude Include="source\game_objects\Camera.h" />
     <ClInclude Include="source\game_objects\EnemySpawner.h" />
     <ClInclude Include="source\game_objects\Goal.h" />
@@ -61,14 +61,13 @@
     <ClInclude Include="source\game_objects\Enemy.h" />
     <ClInclude Include="source\game_objects\Shell.h" />
     <ClInclude Include="source\game_objects\Cannon.h" />
-    <ClInclude Include="include\GLAH\CONSTS.h" />
-    <ClInclude Include="include\GLAH\GLAHColour.h" />
-    <ClInclude Include="include\GLAH\GLAHGraphics.h" />
-    <ClInclude Include="include\GLAH\FileIO.h" />
-    <ClInclude Include="include\GLAH\GLAHEntity.h" />
+    <ClInclude Include="source\GLAH\GLAHColour.h" />
+    <ClInclude Include="source\GLAH\GLAHGraphics.h" />
+    <ClInclude Include="source\GLAH\FileIO.h" />
+    <ClInclude Include="source\GLAH\GLAHEntity.h" />
     <ClInclude Include="include\GLAH\GLAHSoundInfo.h" />
     <ClInclude Include="include\GLAH\SOIL.h" />
-    <ClInclude Include="include\GLAH\Vector.h" />
+    <ClInclude Include="source\GLAH\Vector.h" />
     <ClInclude Include="include\GLAH\Vertex.h" />
     <ClInclude Include="source\game_objects\Platform.h" />
     <ClInclude Include="source\game_objects\GameObject.h" />

@@ -3,7 +3,7 @@
 #include "../game_objects/GLText.h"
 #include <vector>
 #include <map>
-#include "GLAH/InputListener.h"
+#include "../GLAH/InputListener.h"
 
 class PSLevelSelect : public ProgramState, public InputListener
 {

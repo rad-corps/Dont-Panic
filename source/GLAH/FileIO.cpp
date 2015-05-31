@@ -1,4 +1,4 @@
-#include "GLAH/FileIO.h"
+#include "FileIO.h"
 
 #include <string>
 #include <fstream>

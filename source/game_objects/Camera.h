@@ -1,7 +1,7 @@
 //Camera.h
 #pragma once
 
-#include "GLAH/Vector.h"
+#include "../GLAH/Vector.h"
 
 class Camera
 {

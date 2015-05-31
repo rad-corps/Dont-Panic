@@ -1,6 +1,6 @@
 #pragma once
 #include "ProgramState.h"
-#include "GLAH/InputListener.h"
+#include "../GLAH/InputListener.h"
 #include "../game_objects/GLText.h"
 
 class PSMainMenu : public ProgramState, public InputListener

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <array>
-#include "GLAH/Vector.h"
+#include "../GLAH/Vector.h"
 
 enum TEXT_ALIGNMENT
 {
