@@ -81,6 +81,15 @@ SDL_Window*		GetWindow()
 	return window;
 }
 
+Rect			GetScreenRect()
+{
+	Rect ret;
+	ret.centre = Vector2(camX, camY);
+	ret.width = SCREEN_W;
+	ret.height = SCREEN_H;
+	return ret;
+}
+
 //unsigned int	GLAHGraphics::CreateSprite	
 // textureName_		: filename/path of the texture to load
 // width_			: width of texture

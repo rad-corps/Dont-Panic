@@ -4,6 +4,8 @@
 #include "../spritesheet/SpriteSheet.h"
 #include "PlayerProjectile.h"
 #include <iostream>
+#include "../globals/consts.h"
+#include "../math/Collision.h"
 
 float PlayerProjectile::uv[4];
 bool PlayerProjectile::init = false;
@@ -20,6 +22,9 @@ PlayerProjectile::PlayerProjectile()
 		translator.GetUV(uv, 0, 0);
 		init = true;
 	}
+
+	width = TILE_S;
+	height = TILE_S;
 }
 
 PlayerProjectile::~PlayerProjectile()
@@ -53,5 +58,12 @@ PlayerProjectile::Update(float delta_)
 	if ( active ) 
 	{
 		pos += velocity * delta_;
+	
+		//if it no longer collides with the screen, deactivate
+		if ( !Collision::RectCollision(GetScreenRect(), GetRect() ) )
+		{
+			cout << "PlayerProjectile left screen" << endl;
+			active = false;
+		}
 	}
 }

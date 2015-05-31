@@ -4,6 +4,7 @@
 #include <vector>
 #include "Platform.h"
 #include "Shell.h"
+#include "PlayerProjectile.h"
 
 enum ENEMY_TYPE
 {
@@ -31,7 +32,7 @@ public:
 	Enemy(const Enemy& enemy_); //copy ctor
 	~Enemy(void);
 
-	void Update(float delta_, std::vector<Platform>& platform_, std::vector<Shell>& shells_);
+	void Update(float delta_, std::vector<Platform>& platform_, std::vector<Shell>& shells_, std::vector<PlayerProjectile>& playerProjectile_);
 	void Draw();
 
 private:
@@ -41,7 +42,7 @@ private:
 	void MoveTo(Vector2 pos_);
 	void ApplyGravity();
 	void ApplyVelocity(Vector2 velocity_);
-	void HandleCollision(std::vector<Platform>& platform_, std::vector<Shell>& shells_);
+	void HandleCollision(std::vector<Platform>& platform_, std::vector<Shell>& shells_, std::vector<PlayerProjectile>& playerProjectile_);
 	void UndoX();
 	void UndoY();
 

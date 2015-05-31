@@ -42,12 +42,6 @@ Player::Player(void)
 	translator.GetUV(animMove2, 0, 2);
 	translator.GetUV(animMove3, 0, 3);
 	translator.GetUV(animDead, 0, 4);
-
-	//SpriteSheet::FillUV(animStationary, SPRITE_TYPE::M_P1_STAT);
-	//SpriteSheet::FillUV(animMove1, SPRITE_TYPE::M_P1_MOVE1);
-	//SpriteSheet::FillUV(animMove2, SPRITE_TYPE::M_P1_MOVE2);
-	//SpriteSheet::FillUV(animMove3, SPRITE_TYPE::M_P1_MOVE1);
-	//SpriteSheet::FillUV(animDead, SPRITE_TYPE::M_P1_DEATH);
 	
 	currentAnimation = animStationary;
 
@@ -101,7 +95,6 @@ void Player::HandleCollision(vector<Platform>& platform_, std::vector<Enemy>& en
 					onPlatform = true;
 					velocity.y = 0;
 					//push him back up to the top of the platform
-					cout << "MoveTo" << endl;
 					MoveTo(Vector2(pos.x, env.Top() + 64));
 				
 					//if the env is a falling type, then make it fall!

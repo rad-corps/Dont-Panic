@@ -150,7 +150,7 @@ void Enemy::UndoY()
 	MoveTo(Vector2(pos.x, prevY));
 }
 
-void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& shells_)
+void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& shells_, std::vector<PlayerProjectile>& playerProjectiles_)
 {
 	onPlatform = false;
 	//check collision	
@@ -201,6 +201,15 @@ void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& she
 				shell.SetActive(false);
 			}
 
+	//check if shot
+	for ( auto &projectile : playerProjectiles_ )
+		if ( projectile.IsActive() )
+			if ( Collision::RectCollision(projectile.GetRect(), GetRect()) )		
+			{
+				active = false;
+				projectile.SetActive(false);
+			}
+
 		
 	
 }
@@ -221,7 +230,7 @@ void Enemy::ApplyVelocity(Vector2 velocity_)
 	UpdateColliders();
 }
 
-void Enemy::Update(float delta_, vector<Platform>& platform_, std::vector<Shell>& shells_)
+void Enemy::Update(float delta_, vector<Platform>& platform_, std::vector<Shell>& shells_, std::vector<PlayerProjectile>& playerProjectile_ )
 {
 	if ( !active )
 		return;
@@ -238,7 +247,7 @@ void Enemy::Update(float delta_, vector<Platform>& platform_, std::vector<Shell>
 	}
 
 	
-	HandleCollision(platform_, shells_);
+	HandleCollision(platform_, shells_, playerProjectile_);
 	ApplyGravity();
 	ApplyVelocity(velocity);
 

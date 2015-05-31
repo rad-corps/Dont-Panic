@@ -9,6 +9,7 @@
 #include "GLAHColour.h"
 
 #include "InputListener.h"
+#include "../math/Rect.h"
 
 using namespace std;
 
@@ -32,6 +33,9 @@ void			RemoveInputListener();
 								unsigned int parentSpriteID_ = 0, //sprite to parent to (0 if none)
 								//Vector3 originOffset_ = Vector3(0.f,0.f,0.f), //rotation origin (bottom left by default)
 								SColour colour_ = SColour(0xFF,0xFF,0xFF,0xFF)); //RGBA (white default)
+
+	//get the viewport rect based on where the camera is. 
+	Rect			GetScreenRect();
 								
 
 	//Move the sprite in world space to the absolute coordinate xPos_, yPos_
