@@ -33,6 +33,7 @@ PSMainMenu::PSMainMenu(void) : newState(nullptr)
 	AddInputListener(this);
 
 	//testSprite = CreateSprite("./resources/images/simples_pimples2.png", 32, 32, 0, Vector3(0.f,0.f,1.f));
+	selection = 1;
 }
 
 
@@ -43,15 +44,43 @@ PSMainMenu::~PSMainMenu(void)
 
 void PSMainMenu::KeyDown(SDL_Keycode key_)
 {
-	if ( key_ == SDLK_1 ) 
-		newState = new PSLevelSelect();
-	if ( key_ == SDLK_2 ) 
-		newState = new PSLevelEditor();
-	if ( key_ == SDLK_3 ) 
-		newState = new PSLevelModifySelect();
+	if ( key_ == SDLK_UP ) 
+	{
+		selection -= 1;
+		if ( selection < 1 )  //check overflow
+			selection = 3;
+	}
+	if ( key_ == SDLK_DOWN )
+	{
+		selection += 1;
+		if ( selection > 3 ) //check overflow
+			selection = 1;
+	}
+	if (key_ == SDLK_RETURN)
+	{
+		if ( selection == 1 )
+		{
+			newState = new PSLevelSelect();
+		}
+		if ( selection == 2 )
+		{
+			newState = new PSLevelEditor();
+		}
+		if ( selection == 3 )
+		{
+			newState = new PSLevelModifySelect();
+		}
+	}
+}
 
-	//if ( newState != nullptr ) 
-	//	RemoveInputListener(this);
+void PSMainMenu::GamePadButtonDown(SDL_GameControllerButton button_) 
+{
+	if ( button_ == SDL_CONTROLLER_BUTTON_DPAD_UP ) 
+		KeyDown(SDLK_UP);
+	if ( button_ == SDL_CONTROLLER_BUTTON_DPAD_DOWN ) 
+		KeyDown(SDLK_DOWN);
+	if ( button_ == SDL_CONTROLLER_BUTTON_A || button_ == SDL_CONTROLLER_BUTTON_START ) 
+		KeyDown(SDLK_RETURN);
 }
 
 
@@ -62,9 +91,15 @@ ProgramState* PSMainMenu::Update(float delta_)
 
 void PSMainMenu::Draw()
 {
-	for ( auto &txt : menuText )
+	int menuItem = 0;
+	for ( auto txt : menuText )
 	{
+		if (menuItem == selection)
+		{
+			txt.SetText("--" + txt.GetText() + "--");
+		}
 		txt.Draw();
+		menuItem++;
 	}
 	//DrawSprite(testSprite);
 }

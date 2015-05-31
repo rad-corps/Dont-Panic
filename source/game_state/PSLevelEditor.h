@@ -33,6 +33,7 @@ public:
 
 //	void KeyDown(int key_);
 	virtual void KeyDown(SDL_Keycode key_);
+	virtual void GamePadButtonDown(SDL_GameControllerButton button_){}
 
 	static bool FindMatchingPlatform(Platform& env_);
 	static bool FindMatchingEnemySpawner(EnemySpawner& env_);

@@ -16,6 +16,7 @@ public:
 	virtual void Draw();
 	//void KeyDown(int key_);
 	virtual void KeyDown(SDL_Keycode key_);
+	virtual void GamePadButtonDown(SDL_GameControllerButton button_){}
 	
 
 private:

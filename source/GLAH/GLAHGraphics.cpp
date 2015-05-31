@@ -269,6 +269,10 @@ bool FrameworkUpdate()
 		else if( e.type == SDL_CONTROLLERBUTTONDOWN )
         {   
 			gcButtonDownList[(SDL_GameControllerButton)e.cbutton.button] = true;
+			if ( inputListener != nullptr ) 
+			{
+				inputListener->GamePadButtonDown((SDL_GameControllerButton)e.cbutton.button);
+			}
 		}
 		else if( e.type == SDL_CONTROLLERBUTTONUP )
         {   
@@ -312,7 +316,6 @@ bool FrameworkUpdate()
 				msBtnDwn[1] = false;
 			}
 		}
-
     }
 
     //Clear screen

@@ -13,13 +13,14 @@ public:
 	virtual void Draw();
 
 	virtual void KeyDown(SDL_Keycode key_);
+	virtual void GamePadButtonDown(SDL_GameControllerButton button_);
 
 private:
 	
 	std::vector<string> menuStrings;
 	std::vector<GLText> menuText;
 	
-
+	int selection;
 	ProgramState* newState;
 };
 

@@ -33,6 +33,18 @@ void PSLevelSelect::KeyDown(SDL_Keycode key_)
 	}
 }
 
+void PSLevelSelect::GamePadButtonDown(SDL_GameControllerButton button_)
+{
+	if ( button_ == SDL_CONTROLLER_BUTTON_DPAD_DOWN ) 
+		KeyDown ( SDLK_DOWN );
+	if ( button_ == SDL_CONTROLLER_BUTTON_DPAD_UP ) 
+		KeyDown ( SDLK_UP );
+	if ( button_ == SDL_CONTROLLER_BUTTON_A || button_ == SDL_CONTROLLER_BUTTON_START ) 
+		KeyDown ( SDLK_RETURN );
+	if ( button_ == SDL_CONTROLLER_BUTTON_BACK || button_ == SDL_CONTROLLER_BUTTON_B ) 
+		KeyDown ( SDLK_ESCAPE );
+}
+
 PSLevelSelect::PSLevelSelect(void) : nextProgramState(nullptr)
 {
 	AddInputListener(this);
@@ -70,10 +82,9 @@ ProgramState* PSLevelSelect::Update(float delta_)
 }
 
 void PSLevelSelect::Draw()
-{
-	
+{	
 	for ( int i = 0; i < levelText.size(); ++i )
-	{
+	{		
 		GLText txt = levelText[i];
 		if ( i == selection )
 		{

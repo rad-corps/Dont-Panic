@@ -35,6 +35,7 @@ public:
 	virtual void ShotFired(Vector2 pos_, Vector2 velocity_);
 	virtual void PlayerProjectileFired(Vector2 pos_, Vector2 velocity_);
 	virtual void KeyDown(SDL_Keycode key_);
+	virtual void GamePadButtonDown(SDL_GameControllerButton button_) {}
 
 private:
 	//float updateInterval;
