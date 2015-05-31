@@ -8,6 +8,7 @@
 #include "../GLAH/GLAHGraphics.h"
 #include "../globals/consts.h"
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_gamecontroller.h>
 //#include "GLAH/GLAHInput.h"
 //#include "GLAH/Shaders.h"
 #include <iostream>
@@ -28,6 +29,7 @@ float camX;
 float camY;
 
 std::map<SDL_Keycode, bool> keyDownList; //key, isDown
+std::map<SDL_GameControllerButton, bool> gcButtonDownList; //button, isDown
 std::map<int, bool> msBtnDwn;
 
 //used internally by DrawSprite
@@ -36,6 +38,10 @@ std::map<int, bool> msBtnDwn;
 	
 //contains additional information about sprite rotation, scale, position etc.
 std::map<SDL_Texture*, GLAHEntity> spriteList;
+
+//gamepads
+SDL_GameController* gGameController = NULL;
+//const int JOYSTICK_DEAD_ZONE = 8000;
 
 InputListener* inputListener;
 
@@ -65,6 +71,67 @@ std::chrono::time_point<high_resolution_clock> timeBegin;
 std::chrono::time_point<high_resolution_clock> timeEnd;
 
 double delta;
+
+int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pWindowTitle  )
+{
+    //Initialize SDL
+    if( SDL_Init( SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER   ) < 0 )
+    {
+        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+    }
+	else
+    {
+		//load gamepads
+		if( SDL_NumJoysticks() < 1 )
+        {
+            printf( "Warning: No joysticks connected!\n" );
+        }
+        else
+        {
+            //Load joystick
+            gGameController = SDL_GameControllerOpen( 0 );
+            if( gGameController == NULL )
+            {
+                printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+            }
+        }
+
+        //Create window
+        window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, a_iWidth, a_iHeight, SDL_WINDOW_SHOWN );
+        if( window == NULL )
+        {
+            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+        }
+		else
+        {
+			//Create renderer for window
+            renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
+            if( renderer == NULL )
+            {
+                printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
+            }
+			else
+            {
+                //Initialize renderer color
+                SDL_SetRenderDrawColor( renderer, 0x2C, 0x2C, 0x2C, 0xFF );
+
+                //Initialize PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if( !( IMG_Init( imgFlags ) & imgFlags ) )
+                {
+                    printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+                }
+            }
+        }
+	}
+
+	//initialise common keys used
+	//keyDownList[
+
+	timeBegin = high_resolution_clock::now();
+
+	return 0;
+}
 
 void			AddInputListener(InputListener* inputListener_)
 {
@@ -199,6 +266,14 @@ bool FrameworkUpdate()
         {
             quit = true;
         }
+		else if( e.type == SDL_CONTROLLERBUTTONDOWN )
+        {   
+			gcButtonDownList[(SDL_GameControllerButton)e.cbutton.button] = true;
+		}
+		else if( e.type == SDL_CONTROLLERBUTTONUP )
+        {   
+			gcButtonDownList[(SDL_GameControllerButton)e.cbutton.button] = false;
+		}
 		else if ( e.type == SDL_KEYDOWN ) 
 		{
 			if ( inputListener != nullptr ) 
@@ -255,51 +330,7 @@ void Shutdown()
     SDL_Quit();
 }
 
-int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pWindowTitle  )
-{
-    //Initialize SDL
-    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-    }
-	else
-    {
-        //Create window
-        window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, a_iWidth, a_iHeight, SDL_WINDOW_SHOWN );
-        if( window == NULL )
-        {
-            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-        }
-		else
-        {
-			//Create renderer for window
-            renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
-            if( renderer == NULL )
-            {
-                printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
-            }
-			else
-            {
-                //Initialize renderer color
-                SDL_SetRenderDrawColor( renderer, 0x2C, 0x2C, 0x2C, 0xFF );
 
-                //Initialize PNG loading
-                int imgFlags = IMG_INIT_PNG;
-                if( !( IMG_Init( imgFlags ) & imgFlags ) )
-                {
-                    printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-                }
-            }
-        }
-	}
-
-	//initialise common keys used
-	//keyDownList[
-
-	timeBegin = high_resolution_clock::now();
-
-	return 0;
-}
 
 //GLAH::DrawSprite ( unsigned int spriteID_)
 void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
@@ -421,6 +452,11 @@ void			RemoveFont( char* fontName_ )
 bool IsKeyDown( SDL_Keycode key_ )
 {
 	return keyDownList[key_];
+}
+
+bool IsGamePadButtonDown(SDL_GameControllerButton button_)
+{
+	return gcButtonDownList[button_];
 }
 
 bool GetMouseButtonDown( int a_iMouseButtonToTest )

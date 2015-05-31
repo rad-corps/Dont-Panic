@@ -170,14 +170,14 @@ void Player::ApplyGravity()
 
 void Player::HandleInput(float delta_)
 {
-	if ( IsKeyDown(SDLK_a ) )
+	if ( IsKeyDown(SDLK_a ) || IsGamePadButtonDown( SDL_CONTROLLER_BUTTON_DPAD_LEFT ) )
 	{
 		faceLeft = true;
 		pos.x -= maxSpeed * delta_;
 		if ( onPlatform ) 
 			status = RUNNING;
 	}
-	else if ( IsKeyDown(SDLK_d ) )
+	else if ( IsKeyDown(SDLK_d ) || IsGamePadButtonDown( SDL_CONTROLLER_BUTTON_DPAD_RIGHT ) )
 	{
 		faceLeft = false;
 		pos.x += maxSpeed * delta_;
@@ -191,7 +191,7 @@ void Player::HandleInput(float delta_)
 	}
 
 	//only jump if not already jumping
-	if ( IsKeyDown(SDLK_w ) && status != PLAYER_STATUS::JUMPING && !jumpHeld)
+	if ( (IsKeyDown(SDLK_w ) || IsGamePadButtonDown( SDL_CONTROLLER_BUTTON_A )) && status != PLAYER_STATUS::JUMPING && !jumpHeld)
 	{
 		jumpHeld = true;
 		status = JUMPING;	
@@ -205,7 +205,7 @@ void Player::HandleInput(float delta_)
 		jumpHeld = false;
 	}
 
-	if ( IsKeyDown(SDLK_SPACE) && shootHeld == false )
+	if ( (IsKeyDown(SDLK_SPACE) || IsGamePadButtonDown( SDL_CONTROLLER_BUTTON_X ))&& shootHeld == false )
 	{
 		shootHeld = true;
 		cout << "SPACE PRESSED" << endl;
@@ -216,7 +216,7 @@ void Player::HandleInput(float delta_)
 			playerProjectileListener->PlayerProjectileFired(pos, Vector2(1, 0));
 
 	}
-	else if (!IsKeyDown(SDLK_SPACE))
+	else if (!IsKeyDown(SDLK_SPACE) && !IsGamePadButtonDown( SDL_CONTROLLER_BUTTON_X ))
 	{
 		shootHeld = false;
 	}
