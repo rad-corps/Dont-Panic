@@ -4,7 +4,7 @@
 #define TILE_S 64
 
 //actual PLAYER_S is 32 (32 * 4)
-#define PLAYER_S 128
+#define PLAYER_S 64
 
 
 #define SCREEN_W 1300

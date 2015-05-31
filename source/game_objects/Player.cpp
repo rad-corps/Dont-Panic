@@ -18,15 +18,15 @@ Player::Player(void)
 	alive = true;
 
 	////initialise colliders
-	topCollider.width = 64;
+	topCollider.width = 50;
 	topCollider.height = 3;
-	bottomCollider.width = 64;
+	bottomCollider.width = 40;
 	bottomCollider.height = 3;
 
 	leftCollider.width = 3;
-	leftCollider.height = 64;
+	leftCollider.height = 58;
 	rightCollider.width = 3;
-	rightCollider.height = 64;
+	rightCollider.height = 58;
 	hitCollider.width = 58;
 	hitCollider.height = 58;
 
@@ -75,10 +75,10 @@ void Player::InitListener(PlayerProjectileListener* playerProjectileListener_)
 void Player::UpdateColliders()
 {
 	//update colliders
-	topCollider.centre = pos + Vector2(0, 60);
-	bottomCollider.centre = pos + Vector2(0, -64);
-	leftCollider.centre = pos + Vector2(-58, 0);
-	rightCollider.centre = pos + Vector2(58, 0);
+	topCollider.centre = pos + Vector2(0, 30);
+	bottomCollider.centre = pos + Vector2(0, -32);
+	leftCollider.centre = pos + Vector2(-27.5, 0);
+	rightCollider.centre = pos + Vector2(27.5, 0);
 
 	hitCollider.centre = pos;
 }
