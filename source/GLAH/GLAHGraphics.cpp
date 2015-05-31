@@ -14,7 +14,7 @@
 //glfw include
 
 //#include "GLAH/SOIL.h"
-#include "GLAH/Vertex.h"
+//#include "GLAH/Vertex.h"
 #include <chrono> //std::chrono::time_point
 #include <fstream>
 #include <vector>
@@ -31,7 +31,7 @@ std::map<SDL_Keycode, bool> keyDownList; //key, isDown
 std::map<int, bool> msBtnDwn;
 
 //used internally by DrawSprite
-void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_ = 1.0f);
+//void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_ = 1.0f);
 
 	
 //contains additional information about sprite rotation, scale, position etc.
@@ -378,16 +378,16 @@ void SetSpriteUVCoordinates	( SDL_Texture* sprite_, float* UVVec4_ )
 	//cout << "stubbed: SetSpriteUVCoordinates" << endl;
 }
 
-//GLAH::CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br)
-//verticesOut_	: a pointer to the vertex array to write to (must have space for 4 vertices)
-//tl			: top left position
-//tr			: top right position
-//bl			: bottom left position
-//br			: bottom right position
-void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_)
-{
-	
-}
+////GLAH::CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br)
+////verticesOut_	: a pointer to the vertex array to write to (must have space for 4 vertices)
+////tl			: top left position
+////tr			: top right position
+////bl			: bottom left position
+////br			: bottom right position
+//void CreateSpriteVertexData(Vertex* verticesOut_, Vector3 tl, Vector3 tr, Vector3 bl, Vector3 br, float* UV_, bool xFlip_, float alpha_)
+//{
+//	
+//}
 
 void			ClearScreen(){cout << "not yet implemented" << endl;}	
 unsigned int	DuplicateSprite			( unsigned int spriteID_ ){cout << "not yet implemented" << endl; return 0;}

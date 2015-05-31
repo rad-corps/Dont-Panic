@@ -65,10 +65,7 @@
     <ClInclude Include="source\GLAH\GLAHGraphics.h" />
     <ClInclude Include="source\GLAH\FileIO.h" />
     <ClInclude Include="source\GLAH\GLAHEntity.h" />
-    <ClInclude Include="include\GLAH\GLAHSoundInfo.h" />
-    <ClInclude Include="include\GLAH\SOIL.h" />
     <ClInclude Include="source\GLAH\Vector.h" />
-    <ClInclude Include="include\GLAH\Vertex.h" />
     <ClInclude Include="source\game_objects\Platform.h" />
     <ClInclude Include="source\game_objects\GameObject.h" />
     <ClInclude Include="source\game_objects\Player.h" />
