@@ -333,8 +333,9 @@ void Shutdown()
 
 
 //GLAH::DrawSprite ( unsigned int spriteID_)
-void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
+void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, bool effectedByCamera_)
 {
+	int xpos, ypos;
 	//Render texture to screen
 	GLAHEntity entity = spriteList[sprite_];
 
@@ -343,8 +344,18 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 	SDL_Rect src = { (int)entity.UV[0], (int)entity.UV[1], (int)entity.UV[2], (int)entity.UV[3] };
 	
 	//destination draw point needs to be -(int)entity.size.x/2 - (int)entity.size.y/2
-	int xpos = (int)entity.position.x - (int)camX + (int)(SCREEN_W * 0.5f) - (int)(entity.size.x * 0.5f);
-	int ypos = (int)(SCREEN_H * 0.5f) - (int)entity.position.y + (int)camY - (int)(entity.size.y * 0.5f);
+	
+	if ( effectedByCamera_ )
+	{
+		xpos = (int)entity.position.x - (int)camX + (int)(SCREEN_W * 0.5f) - (int)(entity.size.x * 0.5f);
+		ypos = (int)(SCREEN_H * 0.5f) - (int)entity.position.y + (int)camY - (int)(entity.size.y * 0.5f);
+	}
+	else
+	{
+		xpos = (int)entity.position.x - (int)(entity.size.x * 0.5f);
+		ypos = (int)entity.position.y - (int)(entity.size.y * 0.5f);
+	}
+
 	SDL_Rect dst = {xpos, ypos, (int)entity.size.x, (int)entity.size.y };
 
 	

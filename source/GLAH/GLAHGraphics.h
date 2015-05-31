@@ -56,7 +56,7 @@ void			RemoveInputListener();
 	void			SetSpriteUVCoordinates	( SDL_Texture*, float* a_fUVVec4 );
 
 	//draw the sprite to screen
-	void			DrawSprite				( SDL_Texture* sprite_,  bool xFlip_ = false, float alpha_ = 1.0f);
+	void			DrawSprite				( SDL_Texture* sprite_,  bool xFlip_ = false, float alpha_ = 1.0f, bool effectedByCamera = true);
 
 	//Get information about the sprite based on spriteID_ 
 	GLAHEntity		GetGLAHEntity			(SDL_Texture* spriteID_);

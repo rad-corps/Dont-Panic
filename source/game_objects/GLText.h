@@ -25,6 +25,11 @@ public:
 
 	void SetAlignment(TEXT_ALIGNMENT alignment_);
 	void SetText(std::string text_);
+	
+	//if set to true, text is not effected by camera
+	void SetHUD(bool hud_);
+
+
 	std::string GetText();
 	void SetPos(Vector2 pos_);
 
@@ -32,5 +37,6 @@ private:
 	std::vector<std::array<float, 4>> uvs;
 	TEXT_ALIGNMENT alignment;
 	std::string text;
+	bool hud;
 };
 

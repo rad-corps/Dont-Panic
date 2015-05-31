@@ -4,6 +4,7 @@
 #include "PSLevelSelect.h"
 #include "PSLevelModifySelect.h"
 #include "../GLAH/GLAHGraphics.h"
+#include "../globals/consts.h"
 #include <iostream>
 
 using namespace std;
@@ -17,14 +18,15 @@ PSMainMenu::PSMainMenu(void) : newState(nullptr)
 	menuStrings.push_back("Modify Existing Level              3");
 
 	//create the GLText objects
-	Vector2 textPos(1024/2, 700);
+	Vector2 textPos(SCREEN_W*0.5, 100);
 	GLText txt;
 	txt.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
+	txt.SetHUD(true);
 	for ( string str : menuStrings )
 	{		
 		txt.SetPos(textPos);
-		txt.SetText(str);
-		textPos -= Vector2(0, 30);
+		txt.SetText(str);		
+		textPos += Vector2(0, 30);
 		menuText.push_back(txt);
 	}
 

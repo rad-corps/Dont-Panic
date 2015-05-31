@@ -7,8 +7,15 @@ using namespace std;
 
 GLText::GLText(){
 	alignment = TEXT_ALIGNMENT::ALIGN_LEFT;
+	hud = false;
 }
 GLText::~GLText(void){}
+
+void GLText::SetHUD(bool hud_)
+{
+	hud = hud_;
+}
+
 void GLText::Update(float delta_){}
 
 void GLText::SetPos(Vector2 pos_)
@@ -65,7 +72,7 @@ void GLText::Draw()
 		{
 			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[i].data());
 			MoveSprite(SpriteSheet::FontSprite(), pos.x + 16 * i, pos.y); //hardcoded 8 as a step for now, variable size can come later
-			DrawSprite(SpriteSheet::FontSprite());
+			DrawSprite(SpriteSheet::FontSprite(), false, 1.0f, !hud);
 		}
 	}
 	
@@ -78,7 +85,7 @@ void GLText::Draw()
 			float charOffset = (i - middle_char) * 16;
 			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[i].data());
 			MoveSprite(SpriteSheet::FontSprite(), pos.x + charOffset, pos.y);
-			DrawSprite(SpriteSheet::FontSprite());
+			DrawSprite(SpriteSheet::FontSprite(), false, 1.0f, !hud);
 		}
 	}
 
@@ -89,7 +96,7 @@ void GLText::Draw()
 		{
 			SetSpriteUVCoordinates(SpriteSheet::FontSprite(), uvs[uvs.size()-1-i].data());
 			MoveSprite(SpriteSheet::FontSprite(), pos.x - 16 * i, pos.y);
-			DrawSprite(SpriteSheet::FontSprite());
+			DrawSprite(SpriteSheet::FontSprite(), false, 1.0f, !hud);
 		}
 	}
 }

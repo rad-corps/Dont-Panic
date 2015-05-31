@@ -3,6 +3,7 @@
 #include "../sqlite/DatabaseManager.h"
 #include "PSLevelEditor.h"
 #include "PSMainMenu.h"
+#include "../globals/consts.h"
 using namespace std;
 
 //void MyModifyLevelSelectKeyEvent(int key_, void* caller_)
@@ -79,18 +80,19 @@ void PSLevelModifySelect::Init()
 	char * error = "";
 	dm.Select("./resources/db/dontpanic.db", "tbl_level", "id, name", "", "", error);
 
-	textPos = Vector2(1024/2, 700);
+	textPos = Vector2(SCREEN_W*0.5, 100);
 	GLText txtTemp;
 	txtTemp.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
-	
+	txtTemp.SetHUD(true);
 	
 	for ( int i = 0; i < dm.Rows(); ++i )
 	{
 		levelMap[i] = dm.GetValueInt(i, "id");
 		txtTemp.SetText(dm.GetValueString(i, "name"));
 		txtTemp.SetPos(textPos);
+		
 		levelText.push_back(txtTemp);
-		textPos -= Vector2(0, 30);
+		textPos += Vector2(0, 30);
 	}
 
 	lvlToStart = -1;
