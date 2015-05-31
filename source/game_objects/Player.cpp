@@ -6,6 +6,7 @@
 #include "../globals/consts.h"
 
 
+
 Player::Player(void)
 {
 //	gfx = GLAHGraphics::Instance();
@@ -50,6 +51,14 @@ Player::Player(void)
 	onPlatform = false;
 
 	playerSpeak.SetAlignment(TEXT_ALIGNMENT::ALIGN_RIGHT);
+
+	//get the players attributes from DB (assume only 1 row)
+	char * error = "";
+	dm.Select("./resources/db/dontpanic.db", "player_attributes", "*", "", "", error);
+	gravity = dm.GetValueFloat(0, "gravity");
+	maxSpeed = dm.GetValueFloat(0, "top_speed");
+	jumpForce = dm.GetValueFloat(0, "jump_force");
+	accelleration = dm.GetValueFloat(0, "accelleration");	
 }
 
 Player::~Player(void)
@@ -95,7 +104,7 @@ void Player::HandleCollision(vector<Platform>& platform_, std::vector<Enemy>& en
 					onPlatform = true;
 					velocity.y = 0;
 					//push him back up to the top of the platform
-					MoveTo(Vector2(pos.x, env.Top() + 64));
+					MoveTo(Vector2(pos.x, env.Top() + (PLAYER_S * 0.5)));
 				
 					//if the env is a falling type, then make it fall!
 					if ( env.TileType() == ENVIRO_TILE::RED_BRICK_BASE || env.TileType() == ENVIRO_TILE::RED_BRICK_SURFACE ) 
@@ -152,10 +161,10 @@ void Player::UndoY()
 void Player::ApplyGravity()
 {
 	//gravity only if jumping
-	Vector2 gravity(0, -0.75); 
+	Vector2 gravityVec(0, -(gravity)); 
 	if ( status == JUMPING )
 	{
-		velocity += gravity;	
+		velocity += gravityVec;	
 	}
 }
 
@@ -164,14 +173,14 @@ void Player::HandleInput(float delta_)
 	if ( IsKeyDown(SDLK_a ) )
 	{
 		faceLeft = true;
-		pos.x -= 160 * delta_;
+		pos.x -= maxSpeed * delta_;
 		if ( onPlatform ) 
 			status = RUNNING;
 	}
 	else if ( IsKeyDown(SDLK_d ) )
 	{
 		faceLeft = false;
-		pos.x += 160 * delta_;
+		pos.x += maxSpeed * delta_;
 		
 		if ( onPlatform ) 
 			status = RUNNING;
@@ -188,7 +197,7 @@ void Player::HandleInput(float delta_)
 		status = JUMPING;	
 		
 		//will only happen for one frame
-		velocity.y += 17;
+		velocity.y += jumpForce;
 	}
 
 	if ( !IsKeyDown(SDLK_w) )

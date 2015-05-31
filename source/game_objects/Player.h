@@ -12,6 +12,7 @@
 //#include "GLAH\GLAHInput.h"
 #include "GLAH/GLAHGraphics.h"
 #include "../listeners/PlayerProjectileListener.h"
+#include "../sqlite/DatabaseManager.h"
 
 
 enum PLAYER_STATUS
@@ -74,6 +75,13 @@ private:
 	GLText playerSpeak;
 
 	PlayerProjectileListener* playerProjectileListener;
+
+	//database loaded values
+	DatabaseManager dm;
+	float gravity;
+	float maxSpeed;
+	float jumpForce;
+	float accelleration;
 
 
 };
