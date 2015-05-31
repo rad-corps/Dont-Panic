@@ -14,6 +14,7 @@
     <ClCompile Include="source\game_objects\EnemySpawner.cpp" />
     <ClCompile Include="source\game_objects\GLText.cpp" />
     <ClCompile Include="source\game_objects\Goal.cpp" />
+    <ClCompile Include="source\game_objects\PlayerProjectile.cpp" />
     <ClCompile Include="source\game_state\PSLevelModifySelect.cpp" />
     <ClCompile Include="source\game_state\PSLevelSelect.cpp" />
     <ClCompile Include="source\game_state\PSLevelEditor.cpp" />
@@ -43,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLAH\InputListener.h" />
+    <ClInclude Include="source\game_objects\Camera.h" />
     <ClInclude Include="source\game_objects\EnemySpawner.h" />
     <ClInclude Include="source\game_objects\Goal.h" />
+    <ClInclude Include="source\game_objects\PlayerProjectile.h" />
     <ClInclude Include="source\game_state\PSLevelModifySelect.h" />
     <ClInclude Include="source\globals\consts.h" />
     <ClInclude Include="source\game_objects\GLText.h" />
@@ -73,6 +76,7 @@
     <ClInclude Include="source\game_state\PSGameLoop.h" />
     <ClInclude Include="source\game_state\ProgramState.h" />
     <ClInclude Include="source\listeners\CannonListener.h" />
+    <ClInclude Include="source\listeners\PlayerProjectileListener.h" />
     <ClInclude Include="source\math\Collision.h" />
     <ClInclude Include="source\math\Rect.h" />
     <ClInclude Include="source\spritesheet\SpriteSheet.h" />

@@ -34,6 +34,7 @@ public:
 	static void Init();
 	static SDL_Texture* Sprite();
 	static SDL_Texture* FontSprite();
+	static SDL_Texture* PlayerSprite();
 
 	static void FillUV(float* uv_, SPRITE_TYPE st_);
 
@@ -41,6 +42,7 @@ public:
 private:
 	static SDL_Texture* sprite;
 	static SDL_Texture* fontSprite;
+	static SDL_Texture* playerSprite;
 	static bool init;
 	static UVTranslator translator;
 	SpriteSheet(void);

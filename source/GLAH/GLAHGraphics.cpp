@@ -92,7 +92,7 @@ SDL_Window*		GetWindow()
 SDL_Texture* CreateSprite	( const char* textureName_, 
 									 int width_, int height_, 
 									 unsigned int parentSpriteID_, 
-									 Vector3 originOffset_, 
+									 /*Vector3 originOffset_, */
 									 SColour colour_ )
  {
     //The final texture
@@ -124,7 +124,7 @@ SDL_Texture* CreateSprite	( const char* textureName_,
 	glahEntity.parentSpriteID = parentSpriteID_;
 	//glahEntity.spriteID = newTexture;
 	//glahEntity.position = Vector3((float)x_, (float)y_, 1.f);
-	glahEntity.origin = originOffset_;
+	//glahEntity.origin = originOffset_;
 
 	//add to the spriteList (map) using the texture_handle as the key
 	spriteList[newTexture] = glahEntity;
@@ -297,11 +297,17 @@ void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_)
 {
 	//Render texture to screen
 	GLAHEntity entity = spriteList[sprite_];
+
+	int breakpointCondition = spriteList[sprite_].size.x;
+
 	SDL_Rect src = { (int)entity.UV[0], (int)entity.UV[1], (int)entity.UV[2], (int)entity.UV[3] };
-	SDL_Rect dst = { (int)entity.position.x - (int)camX + (int)(SCREEN_W * 0.5f), 
-					(int)(SCREEN_H * 0.5f) - (int)entity.position.y + (int)camY, 
-					(int)entity.size.x * (int)spriteList[sprite_].scaleX, 
-					(int)entity.size.y * (int)spriteList[sprite_].scaleY };
+	
+	//destination draw point needs to be -(int)entity.size.x/2 - (int)entity.size.y/2
+	int xpos = (int)entity.position.x - (int)camX + (int)(SCREEN_W * 0.5f) - (int)(entity.size.x * 0.5f);
+	int ypos = (int)(SCREEN_H * 0.5f) - (int)entity.position.y + (int)camY - (int)(entity.size.y * 0.5f);
+	SDL_Rect dst = {xpos, ypos, (int)entity.size.x, (int)entity.size.y };
+
+	
 
 	//flipping horizontally?
 	SDL_RendererFlip flip = SDL_FLIP_NONE;

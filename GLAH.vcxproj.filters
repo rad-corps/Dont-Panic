@@ -102,6 +102,9 @@
     <ClCompile Include="source\game_state\PSLevelModifySelect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\game_objects\PlayerProjectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GLAH\CONSTS.h">
@@ -216,6 +219,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GLAH\InputListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_objects\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\game_objects\PlayerProjectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\listeners\PlayerProjectileListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

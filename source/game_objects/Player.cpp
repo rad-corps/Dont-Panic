@@ -16,18 +16,18 @@ Player::Player(void)
 
 	alive = true;
 
-	//initialise colliders
-	topCollider.width = 16;
+	////initialise colliders
+	topCollider.width = 64;
 	topCollider.height = 3;
-	bottomCollider.width = 16;
+	bottomCollider.width = 64;
 	bottomCollider.height = 3;
 
 	leftCollider.width = 3;
-	leftCollider.height = 16;
+	leftCollider.height = 64;
 	rightCollider.width = 3;
-	rightCollider.height = 16;
-	hitCollider.width = 26;
-	hitCollider.height = 26;
+	rightCollider.height = 64;
+	hitCollider.width = 58;
+	hitCollider.height = 58;
 
 	
 	UpdateColliders();
@@ -36,13 +36,18 @@ Player::Player(void)
 	status = PLAYER_STATUS::STATIONARY;
 
 	//initialise animations
-	//UVTranslator translator(800, 1280, 16, 16);
-	//translator.GetUV(animStationary, 1, 26);
-	SpriteSheet::FillUV(animStationary, SPRITE_TYPE::M_P1_STAT);
-	SpriteSheet::FillUV(animMove1, SPRITE_TYPE::M_P1_MOVE1);
-	SpriteSheet::FillUV(animMove2, SPRITE_TYPE::M_P1_MOVE2);
-	SpriteSheet::FillUV(animMove3, SPRITE_TYPE::M_P1_MOVE1);
-	SpriteSheet::FillUV(animDead, SPRITE_TYPE::M_P1_DEATH);
+	UVTranslator translator(256, 32, 32, 32);
+	translator.GetUV(animStationary, 0, 0);
+	translator.GetUV(animMove1, 0, 1);
+	translator.GetUV(animMove2, 0, 2);
+	translator.GetUV(animMove3, 0, 3);
+	translator.GetUV(animDead, 0, 4);
+
+	//SpriteSheet::FillUV(animStationary, SPRITE_TYPE::M_P1_STAT);
+	//SpriteSheet::FillUV(animMove1, SPRITE_TYPE::M_P1_MOVE1);
+	//SpriteSheet::FillUV(animMove2, SPRITE_TYPE::M_P1_MOVE2);
+	//SpriteSheet::FillUV(animMove3, SPRITE_TYPE::M_P1_MOVE1);
+	//SpriteSheet::FillUV(animDead, SPRITE_TYPE::M_P1_DEATH);
 	
 	currentAnimation = animStationary;
 
@@ -67,10 +72,10 @@ void Player::InitListener(PlayerProjectileListener* playerProjectileListener_)
 void Player::UpdateColliders()
 {
 	//update colliders
-	topCollider.centre = pos + Vector2(0, 14);
-	bottomCollider.centre = pos + Vector2(0, -16);
-	leftCollider.centre = pos + Vector2(-12, 0);
-	rightCollider.centre = pos + Vector2(12, 0);
+	topCollider.centre = pos + Vector2(0, 60);
+	bottomCollider.centre = pos + Vector2(0, -64);
+	leftCollider.centre = pos + Vector2(-58, 0);
+	rightCollider.centre = pos + Vector2(58, 0);
 
 	hitCollider.centre = pos;
 }
@@ -96,7 +101,8 @@ void Player::HandleCollision(vector<Platform>& platform_, std::vector<Enemy>& en
 					onPlatform = true;
 					velocity.y = 0;
 					//push him back up to the top of the platform
-					MoveTo(Vector2(pos.x, env.Top() + 16));
+					cout << "MoveTo" << endl;
+					MoveTo(Vector2(pos.x, env.Top() + 64));
 				
 					//if the env is a falling type, then make it fall!
 					if ( env.TileType() == ENVIRO_TILE::RED_BRICK_BASE || env.TileType() == ENVIRO_TILE::RED_BRICK_SURFACE ) 
@@ -286,9 +292,9 @@ void Player::ApplyVelocity(Vector2 velocity_)
 void Player::Draw()
 {
 	//set the UV
-	SetSpriteUVCoordinates	( SpriteSheet::Sprite(), currentAnimation);
-	MoveSprite(SpriteSheet::Sprite(), pos.x, pos.y);
-	DrawSprite(SpriteSheet::Sprite(), faceLeft);
+	SetSpriteUVCoordinates	( SpriteSheet::PlayerSprite(), currentAnimation);
+	MoveSprite(SpriteSheet::PlayerSprite(), pos.x, pos.y);
+	DrawSprite(SpriteSheet::PlayerSprite(), faceLeft);
 	//DrawString(to_string(FPS).c_str(), 50, 500);
 
 	playerSpeak.Draw();

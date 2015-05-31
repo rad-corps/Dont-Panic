@@ -5,7 +5,9 @@
 bool SpriteSheet::init;
 SDL_Texture* SpriteSheet::sprite;
 SDL_Texture* SpriteSheet::fontSprite;
+SDL_Texture* SpriteSheet::playerSprite;
 UVTranslator SpriteSheet::translator;
+
 
 
 SpriteSheet::SpriteSheet(void)
@@ -31,9 +33,14 @@ void SpriteSheet::Init()
 	if ( !init ) 
 	{
 		translator = UVTranslator(800, 1280, 16, 16);
-		//sprite = CreateSprite("./resources/images/simples_pimples2.png", 32, 32, 0, Vector3(16.f,16.f,1.f));
-		sprite = CreateSprite("./resources/images/simples_pimples2.png", TILE_S, TILE_S, 0, Vector3(0.f,0.f,1.f));
-		fontSprite = CreateSprite("./resources/images/courier.png", 16, 16, 0, Vector3(8.f,8.f,1.f));
+
+		//sprite = CreateSprite("./resources/images/simples_pimples2.png", TILE_S, TILE_S, 0, Vector3(0.f,0.f,1.f));
+		//fontSprite = CreateSprite("./resources/images/courier.png", 16, 16, 0, Vector3(8.f,8.f,1.f));
+		//playerSprite = CreateSprite("./resources/images/player.png", 32, 32, 0, Vector3(8.f,8.f,1.f));
+
+		sprite = CreateSprite("./resources/images/simples_pimples2.png", TILE_S, TILE_S, 0);
+		fontSprite = CreateSprite("./resources/images/courier.png", 16, 16, 0);
+		playerSprite = CreateSprite("./resources/images/player.png", PLAYER_S, PLAYER_S, 0);
 		init = true;
 	}
 }
@@ -50,4 +57,11 @@ SDL_Texture* SpriteSheet::FontSprite()
 	if ( !init ) 
 		return nullptr;
 	return fontSprite;
+}
+
+SDL_Texture* SpriteSheet::PlayerSprite()
+{
+	if ( !init ) 
+		return nullptr;
+	return playerSprite;
 }

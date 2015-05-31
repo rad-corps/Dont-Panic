@@ -119,7 +119,7 @@ void Enemy::UpdateColliders()
 {
 	//update colliders
 	topCollider.centre = pos + Vector2(0, 14);
-	bottomCollider.centre = pos + Vector2(0, -16);
+	bottomCollider.centre = pos + Vector2(0, -(TILE_S)/2);
 	leftCollider.centre = pos + Vector2(-12, 0);
 	rightCollider.centre = pos + Vector2(12, 0);
 }
@@ -172,7 +172,7 @@ void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& she
 					onPlatform = true;
 					velocity.y = 0;
 					//push him back up to the top of the platform
-					MoveTo(Vector2(pos.x, env.Top() + 16));
+					MoveTo(Vector2(pos.x, env.Top() + (TILE_S / 2)));
 				}
 				if ( Collision::RectCollision(leftCollider, env))
 				{
