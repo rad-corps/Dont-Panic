@@ -6,6 +6,7 @@ bool SpriteSheet::init;
 SDL_Texture* SpriteSheet::sprite;
 SDL_Texture* SpriteSheet::fontSprite;
 SDL_Texture* SpriteSheet::playerSprite;
+SDL_Texture* SpriteSheet::platformSprite;
 UVTranslator SpriteSheet::translator;
 
 
@@ -41,6 +42,7 @@ void SpriteSheet::Init()
 		sprite = CreateSprite("./resources/images/simples_pimples2.png", TILE_S, TILE_S, 0);
 		fontSprite = CreateSprite("./resources/images/courier.png", 16, 16, 0);
 		playerSprite = CreateSprite("./resources/images/player.png", PLAYER_S, PLAYER_S, 0);
+		platformSprite = CreateSprite("./resources/images/platformTiles.png", TILE_S, TILE_S, 0);
 		init = true;
 	}
 }
@@ -64,4 +66,11 @@ SDL_Texture* SpriteSheet::PlayerSprite()
 	if ( !init ) 
 		return nullptr;
 	return playerSprite;
+}
+
+SDL_Texture* SpriteSheet::PlatformSprite()
+{
+	if ( !init ) 
+		return nullptr;
+	return platformSprite;
 }

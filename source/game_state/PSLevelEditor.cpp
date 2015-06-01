@@ -59,7 +59,7 @@ void PSLevelEditor::Init()
 	
 	if ( currentPlatform == nullptr )
 	{
-		currentPlatform = new Platform(col, row, ENVIRO_TILE::RED_BRICK_SURFACE);
+		currentPlatform = new Platform(col, row, 0);
 	}
 
 	//instructions
@@ -203,8 +203,8 @@ void PSLevelEditor::KeyDown(SDL_Keycode key_)
 	if ( key_ == SDLK_o )		cannon.SetPos(col, row);
 	if ( key_ == SDLK_p)		player.SetPos(col, row);
 	if ( key_ == SDLK_g )		goal.SetPos(col, row);
-	if ( key_ == SDLK_1 )		currentPlatform->SetTileset(ENVIRO_TILE::PLATFORMS_START);
-	if ( key_ == SDLK_2 )		currentPlatform->SetTileset(ENVIRO_TILE::DECORATION_BEGIN);
+//	if ( key_ == SDLK_1 )		currentPlatform->SetTileset(ENVIRO_TILE::PLATFORMS_START);
+//	if ( key_ == SDLK_2 )		currentPlatform->SetTileset(ENVIRO_TILE::DECORATION_BEGIN);
 	if ( key_ == SDLK_i )		showInstructions = !showInstructions;
 
 	//	if ( y_ > 0 )

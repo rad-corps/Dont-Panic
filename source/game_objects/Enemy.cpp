@@ -157,33 +157,30 @@ void Enemy::HandleCollision(vector<Platform>& platform_, std::vector<Shell>& she
 	for ( auto &env : platform_ )
 	{
 		//only check collision with platforms
-		if ( env.TileType() > ENVIRO_TILE::PLATFORMS_START && env.TileType() < ENVIRO_TILE::PLATFORMS_END )
+		if ( env.Active() ) 
 		{
-			if ( env.Active() ) 
+			if ( Collision::RectCollision(topCollider, env))
 			{
-				if ( Collision::RectCollision(topCollider, env))
-				{
-					if  (velocity.y > 0)
-						velocity.y = 0;
-						//velocity.y = -velocity.y;
-				}
-				if ( Collision::RectCollision(bottomCollider, env))
-				{
-					onPlatform = true;
+				if  (velocity.y > 0)
 					velocity.y = 0;
-					//push him back up to the top of the platform
-					MoveTo(Vector2(pos.x, env.Top() + (TILE_S / 2)));
-				}
-				if ( Collision::RectCollision(leftCollider, env))
-				{
-					UndoX();
-					dir = DIRECTION::DIR_RIGHT;
-				}
-				if ( Collision::RectCollision(rightCollider, env))
-				{
-					UndoX();
-					dir = DIRECTION::DIR_LEFT;
-				}
+					//velocity.y = -velocity.y;
+			}
+			if ( Collision::RectCollision(bottomCollider, env))
+			{
+				onPlatform = true;
+				velocity.y = 0;
+				//push him back up to the top of the platform
+				MoveTo(Vector2(pos.x, env.Top() + (TILE_S / 2)));
+			}
+			if ( Collision::RectCollision(leftCollider, env))
+			{
+				UndoX();
+				dir = DIRECTION::DIR_RIGHT;
+			}
+			if ( Collision::RectCollision(rightCollider, env))
+			{
+				UndoX();
+				dir = DIRECTION::DIR_LEFT;
 			}
 		}
 	}

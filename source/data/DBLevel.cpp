@@ -61,7 +61,7 @@ void DBLevel::FillData(int level_, std::vector<Platform>& platform_, Player& pla
 	
 		for (int i = 0; i < dm.Rows(); ++i)
 		{
-			Platform env(dm.GetValueInt(i, "col"), dm.GetValueInt(i, "row"), (ENVIRO_TILE)dm.GetValueInt(i, "tile_type"));
+			Platform env(dm.GetValueInt(i, "col"), dm.GetValueInt(i, "row"), dm.GetValueInt(i, "tile_type"));
 			platform_.push_back(env);
 		}
 	}
