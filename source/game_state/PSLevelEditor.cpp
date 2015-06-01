@@ -29,11 +29,11 @@ Platform* PSLevelEditor::currentPlatform = nullptr;
 //	}		 
 //}
 
-void MyKeyEvent(int key_, void* caller_)
-{
-	PSLevelEditor* caller = (PSLevelEditor*)caller_;
-	caller->KeyDown(key_);
-}
+//void MyKeyEvent(int key_, void* caller_)
+//{
+//	PSLevelEditor* caller = (PSLevelEditor*)caller_;
+//	caller->KeyDown(key_);
+//}
 
 void PSLevelEditor::Init()
 {
@@ -46,8 +46,9 @@ void PSLevelEditor::Init()
 	saving = false;
 	inputName = false;
 
+	promptText.SetHUD(true);
 	promptText.SetAlignment(TEXT_ALIGNMENT::ALIGN_CENTRE);
-	promptText.SetPos(Vector2(1024/2, 700));
+	promptText.SetPos(Vector2(SCREEN_W/2, 50));
 	promptText.SetText("");
 
 	//glfwSetScrollCallback(GetWindow(), ScrollCallback); 
@@ -80,13 +81,14 @@ void PSLevelEditor::Init()
 	instructionsStr.push_back("CTRL + S: SAVE LEVEL");
 
 	GLText tempText;
-	Vector2 instPos(30, 700);
+	Vector2 instPos(30, 100);
 	for (auto &text : instructionsStr)
 	{
 		tempText.SetText(text);
 		tempText.SetPos(instPos);
+		tempText.SetHUD(true);
 		instructions.push_back(tempText);
-		instPos.y -= 30;
+		instPos.y += 30;
 	}
 }
 
@@ -140,7 +142,7 @@ void PSLevelEditor::RemovePlatformTile()
 	}
 }
 
-void PSLevelEditor::ChangePlatformTile()
+void PSLevelEditor::SetPlatformTile()
 {
 	//find platform tile at this space.
 	auto it = find_if(platforms.begin(), platforms.end(), FindMatchingPlatform );
@@ -152,92 +154,89 @@ void PSLevelEditor::ChangePlatformTile()
 	}
 }
 
+void PSLevelEditor::HandleNameInput(SDL_Keycode key_)
+{
+	if (key_ == SDLK_RETURN)
+	{
+		//submit
+		cout << "...Saving Level..." << endl;
+		saving = false;
+		DBLevel db;
+		db.SaveData(platforms, player, cannon, levelName, enemySpawners, goal);
+		inputName = false;
+		promptText.SetText(levelName + " Saved");
+	}
+	else if ( key_ == SDLK_BACKSPACE )
+	{
+		if ( levelName.size() > 0 )
+		{
+			levelName = levelName.substr(0, levelName.size()-1);
+		}
+	}
+	else
+	{			
+		//turn key into a char
+		char x = (char)key_;
+		levelName += x;
+	}
+}
+
 void PSLevelEditor::KeyDown(SDL_Keycode key_)
 {
 	if ( inputName )
 	{
-		if (key_ == SDLK_RETURN)
+		HandleNameInput(key_);		
+		return;
+	}
+
+	if ( key_ == SDLK_EQUALS )	currentPlatform->IncrementTileType();	
+	if ( key_ == SDLK_MINUS )	currentPlatform->DecrementTileType();
+	if ( key_ == SDLK_w ) 		MoveCamera(GetCameraPos().x, GetCameraPos().y + TILE_S);
+	if ( key_ == SDLK_s ) 		MoveCamera(GetCameraPos().x, GetCameraPos().y - TILE_S);
+	if ( key_ == SDLK_a ) 		MoveCamera(GetCameraPos().x - TILE_S, GetCameraPos().y);
+	if ( key_ == SDLK_d ) 		MoveCamera(GetCameraPos().x + TILE_S, GetCameraPos().y);
+	if (key_ == SDLK_UP)		++row;
+	if (key_ == SDLK_DOWN)		--row;
+	if( key_ == SDLK_LEFT)		--col;
+	if( key_ == SDLK_RIGHT) 	++col;
+	if ( key_ == SDLK_SPACE )	SetPlatformTile();
+	if ( key_ == SDLK_o )		cannon.SetPos(col, row);
+	if ( key_ == SDLK_p)		player.SetPos(col, row);
+	if ( key_ == SDLK_g )		goal.SetPos(col, row);
+	if ( key_ == SDLK_1 )		currentPlatform->SetTileset(ENVIRO_TILE::PLATFORMS_START);
+	if ( key_ == SDLK_2 )		currentPlatform->SetTileset(ENVIRO_TILE::DECORATION_BEGIN);
+	if ( key_ == SDLK_i )		showInstructions = !showInstructions;
+
+	//	if ( y_ > 0 )
+//	{
+//		currentPlatform->DecrementTileType();
+//	}
+//	else if ( y_ < 0 )
+//	{
+//		currentPlatform->IncrementTileType();		
+//	}	
+	
+	//drop an enemy spawner
+	if ( key_ == SDLK_e )
+	{
+		//find enemySpawner tile at this space.
+		auto it = find_if(enemySpawners.begin(), enemySpawners.end(), FindMatchingEnemySpawner);
+		
+		//if found, we want to set this platform to the next tile
+		if ( it != enemySpawners.end() )
 		{
-			//submit
-			cout << "...Saving Level..." << endl;
-			saving = false;
-			DBLevel db;
-			db.SaveData(platforms, player, cannon, levelName, enemySpawners, goal);
-			inputName = false;
-			promptText.SetText(levelName + " Saved");
+			it = enemySpawners.erase(it);
 		}
-		else if ( key_ == SDLK_BACKSPACE )
+		else //if no tiles found, add a new one. 
 		{
-			if ( levelName.size() > 0 )
-			{
-				levelName = levelName.substr(0, levelName.size()-1);
-			}
-		}
-		else
-		{			
-			//turn key into a char
-			char x = (char)key_;
-			levelName += x;
+			enemySpawners.push_back(EnemySpawner(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, col, row)));
 		}
 	}
-	if ( !inputName )
+
+	if ( key_ == SDLK_ESCAPE )
 	{
-		if (key_ == SDLK_UP)
-			++row;
-		if (key_ == SDLK_DOWN)	
-			--row;
-		if( key_ == SDLK_LEFT)
-			--col;
-		if( key_ == SDLK_RIGHT)
-			++col;
-		if ( key_ == SDLK_SPACE )
-		{
-			ChangePlatformTile();
-		}
-		if ( key_ == SDLK_e )
-		{
-			//find enemySpawner tile at this space.
-			auto it = find_if(enemySpawners.begin(), enemySpawners.end(), FindMatchingEnemySpawner);
-		
-			//if found, we want to set this platform to the next tile
-			if ( it != enemySpawners.end() )
-			{
-				it = enemySpawners.erase(it);
-			}
-			else //if no tiles found, add a new one. 
-			{
-				enemySpawners.push_back(EnemySpawner(Enemy(ENEMY_TYPE::SKELETON, DIRECTION::DIR_LEFT, col, row)));
-			}
-		}
-		if ( key_ == SDLK_o )
-		{
-			cannon.SetPos(col, row);
-		}
-		if ( key_ == SDLK_p)
-		{
-			player.SetPos(col, row);
-		}
-		if ( key_ == SDLK_g )
-		{
-			goal.SetPos(col, row);
-		}
-		if ( key_ == SDLK_1 )
-		{
-			currentPlatform->SetTileset(ENVIRO_TILE::PLATFORMS_START);
-		}
-		if ( key_ == SDLK_2 )
-		{
-			currentPlatform->SetTileset(ENVIRO_TILE::DECORATION_BEGIN);
-		}
-		if ( key_ == SDLK_i )
-		{
-			showInstructions = !showInstructions;
-		}
-		if ( key_ == SDLK_ESCAPE )
-		{
-			RemoveInputListener();
-			newProgramState = new PSMainMenu();
-		}
+		RemoveInputListener();
+		newProgramState = new PSMainMenu();
 	}
 }
 
@@ -249,8 +248,8 @@ void PSLevelEditor::UpdateRowCol()
 	mousePos.x = (float)mouseX;//offset x due to drawing from centre
 	mousePos.y = (float)mouseY;
 	//get row and column based on mousePos
-	col = mousePos.x / TILE_S;
-	row = mousePos.y / TILE_S;
+	col = (mousePos.x + GetCameraPos().x - (SCREEN_W / 2)) / TILE_S;
+	row = (mousePos.y + GetCameraPos().y - (SCREEN_H / 2)) / TILE_S;
 }
 
 void PSLevelEditor::HandleMouseDown()
@@ -260,7 +259,7 @@ void PSLevelEditor::HandleMouseDown()
 	{
 		if (!lmbDown || (lastCol != col || lastRow != row))
 		{
-			ChangePlatformTile();
+			SetPlatformTile();
 			lmbDown = true;
 		}
 	}
@@ -295,11 +294,11 @@ ProgramState* PSLevelEditor::Update(float delta_)
 //	if ( IsKeyDown(KEY_ESCAPE) ) 
 //		return new PSMainMenu();
 
-	//if ( IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_S) && !saving)
-	//{
-	//	inputName = true;
-	//	levelName = "";
-	//}
+	if ( IsKeyDown(SDLK_F1) && !saving)
+	{
+		inputName = true;
+		levelName = "";
+	}
 
 	if ( inputName )
 	{

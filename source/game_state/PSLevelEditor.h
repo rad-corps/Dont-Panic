@@ -39,8 +39,9 @@ public:
 	static bool FindMatchingEnemySpawner(EnemySpawner& env_);
 
 private:
+	void HandleNameInput(SDL_Keycode key_);
 	void Init();
-	void ChangePlatformTile();
+	void SetPlatformTile();
 	void RemovePlatformTile();
 	void UpdateRowCol();
 	void HandleMouseDown();

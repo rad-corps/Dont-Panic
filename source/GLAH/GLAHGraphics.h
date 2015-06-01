@@ -26,6 +26,10 @@ void			RemoveInputListener();
 
  bool			GetMouseButtonReleased( int a_iMouseButtonToTest );
 
+
+ Vector2			GetCameraPos();
+ void			SetBGColour(int r_, int g_, int b_);
+
 	//create a sprite (returns a spriteID)
 	//This also creates a GLAHEntity that maps to the sprite ID
 	//See GLAHEntity for more info

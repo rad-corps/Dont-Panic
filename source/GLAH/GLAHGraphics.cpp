@@ -133,6 +133,16 @@ int Initialise(int a_iWidth, int a_iHeight, bool a_bFullscreen, const char* a_pW
 	return 0;
 }
 
+void SetBGColour(int r_, int g_, int b_)
+{
+	SDL_SetRenderDrawColor( renderer, r_, g_, b_, 0xFF );
+}
+
+Vector2			GetCameraPos()
+{
+	return Vector2(camX, camY);
+}
+
 void			AddInputListener(InputListener* inputListener_)
 {
 	inputListener = inputListener_;
@@ -208,23 +218,42 @@ SDL_Texture* CreateSprite	( const char* textureName_,
     return newTexture;
 }
 
-//returns the transform matrix based on the sprite
-//Matrix3x3		
-//CreateSpriteTransformation( unsigned int spriteID_ )
-//{
-//	Matrix3x3 translationMat = Matrix3x3::CreateTranslationMatrix(spriteList[spriteID_].position);
-//	Matrix3x3 rotationMat = Matrix3x3::CreateRotationMatrix(spriteList[spriteID_].rotation);
-//	Matrix3x3 scaleMatrix = Matrix3x3::CreateScaleMatrix(spriteList[spriteID_].scaleX, spriteList[spriteID_].scaleY);
-//	return scaleMatrix * rotationMat * translationMat;
-//}
+//GLAH::DrawSprite ( unsigned int spriteID_)
+void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, bool effectedByCamera_)
+{
+	int xpos, ypos;
+	//Render texture to screen
+	GLAHEntity entity = spriteList[sprite_];
 
-//modify the scale of the sprite
-//void			
-//ScaleSprite( unsigned int spriteID_, float scalar_ )
-//{
-//	spriteList[spriteID_].scaleX = scalar_;
-//	spriteList[spriteID_].scaleY = scalar_;
-//}
+	int breakpointCondition = spriteList[sprite_].size.x;
+
+	SDL_Rect src = { (int)entity.UV[0], (int)entity.UV[1], (int)entity.UV[2], (int)entity.UV[3] };
+	
+	//destination draw point needs to be -(int)entity.size.x/2 - (int)entity.size.y/2
+	
+	if ( effectedByCamera_ )
+	{
+		xpos = (int)entity.position.x - (int)camX + (int)(SCREEN_W * 0.5f) - (int)(entity.size.x * 0.5f);
+		ypos = (int)(SCREEN_H * 0.5f) - (int)entity.position.y + (int)camY - (int)(entity.size.y * 0.5f);
+	}
+	else
+	{
+		xpos = (int)entity.position.x - (int)(entity.size.x * 0.5f);
+		ypos = (int)entity.position.y - (int)(entity.size.y * 0.5f);
+	}
+
+	SDL_Rect dst = {xpos, ypos, (int)entity.size.x, (int)entity.size.y };
+
+	
+
+	//flipping horizontally?
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	if ( xFlip_ )
+	{
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, NULL, flip );
+}
 
 void			
 ScaleSprite( SDL_Texture* sprite_, float scalarX_, float scalarY_ )
@@ -335,42 +364,7 @@ void Shutdown()
 
 
 
-//GLAH::DrawSprite ( unsigned int spriteID_)
-void DrawSprite(SDL_Texture* sprite_, bool xFlip_, float alpha_, bool effectedByCamera_)
-{
-	int xpos, ypos;
-	//Render texture to screen
-	GLAHEntity entity = spriteList[sprite_];
 
-	int breakpointCondition = spriteList[sprite_].size.x;
-
-	SDL_Rect src = { (int)entity.UV[0], (int)entity.UV[1], (int)entity.UV[2], (int)entity.UV[3] };
-	
-	//destination draw point needs to be -(int)entity.size.x/2 - (int)entity.size.y/2
-	
-	if ( effectedByCamera_ )
-	{
-		xpos = (int)entity.position.x - (int)camX + (int)(SCREEN_W * 0.5f) - (int)(entity.size.x * 0.5f);
-		ypos = (int)(SCREEN_H * 0.5f) - (int)entity.position.y + (int)camY - (int)(entity.size.y * 0.5f);
-	}
-	else
-	{
-		xpos = (int)entity.position.x - (int)(entity.size.x * 0.5f);
-		ypos = (int)entity.position.y - (int)(entity.size.y * 0.5f);
-	}
-
-	SDL_Rect dst = {xpos, ypos, (int)entity.size.x, (int)entity.size.y };
-
-	
-
-	//flipping horizontally?
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	if ( xFlip_ )
-	{
-		flip = SDL_FLIP_HORIZONTAL;
-	}
-	SDL_RenderCopyEx( renderer, sprite_, &src, &dst, entity.rotation * 57.2957795f, NULL, flip );
-}
 
 //GLAH::DrawSprite
 //spriteID_		: The ID of the sprite to draw

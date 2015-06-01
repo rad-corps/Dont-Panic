@@ -34,11 +34,15 @@ PSGameLoop::PSGameLoop(int level_) : newProgramState(nullptr)
 	//maximum of 3 player projectiles on screen at once
 	playerProjectiles.resize(3);
 	player.InitListener(this);
+
+	SetBGColour(89, 141, 179);
 }
 
 
 PSGameLoop::~PSGameLoop(void)
-{}
+{
+	SetBGColour( 0x2C, 0x2C, 0x2C );
+}
 
 void PSGameLoop::KeyDown(SDL_Keycode key_)
 {
